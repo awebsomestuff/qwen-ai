@@ -22,15 +22,18 @@ const displayTitle = seoTitle ? seoTitle.replace('%title%', title) : title;
   <link rel="icon" type="image/webp" sizes="32x32" href="/wp-content/uploads/2024/09/cropped-qwen-32x32.webp" />
   <link rel="icon" type="image/webp" sizes="192x192" href="/wp-content/uploads/2024/09/cropped-qwen-192x192.webp" />
   <link rel="apple-touch-icon" href="/wp-content/uploads/2024/09/cropped-qwen-180x180.webp" />
+  <meta name="robots" content="index, follow" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" />
+  <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" /></noscript>
 </head>
 <body>
   <header class="site-header">
     <div class="header-inner">
       <a href="/" class="site-logo">
-        <img src="/wp-content/uploads/2024/09/cropped-Qwen-AI.webp" alt="Qwen AI" />
+        <img src="/wp-content/uploads/2024/09/cropped-Qwen-AI.webp" alt="Qwen AI" width="150" height="50" />
       </a>
       <button class="mobile-menu-toggle" aria-label="Toggle menu" id="mobileMenuToggle">
         <span></span><span></span><span></span>

@@ -5,8 +5,6 @@
 /* ------------------------------------
    1. Global Variables & Root Settings
    ------------------------------------ */
-@import url('https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
-
 :root {
   /* Core Colors */
   --qwen-primary: #4f46e5;         /* Indigo Principal */
