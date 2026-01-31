@@ -3,6 +3,27 @@
    ========================================================================== */
 
 /* ------------------------------------
+   0. Font Fallbacks (CLS prevention)
+   ------------------------------------ */
+@font-face {
+  font-family: 'Lora Fallback';
+  src: local('Georgia'), local('Times New Roman');
+  size-adjust: 97.8%;
+  ascent-override: 90%;
+  descent-override: 22%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'Inter Fallback';
+  src: local('Arial'), local('Helvetica Neue');
+  size-adjust: 107%;
+  ascent-override: 90%;
+  descent-override: 22%;
+  line-gap-override: 0%;
+}
+
+/* ------------------------------------
    1. Global Variables & Root Settings
    ------------------------------------ */
 :root {
@@ -64,8 +85,8 @@
   --qwen-transition-slow: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 
   /* Typography */
-  --qwen-font-serif: 'Lora', serif;
-  --qwen-font-sans: 'Inter', sans-serif;
+  --qwen-font-serif: 'Lora', 'Lora Fallback', serif;
+  --qwen-font-sans: 'Inter', 'Inter Fallback', sans-serif;
   --qwen-body-font-size: 18px; /* Base 18px para mejor lectura */
   --qwen-body-line-height: 1.65;
   --qwen-heading-line-height: 1.3;
