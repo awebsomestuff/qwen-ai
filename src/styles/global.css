@@ -1268,8 +1268,8 @@ article.qwen-container img {
   .qwen-grid-cols-2, .qwen-grid-cols-3, .qwen-grid-cols-4 { grid-template-columns: 1fr; } /* Stack to 1 col */
   .qwen-grid-auto-fit { grid-template-columns: 1fr; }
   .qwen-row { flex-direction: column; align-items: center; } /* Stack buttons centered */
-  .qwen-col { min-width: unset; width: 100%; max-width: 400px; }
-  .qwen-button { width: 100%; } /* Full width within capped col */
+  .qwen-col { min-width: unset; width: 100%; max-width: 400px; flex-basis: auto; }
+  .qwen-col .qwen-button { width: 100%; } /* Full width within capped col */
   .qwen-table-wrapper { margin-left: -var(--qwen-gutter-width); margin-right: -var(--qwen-gutter-width); } /* Allow table scroll */
   .qwen-table { font-size: 0.9rem; }
   .qwen-table th, .qwen-table td { padding: 10px 12px; }
