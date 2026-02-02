@@ -1689,3 +1689,31 @@ p {
   color: white;
   background-image: none !important;
 }
+
+/* ------------------------------------
+   AD SLOTS
+   ------------------------------------ */
+.ad-slot {
+  width: 100%;
+  min-height: 310px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 15px 0;
+}
+.ad-slot-header {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-left: 40px;
+  padding-right: 40px;
+}
+.ad-slot-content {
+  margin: 15px 0;
+}
+.ad-slot-inner {
+  width: 100%;
+  min-height: 280px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

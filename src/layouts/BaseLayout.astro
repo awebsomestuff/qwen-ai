@@ -24,7 +24,6 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site).href;
   <link rel="apple-touch-icon" href="/wp-content/uploads/2024/09/cropped-qwen-180x180.webp" />
   <meta name="robots" content="index, follow" />
   <meta name="google-site-verification" content="fqVPifZzIzVQVICweVlgOWCs2eZnP663vzjh0KRvzro" />
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9609544329602409" crossorigin="anonymous"></script>
 </head>
 <body>
   <header class="site-header">
@@ -47,6 +46,13 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site).href;
     </div>
   </header>
 
+  <!-- Ad Slot 1: Below header, above content -->
+  <div class="ad-slot ad-slot-header">
+    <div class="ad-slot-inner" id="ad-slot-1">
+      <!-- Se insertará el <ins> de AdSense aquí -->
+    </div>
+  </div>
+
   <main class="qwen-page-wrapper">
     <slot />
   </main>
@@ -62,27 +68,53 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site).href;
 
   <a href="#" class="back-to-top" id="backToTop" aria-label="Back to top">&#8679;</a>
 
-  <script>
+  <script is:inline>
     // Mobile menu toggle
-    const toggle = document.getElementById('mobileMenuToggle');
-    const nav = document.getElementById('mainNav');
+    var toggle = document.getElementById('mobileMenuToggle');
+    var nav = document.getElementById('mainNav');
     if (toggle && nav) {
-      toggle.addEventListener('click', () => {
+      toggle.addEventListener('click', function() {
         nav.classList.toggle('open');
         toggle.classList.toggle('open');
       });
     }
     // Back to top
-    const btn = document.getElementById('backToTop');
+    var btn = document.getElementById('backToTop');
     if (btn) {
-      window.addEventListener('scroll', () => {
+      window.addEventListener('scroll', function() {
         btn.style.display = window.scrollY > 300 ? 'flex' : 'none';
       });
-      btn.addEventListener('click', (e) => {
+      btn.addEventListener('click', function(e) {
         e.preventDefault();
         window.scrollTo({ top: 0, behavior: 'smooth' });
       });
     }
+
+    // Ad Slot 2: After first <p> in article
+    (function() {
+      var article = document.querySelector('article.qwen-container');
+      if (!article) return;
+      var firstP = article.querySelector('p');
+      if (!firstP) return;
+      var adSlot = document.createElement('div');
+      adSlot.className = 'ad-slot ad-slot-content';
+      adSlot.innerHTML = '<div class="ad-slot-inner" id="ad-slot-2"><!-- Se insertará el <ins> aquí --></div>';
+      firstP.parentNode.insertBefore(adSlot, firstP.nextSibling);
+    })();
+
+    // Deferred AdSense loading after page load
+    window.addEventListener('load', function() {
+      var s = document.createElement('script');
+      s.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9609544329602409';
+      s.crossOrigin = 'anonymous';
+      s.onload = function() {
+        var ads = document.querySelectorAll('.adsbygoogle');
+        for (var i = 0; i < ads.length; i++) {
+          try { (adsbygoogle = window.adsbygoogle || []).push({}); } catch(e) {}
+        }
+      };
+      document.head.appendChild(s);
+    });
   </script>
 </body>
 </html>
