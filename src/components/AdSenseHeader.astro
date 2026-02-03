@@ -1,0 +1,69 @@
+---
+// AdSenseHeader.astro
+// Banner de cabecera con altura fija de 300px en desktop y mobile
+// Anuncio responsive centrado dentro del contenedor
+---
+
+<div class="ad-header-container">
+  <div class="ad-header-inner">
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-9609544329602409"
+         data-ad-slot="2299948284"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+  </div>
+</div>
+
+<style>
+  /* Contenedor principal - altura FIJA 300px para evitar CLS */
+  .ad-header-container {
+    width: 100%;
+    height: 300px;
+    min-height: 300px;
+    max-height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 0;
+    background-color: #fff;
+    overflow: hidden;
+    box-sizing: border-box;
+  }
+
+  /* Contenedor interno - limita el anuncio */
+  .ad-header-inner {
+    width: 100%;
+    max-width: 100%;
+    height: 300px;
+    min-height: 300px;
+    max-height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  /* Limitar el ins de AdSense al contenedor */
+  .ad-header-inner .adsbygoogle {
+    display: block;
+    width: 100%;
+    max-height: 300px;
+    overflow: hidden;
+  }
+
+  /* Mobile: mismas dimensiones exactas (300px) */
+  @media (max-width: 767px) {
+    .ad-header-container {
+      height: 300px;
+      min-height: 300px;
+      max-height: 300px;
+    }
+
+    .ad-header-inner {
+      height: 300px;
+      min-height: 300px;
+      max-height: 300px;
+    }
+  }
+</style>

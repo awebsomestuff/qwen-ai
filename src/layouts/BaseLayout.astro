@@ -6,6 +6,7 @@ export interface Props {
 }
 
 import '../styles/global.css';
+import AdSenseHeader from '../components/AdSenseHeader.astro';
 
 const { title, seoTitle, seoDescription } = Astro.props;
 const displayTitle = seoTitle ? seoTitle.replace('%title%', title) : title;
@@ -24,6 +25,9 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site).href;
   <link rel="apple-touch-icon" href="/wp-content/uploads/2024/09/cropped-qwen-180x180.webp" />
   <meta name="robots" content="index, follow" />
   <meta name="google-site-verification" content="fqVPifZzIzVQVICweVlgOWCs2eZnP663vzjh0KRvzro" />
+  <!-- Preconnect para Google AdSense (prepara conexión mientras carga la página) -->
+  <link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin />
+  <link rel="preconnect" href="https://googleads.g.doubleclick.net" crossorigin />
 </head>
 <body>
   <header class="site-header">
@@ -47,17 +51,7 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site).href;
   </header>
 
   <!-- Ad Slot 1: Below header, above content -->
-  <div class="ad-slot ad-slot-header">
-    <div class="ad-slot-inner" id="ad-slot-1">
-      <!-- QWEN-A -->
-      <ins class="adsbygoogle"
-           style="display:block"
-           data-ad-client="ca-pub-9609544329602409"
-           data-ad-slot="2299948284"
-           data-ad-format="auto"
-           data-full-width-responsive="true"></ins>
-    </div>
-  </div>
+  <AdSenseHeader />
 
   <main class="qwen-page-wrapper">
     <slot />
@@ -95,32 +89,50 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site).href;
         window.scrollTo({ top: 0, behavior: 'smooth' });
       });
     }
+  </script>
 
-    // Ad Slot 2: After first <p> in article
-    (function() {
-      var article = document.querySelector('article.qwen-container');
-      if (!article) return;
-      var firstP = article.querySelector('p');
-      if (!firstP) return;
-      var adSlot = document.createElement('div');
-      adSlot.className = 'ad-slot ad-slot-content';
-      adSlot.innerHTML = '<div class="ad-slot-inner" id="ad-slot-2"><!-- QWEN-B --><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9609544329602409" data-ad-slot="8310388095" data-ad-format="auto" data-full-width-responsive="true"></ins></div>';
-      firstP.parentNode.insertBefore(adSlot, firstP.nextSibling);
-    })();
-
-    // Deferred AdSense loading after page load
-    window.addEventListener('load', function() {
-      var s = document.createElement('script');
-      s.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9609544329602409';
-      s.crossOrigin = 'anonymous';
-      s.onload = function() {
-        var ads = document.querySelectorAll('.adsbygoogle');
-        for (var i = 0; i < ads.length; i++) {
-          try { (adsbygoogle = window.adsbygoogle || []).push({}); } catch(e) {}
+  <!-- AdSense: Carga diferida para mejorar rendimiento -->
+  <script is:inline>
+    // Cargar AdSense después de que la página esté lista
+    function loadAdSense() {
+      // Ad Slot 2: Inyectar después del primer <p> en article ANTES de cargar AdSense
+      (function() {
+        var article = document.querySelector('article.qwen-container');
+        if (article) {
+          var firstP = article.querySelector('p');
+          if (firstP) {
+            var adSlot = document.createElement('div');
+            adSlot.className = 'ad-afterintro-container';
+            adSlot.innerHTML = '<div class="ad-afterintro-inner"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9609544329602409" data-ad-slot="8310388095" data-ad-format="auto" data-full-width-responsive="true"></ins></div>';
+            firstP.parentNode.insertBefore(adSlot, firstP.nextSibling);
+          }
         }
+      })();
+
+      // Crear y cargar el script de AdSense
+      var script = document.createElement('script');
+      script.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9609544329602409';
+      script.async = true;
+      script.crossOrigin = 'anonymous';
+      script.onload = function() {
+        // Inicializar los anuncios cuando el script esté cargado
+        // Buscar todos los bloques de anuncios y hacer push para cada uno
+        try {
+          var ads = document.querySelectorAll('.adsbygoogle');
+          for (var i = 0; i < ads.length; i++) {
+            (adsbygoogle = window.adsbygoogle || []).push({});
+          }
+        } catch (e) {}
       };
-      document.head.appendChild(s);
-    });
+      document.head.appendChild(script);
+    }
+
+    // Cargar después de que la página termine de renderizar
+    if (document.readyState === 'complete') {
+      loadAdSense();
+    } else {
+      window.addEventListener('load', loadAdSense);
+    }
   </script>
 </body>
 </html>
