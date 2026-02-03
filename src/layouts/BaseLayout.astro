@@ -95,6 +95,21 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site).href;
   <script is:inline>
     // Cargar AdSense después de que la página esté lista
     function loadAdSense() {
+      // Ad Slot 2: Inyectar después del primer <p> en article ANTES de cargar AdSense
+      (function() {
+        var article = document.querySelector('article.qwen-container');
+        if (article) {
+          var firstP = article.querySelector('p');
+          if (firstP) {
+            var adSlot = document.createElement('div');
+            adSlot.className = 'ad-afterintro-container';
+            adSlot.innerHTML = '<div class="ad-afterintro-inner"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9609544329602409" data-ad-slot="8310388095" data-ad-format="auto" data-full-width-responsive="true"></ins></div>';
+            firstP.parentNode.insertBefore(adSlot, firstP.nextSibling);
+          }
+        }
+      })();
+
+      // Crear y cargar el script de AdSense
       var script = document.createElement('script');
       script.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9609544329602409';
       script.async = true;
