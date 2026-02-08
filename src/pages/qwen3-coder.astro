@@ -20,20 +20,22 @@ const rawHtml = `
   What makes Qwen3-Coder-Next stand out isn't just raw intelligence — it's <em>how</em> that intelligence is delivered. With only 3B parameters active per token (out of 512 experts), inference speeds reach <strong>60–70 tokens per second</strong> on consumer hardware. Early testers have reported running six simultaneous inference windows at a combined 150 tokens/second using batch processing. This model isn't designed to just autocomplete your code — it's trained to <strong>autonomously debug, test, and fix</strong> real-world software. For the broader Qwen ecosystem, check the <a href="/qwen-3/">Qwen 3 family overview</a>.
 </p>
 
-<p><strong>Table of Contents</strong></p>
-<ul>
-  <li><a href="#key-specs">Key Specifications</a></li>
-  <li><a href="#architecture">Architecture: Hybrid MoE with Gated DeltaNet</a></li>
-  <li><a href="#from-assistant-to-agent">From Assistant to Agent</a></li>
-  <li><a href="#benchmarks">Benchmarks & Performance</a></li>
-  <li><a href="#available-variants">Available Variants on Hugging Face</a></li>
-  <li><a href="#run-locally">How to Run Locally</a></li>
-  <li><a href="#hardware-requirements">Hardware Requirements</a></li>
-  <li><a href="#field-tests">Real-World Field Tests</a></li>
-  <li><a href="#agentic-capabilities">Agentic Capabilities & IDE Integration</a></li>
-  <li><a href="#limitations">Limitations & Considerations</a></li>
-  <li><a href="#conclusion">Final Verdict</a></li>
-</ul>
+<div class="qwen-toc">
+  <p class="qwen-toc-label">In This Guide</p>
+  <div class="qwen-toc-grid">
+    <a href="#key-specs" class="qwen-toc-chip">Key Specs</a>
+    <a href="#architecture" class="qwen-toc-chip">Architecture</a>
+    <a href="#from-assistant-to-agent" class="qwen-toc-chip">From Assistant to Agent</a>
+    <a href="#benchmarks" class="qwen-toc-chip">Benchmarks</a>
+    <a href="#available-variants" class="qwen-toc-chip">Variants</a>
+    <a href="#run-locally" class="qwen-toc-chip qwen-toc-highlight">Run Locally</a>
+    <a href="#hardware-requirements" class="qwen-toc-chip">Hardware Reqs</a>
+    <a href="#field-tests" class="qwen-toc-chip">Field Tests</a>
+    <a href="#agentic-capabilities" class="qwen-toc-chip">Agentic &amp; IDE</a>
+    <a href="#limitations" class="qwen-toc-chip">Limitations</a>
+    <a href="#conclusion" class="qwen-toc-chip">Verdict</a>
+  </div>
+</div>
 
 <h2 id="key-specs">Key Specifications</h2>
 <div class="qwen-table-wrapper">
