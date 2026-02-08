@@ -1,8 +1,201 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-const rawHtml = "<div class=\"qwen-page-wrapper\"><style>\r\n        /* 1 – reserve space for hero content → CLS ↓ */<br />\r\n        .qwen-hero-content{min-height:280px}<br />\r\n    </style><section class=\"qwen-hero\">\r\n<div class=\"qwen-hero-content\"><center>\r\n<img src=\"/wp-content/uploads/2025/05/Qwen-AI-Alibaba-Cloud-Generative-AI.webp\" alt=\"Qwen AI Alibaba Cloud Generative AI - Logo\" width=\"150\" height=\"45\" /></center><strong>Qwen AI</strong> is Alibaba Cloud’s next-gen <em>open-source</em> and proprietary ecosystem of large language &amp; multimodal models. From the flagship <strong>Qwen 3</strong> LLM to the all-in-one <strong>Qwen 2.5-Omni</strong>, it delivers state-of-the-art reasoning, 128 K-to-1 M-token context and real-time text-image-audio-video interaction—under the permissive Apache 2.0 licence or fully managed in the cloud. Build, scale and monetise AGI-ready apps faster with Alibaba Cloud’s security, global GPU power and thriving developer tools.\r\n<div class=\"qwen-container\">\r\n<div class=\"qwen-row\" style=\"justify-content: center; margin-bottom: 10px;\">\r\n<div class=\"qwen-col\" style=\"flex-grow: 0;\"><a class=\"qwen-button pro\" href=\"/qwen-3/\"><span class=\"new-badge\">NEW</span> Qwen 3</a></div>\r\n</div>\r\n<div class=\"qwen-row\" style=\"justify-content: center;\">\r\n<div class=\"qwen-col\" style=\"margin-right: 5px;\"><a class=\"qwen-button primary\" href=\"/chat/\">Try Qwen AI Chat</a></div>\r\n<div class=\"qwen-col\" style=\"margin-left: 5px;\"><a class=\"qwen-button primary\" href=\"#qwen-suite-navigation\">Model Selection Guide</a></div>\r\n</div>\r\n</div>\r\n</div>\r\n</section><section id=\"qwen-ai-model-ecosystem-links\" class=\"qwen-section\">\r\n<div id=\"qwen-suite-navigation\" class=\"qwen-section-header\">\r\n<h2>Explore the Full Qwen AI Suite: Models &amp; Resources</h2>\r\n</div>\r\n<div class=\"qwen-container\">\r\n<div class=\"qwen-row\">\r\n<div class=\"qwen-col\"><a class=\"qwen-button primary\" href=\"/2-5/\">\r\n<span class=\"button-content\"><span class=\"button-text\">Qwen 2.5 Family Hub</span></span>\r\n</a></div>\r\n<div class=\"qwen-col\"><a class=\"qwen-button primary\" href=\"/2-5-max/\">\r\n<span class=\"button-content\"><span class=\"button-text\">Qwen2.5 Max (Proprietary)</span></span>\r\n</a></div>\r\n<div class=\"qwen-col\"><a class=\"qwen-button primary\" href=\"/2-5-coder/\">\r\n<span class=\"button-content\"><span class=\"button-text\">Qwen 2.5 Coder Guide</span></span>\r\n</a></div>\r\n</div>\r\n<div class=\"qwen-row\">\r\n<div class=\"qwen-col\"><a class=\"qwen-button primary\" href=\"/2-5-vl/\">\r\n<span class=\"button-content\"><span class=\"button-text\">Qwen2.5-VL (Vision)</span></span>\r\n</a></div>\r\n<div class=\"qwen-col\"><a class=\"qwen-button primary\" href=\"/qwq-max/\">\r\n<span class=\"button-content\"><span class=\"button-text\">QwQ Max (Reasoning)</span></span>\r\n</a></div>\r\n<div class=\"qwen-col\"><a class=\"qwen-button primary\" href=\"/voice-video-chat/\">\r\n<span class=\"button-content\"><span class=\"button-text\">Voice &amp; Video AI (Omni)</span></span>\r\n</a></div>\r\n</div>\r\n<div class=\"qwen-row\">\r\n<div class=\"qwen-col\"><a class=\"qwen-button primary\" href=\"/2-audio/\">\r\n<span class=\"button-content\"><span class=\"button-text\">Qwen Audio Insights</span></span>\r\n</a></div>\r\n<div class=\"qwen-col\"><a class=\"qwen-button primary\" href=\"/images/\">\r\n<span class=\"button-content\"><span class=\"button-text\">AI Image Generation</span></span>\r\n</a></div>\r\n<div class=\"qwen-col\"><a class=\"qwen-button primary\" href=\"/video/\">\r\n<span class=\"button-content\"><span class=\"button-text\">AI Video Solutions</span></span>\r\n</a></div>\r\n</div>\r\n<div class=\"qwen-row\">\r\n<div class=\"qwen-col\"><a class=\"qwen-button primary\" href=\"/prompts/\">\r\n<span class=\"button-content\"><span class=\"button-text\">Prompt Engineering Hub</span></span>\r\n</a></div>\r\n<div class=\"qwen-col\"><a class=\"qwen-button primary\" href=\"/web-dev/\">\r\n<span class=\"button-content\"><span class=\"button-text\">Qwen for Web Dev</span></span>\r\n</a></div>\r\n<div class=\"qwen-col\"><a class=\"qwen-button primary\" href=\"/deep-research/\">\r\n<span class=\"button-content\"><span class=\"button-text\">Qwen for Deep Research</span></span>\r\n</a></div>\r\n</div>\r\n<div class=\"qwen-row\">\r\n<div class=\"qwen-col\"><a class=\"qwen-button dark\" href=\"https://huggingface.co/Qwen\" target=\"_blank\" rel=\"noopener noreferrer\"> <span class=\"button-content\"><span class=\"button-text\">Qwen on Hugging Face</span></span>\r\n</a></div>\r\n<div class=\"qwen-col\"><a class=\"qwen-button dark\" href=\"/blog/\"> <span class=\"button-content\"><span class=\"button-text\">Our AI Insights Blog</span></span>\r\n</a></div>\r\n<div class=\"qwen-col\"><a class=\"qwen-button dark\" href=\"https://qwen-ai.com/download-models-locally/\"> <span class=\"button-content\"><span class=\"button-text\">Local Installation Guide</span></span>\r\n</a></div>\r\n</div>\r\n</div>\r\n<h3 id=\"qwen-selection-guide-text\" style=\"text-align: center; margin-bottom: 15px; margin-top: 30px;\">Quick Guide: Choosing Your Qwen AI Solution</h3>\r\n<div style=\"text-align: center; padding: 0 15px;\">\r\n<p style=\"font-size: 0.9em; font-style: italic; margin-bottom: 20px;\">The purple text (e.g., <code>Qwen 3</code>) indicates the name of the button in the sections above to select for your described need.</p><div class=\"ad-afterintro-container\"><div class=\"ad-afterintro-inner\"><ins class=\"adsbygoogle\" style=\"display:block\" data-ad-client=\"ca-pub-9609544329602409\" data-ad-slot=\"8310388095\" data-ad-format=\"auto\" data-full-width-responsive=\"true\"></ins></div></div>\r\n<p style=\"text-align: left; margin-bottom: 8px; margin-top: 0;\">To choose your Qwen AI solution:</p>\r\n\r\n<ul style=\"text-align: left; list-style-position: inside; padding-left: 20px; margin-bottom: 1.5em; line-height: 1.6;\">\r\n \t<li><strong>Use models online (no download):</strong> <code>Try Qwen AI Chat</code> (featured above).</li>\r\n \t<li><strong>Top open-source LLM (reasoning, general tasks):</strong> <code>Qwen 3</code> (featured above).</li>\r\n \t<li><strong>Previous gen. models &amp; diverse options:</strong> Explore <code>Qwen 2.5 Family Hub</code> or proprietary <code>Qwen2.5 Max</code>. (Note: <code>Qwen 3</code> is our latest &amp; most powerful open-source series).</li>\r\n \t<li><strong>Specialized for code / deep reasoning:</strong> <code>Qwen 2.5 Coder</code> / <code>QwQ Max</code>.</li>\r\n \t<li><strong>Multimodal (images, audio, video):</strong> <code>Qwen2.5-VL</code> (vision), <code>Voice &amp; Video AI (Omni)</code>, <code>Qwen Audio Insights</code>, <code>AI Image/Video Solutions</code>.</li>\r\n</ul>\r\n<p style=\"text-align: left; margin-bottom: 8px; margin-top: 1em;\">Developers and researchers:</p>\r\n\r\n<ul style=\"text-align: left; list-style-position: inside; padding-left: 20px; margin-bottom: 1.5em; line-height: 1.6;\">\r\n \t<li><strong>Application guides:</strong> <code>Qwen for Web Dev</code>, <code>Qwen for Deep Research</code>.</li>\r\n \t<li><strong>Master prompts:</strong> <code>Prompt Engineering Hub</code>.</li>\r\n \t<li><strong>Learn to get models locally:</strong> <code>Local Installation Guide</code>.</li>\r\n \t<li><strong>Latest news:</strong> <code>Our AI Insights Blog</code>.</li>\r\n</ul>\r\n<p style=\"text-align: center; margin-top: 1.5em; line-height: 1.6;\">Remember, Qwen empowers you to innovate locally with open-source models or leverage the peak performance and scalability of Alibaba Cloud.</p>\r\n\r\n</div>\r\n</section><img class=\"aligncenter\" src=\"/wp-content/uploads/2025/05/The-Free-AI-Powerhouse-Making-Premium-Services-Sweat-1.webp\" alt=\"The Free AI Powerhouse Making Premium Services Sweat - Qwen AI Features\" width=\"512\" height=\"288\" loading=\"lazy\" />\r\n\r\n<section class=\"qwen-section\">\r\n<div class=\"qwen-section-header\">\r\n<h2>Key Innovations Driving Qwen AI</h2>\r\n</div>\r\n<div class=\"qwen-feature-highlight\">\r\n<div class=\"feature-highlight-header\">\r\n<h3>Hybrid Reasoning Engine &amp; Switchable “Thinking Mode” (Qwen 3)</h3>\r\n</div>\r\n<div class=\"feature-highlight-body\">\r\n\r\nThe <strong>Hybrid Reasoning Engine</strong> in Qwen 3 lets you toggle between lightning-fast responses and step-by-step chain-of-thought reasoning. Control depth, latency and cost with a single flag—perfect for both realtime chat and heavy STEM problem-solving.\r\n\r\n</div>\r\n</div>\r\n<div class=\"qwen-feature-highlight\">\r\n<div class=\"feature-highlight-header\">\r\n<h3>End-to-End Multimodality via “Thinker–Talker” (Qwen 2.5-Omni)</h3>\r\n</div>\r\n<div class=\"feature-highlight-body\">\r\n\r\nPowered by the novel <strong>Thinker–Talker</strong> stack, Qwen 2.5-Omni ingests text, images, audio and video—and streams back rich text <em>or</em> natural speech. Build voice or vision apps without juggling separate models.\r\n\r\n</div>\r\n</div>\r\n<div class=\"qwen-feature-highlight\">\r\n<div class=\"feature-highlight-header\">\r\n<h3>Extreme Scale &amp; 1 M-Token Context (MoE, 36 T+ Tokens)</h3>\r\n</div>\r\n<div class=\"feature-highlight-body\">\r\n\r\nQwen’s sparse <strong>Mixture-of-Experts</strong> architecture (e.g., Qwen3-235B) delivers GPT-4-class quality while keeping inference lean. Context windows stretch to <strong>128 K – 1 M tokens</strong>, trained on an unrivalled 36 trillion-token corpus.\r\n\r\n</div>\r\n</div>\r\n</section><section class=\"qwen-section\">\r\n<div class=\"qwen-section-header\">\r\n<h2>Qwen AI: Powering Industries Worldwide</h2>\r\n</div>\r\n<p style=\"text-align: center;\">Trusted by <strong>290 000+ customers</strong>, Qwen drives measurable ROI across e-commerce, finance, healthcare, automotive and more. Dingdong’s AI concierge, NIO’s smart cockpit and Microcraft’s medical assistant all run on Qwen’s unified LLM stack.</p>\r\n\r\n<h4>AstraZeneca: 3× Faster Safety Reporting</h4>\r\nBy automating adverse-event analysis with Qwen, AstraZeneca slashed document turnaround times by <strong>300 %</strong> while sustaining <strong>95 %</strong> accuracy—freeing medical teams for higher-value work.\r\n<blockquote>“Qwen turbo-charged our pharmacovigilance workflow—an industry first.”\r\n<cite>— Xin Zhong, IT Head, AstraZeneca China</cite></blockquote>\r\n</section>\r\n<div class=\"qwen-cta-section\">\r\n<h2>Ready to Build with Qwen AI?</h2>\r\nLeverage open-source licenses or fully managed APIs to launch AGI-grade apps in days. Join our global developer community, explore detailed guides and tap Alibaba Cloud’s GPU backbone.\r\n<p class=\"cta-highlight\">Deep-dive tutorials and benchmarks updated July 2 2025—stay ahead with Qwen AI.</p>\r\n\r\n</div>\r\n</div>";
+const rawHtml = `<div class="qwen-page-wrapper"><style>
+        /* 1 – reserve space for hero content → CLS ↓ */
+        .qwen-hero-content{min-height:280px}
+    </style><section class="qwen-hero">
+<div class="qwen-hero-content"><center>
+<img src="/wp-content/uploads/2025/05/Qwen-AI-Alibaba-Cloud-Generative-AI.webp" alt="Qwen AI Alibaba Cloud Generative AI - Logo" width="150" height="45" /></center><strong>Qwen AI</strong> is Alibaba Cloud's next-gen <em>open-source</em> and proprietary ecosystem of large language &amp; multimodal models. From the flagship <strong>Qwen 3</strong> family to the brand-new <strong>Qwen3-Coder-Next</strong> coding agent, it delivers state-of-the-art reasoning, 256K-to-1M-token context and real-time text-image-audio-video interaction — under the permissive Apache 2.0 licence or fully managed in the cloud.
+<div class="qwen-container">
+<div class="qwen-row" style="justify-content: center; margin-bottom: 10px;">
+<div class="qwen-col" style="flex-grow: 0;"><a class="qwen-button pro" href="/qwen-3/"><span class="new-badge">NEW</span> Qwen 3</a></div>
+</div>
+<div class="qwen-row" style="justify-content: center;">
+<div class="qwen-col" style="margin-right: 5px;"><a class="qwen-button primary" href="/chat/">Try Qwen AI Chat</a></div>
+<div class="qwen-col" style="margin-left: 5px;"><a class="qwen-button primary" href="#flagship-models">Explore Models ↓</a></div>
+</div>
+</div>
+</div>
+</section>
+
+<section id="flagship-models" class="qwen-section">
+<div class="qwen-section-header">
+<h2>Flagship Models — Latest &amp; Most Powerful</h2>
+</div>
+<div class="qwen-container">
+<div class="qwen-row">
+<div class="qwen-col"><a class="qwen-button pro" href="/qwen-3/">
+<span class="button-content"><span class="button-text">Qwen 3 Family</span></span>
+<span class="new-badge">FLAGSHIP</span></a></div>
+<div class="qwen-col"><a class="qwen-button pro" href="/qwen3-coder/">
+<span class="button-content"><span class="button-text">Qwen3-Coder-Next (80B)</span></span>
+<span class="new-badge">NEW</span></a></div>
+</div>
+<div class="qwen-row">
+<div class="qwen-col"><a class="qwen-button primary" href="/qwq-max/">
+<span class="button-content"><span class="button-text">QwQ Max (Reasoning)</span></span>
+</a></div>
+<div class="qwen-col"><a class="qwen-button primary" href="/chat/">
+<span class="button-content"><span class="button-text">Try Qwen AI Chat</span></span>
+</a></div>
+</div>
+</div>
+</section>
+
+<div class="ad-afterintro-container"><div class="ad-afterintro-inner"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9609544329602409" data-ad-slot="8310388095" data-ad-format="auto" data-full-width-responsive="true"></ins></div></div>
+
+<section class="qwen-section">
+<div class="qwen-section-header">
+<h2>Specialized &amp; Multimodal Models</h2>
+</div>
+<div class="qwen-container">
+<div class="qwen-row">
+<div class="qwen-col"><a class="qwen-button primary" href="/2-5-vl/">
+<span class="button-content"><span class="button-text">Qwen 2.5-VL (Vision)</span></span>
+</a></div>
+<div class="qwen-col"><a class="qwen-button primary" href="/voice-video-chat/">
+<span class="button-content"><span class="button-text">Voice &amp; Video AI (Omni)</span></span>
+</a></div>
+</div>
+<div class="qwen-row">
+<div class="qwen-col"><a class="qwen-button primary" href="/images/">
+<span class="button-content"><span class="button-text">AI Image Generation</span></span>
+</a></div>
+<div class="qwen-col"><a class="qwen-button primary" href="/video/">
+<span class="button-content"><span class="button-text">AI Video Solutions</span></span>
+</a></div>
+<div class="qwen-col"><a class="qwen-button primary" href="/2-audio/">
+<span class="button-content"><span class="button-text">Qwen Audio</span></span>
+</a></div>
+</div>
+</div>
+</section>
+
+<section class="qwen-section">
+<div class="qwen-section-header">
+<h2>Developer Resources &amp; Guides</h2>
+</div>
+<div class="qwen-container">
+<div class="qwen-row">
+<div class="qwen-col"><a class="qwen-button primary" href="/download-models-locally/">
+<span class="button-content"><span class="button-text">Run Qwen Locally</span></span>
+</a></div>
+<div class="qwen-col"><a class="qwen-button primary" href="/prompts/">
+<span class="button-content"><span class="button-text">Prompt Engineering Hub</span></span>
+</a></div>
+</div>
+<div class="qwen-row">
+<div class="qwen-col"><a class="qwen-button primary" href="/web-dev/">
+<span class="button-content"><span class="button-text">Qwen for Web Dev</span></span>
+</a></div>
+<div class="qwen-col"><a class="qwen-button primary" href="/deep-research/">
+<span class="button-content"><span class="button-text">Qwen for Deep Research</span></span>
+</a></div>
+<div class="qwen-col"><a class="qwen-button dark" href="https://huggingface.co/Qwen" target="_blank" rel="noopener noreferrer">
+<span class="button-content"><span class="button-text">Qwen on Hugging Face</span></span>
+</a></div>
+</div>
+</div>
+</section>
+
+<section class="qwen-section">
+<div class="qwen-section-header">
+<h2>Previous Generation — Qwen 2.5</h2>
+</div>
+<p style="text-align:center;margin-bottom:1em;color:#6b7280;">The Qwen 2.5 series (Sept 2024) remains widely deployed. <a href="/qwen-3/">Qwen 3</a> is the latest and most capable family.</p>
+<div class="qwen-container">
+<div class="qwen-row">
+<div class="qwen-col"><a class="qwen-button dark" href="/qwen-2-5/">
+<span class="button-content"><span class="button-text">Qwen 2.5 Family Hub</span></span>
+</a></div>
+<div class="qwen-col"><a class="qwen-button dark" href="/2-5-max/">
+<span class="button-content"><span class="button-text">Qwen 2.5 Max</span></span>
+</a></div>
+<div class="qwen-col"><a class="qwen-button dark" href="/qwen-2-5-coder/">
+<span class="button-content"><span class="button-text">Qwen 2.5 Coder</span></span>
+</a></div>
+</div>
+</div>
+</section>
+
+<img class="aligncenter" src="/wp-content/uploads/2025/05/The-Free-AI-Powerhouse-Making-Premium-Services-Sweat-1.webp" alt="Qwen AI - The Free AI Powerhouse Making Premium Services Sweat" width="512" height="288" loading="lazy" />
+
+<section class="qwen-section">
+<div class="qwen-section-header">
+<h2>What Is Qwen AI?</h2>
+</div>
+<p>
+Qwen (pronounced "chwen", from the Chinese 通义千问 / Tōngyì Qiānwèn) is a family of large language models and multimodal AI systems developed by <strong>Alibaba Cloud</strong>. Since its initial release in 2023, the project has grown into one of the largest open-source AI ecosystems in the world — with <strong>more than 100 open-weight models</strong> published on Hugging Face and <strong>over 40 million downloads</strong> to date.
+</p>
+<p>
+The ecosystem spans multiple model families. <strong><a href="/qwen-3/">Qwen 3</a></strong> (April 2025) is the current flagship generation, featuring both dense models (0.6B to 32B parameters) and sparse Mixture-of-Experts models up to 235B parameters with 22B active — supporting 119 languages and a hybrid "thinking mode" that toggles between fast inference and deep chain-of-thought reasoning. <strong><a href="/qwen3-coder/">Qwen3-Coder-Next</a></strong> (February 2026) is the newest addition: an 80B MoE coding agent with only 3B active parameters, 256K context, and autonomous debugging capabilities that rival frontier proprietary models.
+</p>
+<p>
+Beyond text, Qwen offers specialized models for <a href="/2-5-vl/">vision</a> (Qwen-VL), <a href="/2-audio/">audio</a> (Qwen-Audio, ASR, TTS), <a href="/images/">image generation</a>, <a href="/video/">video generation</a>, and the all-in-one <a href="/voice-video-chat/">Qwen 2.5-Omni</a> that processes text, images, audio and video simultaneously with real-time speech output. For reasoning-heavy tasks, <a href="/qwq-max/">QwQ</a> delivers specialized mathematical and analytical performance.
+</p>
+<p>
+Most Qwen models are released under the <strong>Apache 2.0 license</strong>, allowing free commercial use, modification and redistribution. You can run them locally with tools like <a href="/download-models-locally/">Ollama, llama.cpp, or LM Studio</a>, deploy them via Alibaba Cloud's DashScope API, or use them through third-party providers. The project is backed by Alibaba Cloud's infrastructure, which serves <strong>290,000+ enterprise customers</strong> including AstraZeneca, NIO, and Dingdong.
+</p>
+</section>
+
+<section class="qwen-section">
+<div class="qwen-section-header">
+<h2>Key Innovations Driving Qwen AI</h2>
+</div>
+<div class="qwen-feature-highlight">
+<div class="feature-highlight-header">
+<h3>Hybrid Reasoning Engine &amp; Switchable Thinking Mode (Qwen 3)</h3>
+</div>
+<div class="feature-highlight-body">
+The <strong>Hybrid Reasoning Engine</strong> in <a href="/qwen-3/">Qwen 3</a> lets you toggle between lightning-fast responses and step-by-step chain-of-thought reasoning. Control depth, latency and cost with a single flag — perfect for both realtime chat and heavy STEM problem-solving. All Qwen 3 models support this natively, from the 0.6B edge model to the 235B flagship.
+</div>
+</div>
+<div class="qwen-feature-highlight">
+<div class="feature-highlight-header">
+<h3>Autonomous Coding Agents (Qwen3-Coder-Next)</h3>
+</div>
+<div class="feature-highlight-body">
+<a href="/qwen3-coder/">Qwen3-Coder-Next</a> shifts from code <em>assistance</em> to code <em>agency</em>. Trained across 800,000+ verifiable tasks, it autonomously writes, executes, debugs and fixes code — achieving 70.5% on SWE-Bench with only 3B active parameters. Run it locally on a 64 GB system at 60+ tokens per second.
+</div>
+</div>
+<div class="qwen-feature-highlight">
+<div class="feature-highlight-header">
+<h3>End-to-End Multimodality via Thinker-Talker (Qwen 2.5-Omni)</h3>
+</div>
+<div class="feature-highlight-body">
+Powered by the novel <strong>Thinker-Talker</strong> stack, <a href="/voice-video-chat/">Qwen 2.5-Omni</a> ingests text, images, audio and video — and streams back rich text <em>or</em> natural speech. Build voice or vision apps without juggling separate models.
+</div>
+</div>
+<div class="qwen-feature-highlight">
+<div class="feature-highlight-header">
+<h3>Extreme Scale &amp; 1M-Token Context (MoE Architecture)</h3>
+</div>
+<div class="feature-highlight-body">
+Qwen's sparse <strong>Mixture-of-Experts</strong> architecture delivers frontier-class quality while keeping inference lean. Context windows stretch to <strong>256K–1M tokens</strong> natively, trained on an unrivalled 36 trillion-token corpus spanning 119 languages.
+</div>
+</div>
+</section>
+
+<section class="qwen-section">
+<div class="qwen-section-header">
+<h2>Qwen AI: Powering Industries Worldwide</h2>
+</div>
+<p style="text-align: center;">Trusted by <strong>290,000+ customers</strong>, Qwen drives measurable ROI across e-commerce, finance, healthcare, automotive and more. Dingdong's AI concierge, NIO's smart cockpit and Microcraft's medical assistant all run on Qwen's unified LLM stack.</p>
+
+<h4>AstraZeneca: 3x Faster Safety Reporting</h4>
+By automating adverse-event analysis with Qwen, AstraZeneca slashed document turnaround times by <strong>300%</strong> while sustaining <strong>95%</strong> accuracy — freeing medical teams for higher-value work.
+<blockquote>"Qwen turbo-charged our pharmacovigilance workflow — an industry first."
+<cite>— Xin Zhong, IT Head, AstraZeneca China</cite></blockquote>
+</section>
+
+<div class="qwen-cta-section">
+<h2>Ready to Build with Qwen AI?</h2>
+Leverage open-source licenses or fully managed APIs to launch production-grade AI apps in days. Explore our detailed model guides, run locally with Ollama or llama.cpp, or deploy on Alibaba Cloud's GPU backbone.
+<p class="cta-highlight">Guides and benchmarks updated February 2026 — stay ahead with Qwen AI.</p>
+</div>
+</div>`;
 ---
-<BaseLayout title="Qwen AI: Alibaba's Generative AI Ecosystem" seoTitle="Qwen AI: Explore &amp; Use Alibaba’s Open Source Multimodal LLMs" seoDescription="Explore Qwen AI, Alibaba Cloud's open-source generative AI ecosystem. Access Qwen 3, multimodal LLMs, code generation, image and video AI tools — all free under Apache 2.0.">
+<BaseLayout title="Qwen AI: Alibaba's Generative AI Ecosystem" seoTitle="Qwen AI: Explore &amp; Use Alibaba's Open Source Multimodal LLMs" seoDescription="Explore Qwen AI, Alibaba Cloud's open-source generative AI ecosystem. Access Qwen 3, multimodal LLMs, code generation, image and video AI tools — all free under Apache 2.0.">
   <article class="qwen-container">
     <h1>Qwen AI: Alibaba's Generative AI Ecosystem</h1>
     <Fragment set:html={rawHtml} />

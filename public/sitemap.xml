@@ -1,20 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://qwen-ai.com/2-5-3b/</loc>
-    <lastmod>2026-01-29</lastmod>
+    <loc>https://qwen-ai.com/qwen-2-5/</loc>
+    <lastmod>2026-02-08</lastmod>
   </url>
   <url>
-    <loc>https://qwen-ai.com/2-5-7b/</loc>
-    <lastmod>2026-01-29</lastmod>
-  </url>
-  <url>
-    <loc>https://qwen-ai.com/2-5-14b/</loc>
-    <lastmod>2026-01-29</lastmod>
-  </url>
-  <url>
-    <loc>https://qwen-ai.com/2-5-32b/</loc>
-    <lastmod>2026-01-29</lastmod>
+    <loc>https://qwen-ai.com/qwen-2-5-coder/</loc>
+    <lastmod>2026-02-08</lastmod>
   </url>
   <url>
     <loc>https://qwen-ai.com/2-5-72b/</loc>
@@ -22,14 +14,6 @@
   </url>
   <url>
     <loc>https://qwen-ai.com/2-5-0-5b/</loc>
-    <lastmod>2026-01-29</lastmod>
-  </url>
-  <url>
-    <loc>https://qwen-ai.com/2-5-coder-7b/</loc>
-    <lastmod>2026-01-29</lastmod>
-  </url>
-  <url>
-    <loc>https://qwen-ai.com/2-5-coder-1-5b/</loc>
     <lastmod>2026-01-29</lastmod>
   </url>
   <url>
@@ -45,15 +29,7 @@
     <lastmod>2026-01-29</lastmod>
   </url>
   <url>
-    <loc>https://qwen-ai.com/2-5-coder/</loc>
-    <lastmod>2026-01-29</lastmod>
-  </url>
-  <url>
     <loc>https://qwen-ai.com/2-math/</loc>
-    <lastmod>2026-01-29</lastmod>
-  </url>
-  <url>
-    <loc>https://qwen-ai.com/2-5/</loc>
     <lastmod>2026-01-29</lastmod>
   </url>
   <url>
@@ -77,10 +53,6 @@
     <lastmod>2026-01-29</lastmod>
   </url>
   <url>
-    <loc>https://qwen-ai.com/2-audio-7b/</loc>
-    <lastmod>2026-01-29</lastmod>
-  </url>
-  <url>
     <loc>https://qwen-ai.com/2-audio/</loc>
     <lastmod>2026-01-29</lastmod>
   </url>
@@ -98,10 +70,6 @@
   </url>
   <url>
     <loc>https://qwen-ai.com/2-5-coder-14b/</loc>
-    <lastmod>2026-01-29</lastmod>
-  </url>
-  <url>
-    <loc>https://qwen-ai.com/qwq-32b-preview/</loc>
     <lastmod>2026-01-29</lastmod>
   </url>
   <url>
@@ -147,6 +115,10 @@
   <url>
     <loc>https://qwen-ai.com/qwen-3/</loc>
     <lastmod>2026-01-29</lastmod>
+  </url>
+  <url>
+    <loc>https://qwen-ai.com/qwen3-coder/</loc>
+    <lastmod>2026-02-08</lastmod>
   </url>
   <url>
     <loc>https://qwen-ai.com/images/</loc>

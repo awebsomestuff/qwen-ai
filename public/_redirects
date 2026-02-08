@@ -1,0 +1,21 @@
+# Qwen AI — Cloudflare Pages Redirects
+# Format: /old-path/ /new-path/ STATUS_CODE
+# Docs: https://developers.cloudflare.com/pages/configuration/redirects/
+
+# ─── Hub page renames ───────────────────────────────────
+/2-5/         /qwen-2-5/         301
+/2-5-coder/   /qwen-2-5-coder/   301
+
+# ─── Qwen 2.5 size variants → hub ──────────────────────
+/2-5-3b/      /qwen-2-5/         301
+/2-5-7b/      /qwen-2-5/         301
+/2-5-14b/     /qwen-2-5/         301
+/2-5-32b/     /qwen-2-5/         301
+
+# ─── Qwen 2.5 Coder size variants → hub ────────────────
+/2-5-coder-1-5b/  /qwen-2-5-coder/  301
+/2-5-coder-7b/    /qwen-2-5-coder/  301
+
+# ─── Other variant consolidations ──────────────────────
+/2-audio-7b/       /2-audio/     301
+/qwq-32b-preview/  /qwq-32b/     301
