@@ -408,6 +408,13 @@ hr, .qwen-section-divider {
   color:var(--qwen-text-light);
   box-shadow:var(--qwen-shadow-primary-md);
 }
+.qwen-button.primary:has(.new-badge){
+  overflow:visible;
+  z-index:5;
+}
+.qwen-button.primary:has(.new-badge)::before{
+  clip-path:inset(0 round var(--qwen-border-radius-lg));
+}
 .qwen-button.primary:hover{
   filter:brightness(1.1);
   box-shadow:var(--qwen-shadow-primary-lg);
