@@ -31,6 +31,9 @@ const rawHtml = `<div class="qwen-page-wrapper"><style>
 <span class="new-badge">NEW</span></a></div>
 </div>
 <div class="qwen-row">
+<div class="qwen-col"><a class="qwen-button pro" href="/qwen-3-max/">
+<span class="button-content"><span class="button-text">Qwen3-Max-Thinking (1T+)</span></span>
+<span class="new-badge">NEW</span></a></div>
 <div class="qwen-col"><a class="qwen-button primary" href="/qwq-max/">
 <span class="button-content"><span class="button-text">QwQ Max (Reasoning)</span></span>
 </a></div>
@@ -66,6 +69,14 @@ const rawHtml = `<div class="qwen-page-wrapper"><style>
 <div class="qwen-col"><a class="qwen-button primary" href="/2-audio/">
 <span class="button-content"><span class="button-text">Qwen Audio</span></span>
 </a></div>
+</div>
+<div class="qwen-row">
+<div class="qwen-col"><a class="qwen-button primary" href="/qwen-3-asr/">
+<span class="button-content"><span class="button-text">Qwen3-ASR (Speech Recognition)</span></span>
+<span class="new-badge">NEW</span></a></div>
+<div class="qwen-col"><a class="qwen-button primary" href="/qwen-3-tts/">
+<span class="button-content"><span class="button-text">Qwen3-TTS (Text-to-Speech)</span></span>
+<span class="new-badge">NEW</span></a></div>
 </div>
 </div>
 </section>
@@ -130,7 +141,7 @@ Qwen (pronounced "chwen", from the Chinese 通义千问 / Tōngyì Qiānwèn) is
 The ecosystem spans multiple model families. <strong><a href="/qwen-3/">Qwen 3</a></strong> (April 2025) is the current flagship generation, featuring both dense models (0.6B to 32B parameters) and sparse Mixture-of-Experts models up to 235B parameters with 22B active — supporting 119 languages and a hybrid "thinking mode" that toggles between fast inference and deep chain-of-thought reasoning. <strong><a href="/qwen3-coder/">Qwen3-Coder-Next</a></strong> (February 2026) is the newest addition: an 80B MoE coding agent with only 3B active parameters, 256K context, and autonomous debugging capabilities that rival frontier proprietary models.
 </p>
 <p>
-Beyond text, Qwen offers specialized models for <a href="/2-5-vl/">vision</a> (Qwen-VL), <a href="/2-audio/">audio</a> (Qwen-Audio, ASR, TTS), <a href="/images/">image generation</a>, <a href="/video/">video generation</a>, and the all-in-one <a href="/voice-video-chat/">Qwen 2.5-Omni</a> that processes text, images, audio and video simultaneously with real-time speech output. For reasoning-heavy tasks, <a href="/qwq-max/">QwQ</a> delivers specialized mathematical and analytical performance.
+Beyond text, Qwen offers specialized models for <a href="/2-5-vl/">vision</a> (Qwen-VL), <a href="/2-audio/">audio</a> (Qwen-Audio, ASR, TTS), <a href="/images/">image generation</a>, <a href="/video/">video generation</a>, and the all-in-one <a href="/voice-video-chat/">Qwen 2.5-Omni</a> that processes text, images, audio and video simultaneously with real-time speech output. The closed-source <a href="/qwen-3-max/">Qwen3-Max-Thinking</a> (1T+ parameters) pushes further with test-time scaling, scoring perfect 100% on AIME 2025. For reasoning-heavy tasks, <a href="/qwq-max/">QwQ</a> delivers specialized mathematical and analytical performance.
 </p>
 <p>
 Most Qwen models are released under the <strong>Apache 2.0 license</strong>, allowing free commercial use, modification and redistribution. You can run them locally with tools like <a href="/download-models-locally/">Ollama, llama.cpp, or LM Studio</a>, deploy them via Alibaba Cloud's DashScope API, or use them through third-party providers. The project is backed by Alibaba Cloud's infrastructure, which serves <strong>290,000+ enterprise customers</strong> including AstraZeneca, NIO, and Dingdong.

@@ -16,6 +16,24 @@
 /2-5-coder-1-5b/  /qwen-2-5-coder/  301
 /2-5-coder-7b/    /qwen-2-5-coder/  301
 
+# ─── Qwen 2.5 Coder size variants → hub (batch 2) ─────
+/2-5-coder-14b/   /qwen-2-5-coder/  301
+/2-5-coder-32b/   /qwen-2-5-coder/  301
+
+# ─── Qwen 2.5 remaining size variants → hub ──────────
+/2-5-0-5b/        /qwen-2-5/         301
+/2-5-72b/         /qwen-2-5/         301
+
+# ─── Qwen 2 VL size variants → hub ───────────────────
+/2-vl-2b/         /2-5-vl/           301
+/2-vl-7b/         /2-5-vl/           301
+/2-vl-72b/        /2-5-vl/           301
+
+# ─── Qwen 2 Math size variants → hub ─────────────────
+/2-math-1-5b/     /2-math/           301
+/2-math-7b/       /2-math/           301
+/2-math-72b/      /2-math/           301
+
 # ─── Other variant consolidations ──────────────────────
 /2-audio-7b/       /2-audio/     301
 /qwq-32b-preview/  /qwq-32b/     301

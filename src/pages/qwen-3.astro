@@ -1,10 +1,560 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-const rawHtml = "<p>\r\n  <strong>Qwen 3</strong> — released by <a href=\"https://www.alibabacloud.com/\" target=\"_blank\" rel=\"noopener noreferrer\">Alibaba Cloud</a> on 28 April 2025 — redefines what an <em>open-source</em> large-language model can do.  From a pocket-friendly <strong>0.6 B-parameter</strong> model to the flagship <strong>235 B-parameter Mixture-of-Experts</strong>, every variant ships under the permissive\r\n  <a href=\"https://www.apache.org/licenses/LICENSE-2.0\" target=\"_blank\" rel=\"noopener noreferrer\">Apache 2.0 license</a>.  Trained on a colossal <strong>36 trillion-token</strong> corpus and fluent in <strong>119 languages</strong>, Qwen 3 competes head-to-head with GPT-4-class systems — yet remains fully transparent and free to fine-tune.  Looking for the bigger picture?  Explore the complete ecosystem on the <a href=\"/\">Qwen AI homepage</a>.\r\n</p><div class=\"ad-afterintro-container\"><div class=\"ad-afterintro-inner\"><ins class=\"adsbygoogle\" style=\"display:block\" data-ad-client=\"ca-pub-9609544329602409\" data-ad-slot=\"8310388095\" data-ad-format=\"auto\" data-full-width-responsive=\"true\"></ins></div></div>\r\n\r\n<div class=\"qwen-container\" style=\"text-align:center;margin-bottom:30px;\">\r\n  <div class=\"qwen-row\" style=\"justify-content:center;\">\r\n    <div class=\"qwen-col\">\r\n      <a class=\"qwen-button pro\" href=\"https://chat.qwen.ai/\" target=\"_blank\" rel=\"nofollow noopener noreferrer\">\r\n        <span class=\"button-content\"><span class=\"button-text\">Test-drive Qwen 3 now</span></span>\r\n      </a>\r\n    </div>\r\n  </div>\r\n</div>\r\n\r\n\r\n\r\n<p>\r\n  Stand-out upgrades include a dual-mode <strong>Hybrid Reasoning Engine</strong>, sparsely-activated MoE layers for maximum FLOPS-per-dollar, and monstrous context windows — <strong>32 K</strong> native and up to <strong>128 K</strong> with YaRN.  Below you’ll find deep-dive specs, benchmark results, and a step-by-step local install using <a href=\"https://ollama.com\" target=\"_blank\" rel=\"nofollow noopener noreferrer\">Ollama</a>. Prefer the hosted route?  Fire up <a href=\"/chat/\">Qwen AI Chat</a> and start exploring.\r\n</p>\r\n\r\n<center>\r\n  <img src=\"/wp-content/uploads/2025/04/qwen-3.webp\"\r\n       alt=\"Alibaba Cloud Qwen 3 model family overview\"\r\n       width=\"520\" height=\"272\" class=\"aligncenter size-full\"/>\r\n</center>\r\n\r\n<p><strong>Table of Contents</strong></p>\r\n<ul>\r\n  <li><a href=\"#qwen3-family-overview\">Qwen 3 Model Line-up</a></li>\r\n  <li><a href=\"#getting-started-qwen3\">Deployment Options</a></li>\r\n  <li><a href=\"#run-qwen3-ollama\">Local Install with Ollama</a></li>\r\n  <li><a href=\"#hardware-requirements-qwen3\">Hardware Guide</a></li>\r\n  <li><a href=\"#technical-architecture-innovations\">Architectural Highlights</a></li>\r\n  <li><a href=\"#hybrid-reasoning-engine\">Inside the Hybrid Reasoning Engine</a></li>\r\n  <li><a href=\"#training-methodology-qwen3\">Training & Alignment</a></li>\r\n  <li><a href=\"#context-length-mcp\">Context & Tool Calling (MCP)</a></li>\r\n  <li><a href=\"#qwen3-performance-benchmarks\">Benchmarks & Comparisons</a></li>\r\n  <li><a href=\"#use-cases-qwen3\">Prime Use Cases</a></li>\r\n  <li><a href=\"#conclusion-qwen3\">Next Steps</a></li>\r\n</ul>\r\n\r\n<h2 id=\"qwen3-family-overview\">Qwen 3 Model Line-up: Dense and MoE</h2>\r\n<p>\r\n  Choose from lean dense models for edge devices to heavyweight MoE titans for research labs.  All share identical tokenizer and instruction format, so you can swap models without rewriting code.\r\n</p>\r\n\r\n<h3>Dense Models (0.6 B → 32 B)</h3>\r\n<p>\r\n  Perfect for chatbots, real-time RAG, and multi-lingual assistants.  The 8 B variant runs in &lt;10 GB VRAM with GGUF quantization, yet scores &gt;80 on MT-Bench.\r\n</p>\r\n\r\n<h3>Mixture-of-Experts Variants</h3>\r\n<ul>\r\n  <li><strong>Qwen3-30B-A3B</strong> — 30.5 B total, ≈3.3 B active.  One high-end RTX 4090 handles it in real time.</li>\r\n  <li><strong>Qwen3-235B-A22B</strong> — 235 B total, 22 B active (8 of 128 experts/token).  Hits GPT-4-level reasoning while halving inference cost versus a monolithic dense model.</li>\r\n</ul>\r\n\r\n<h3>Specification Matrix</h3>\r\n<div class=\"qwen-table-container\">\r\n  <table>\r\n    <thead>\r\n      <tr>\r\n        <th>Model</th><th>Type</th><th>Total Params</th><th>Active Params</th>\r\n        <th>Native Ctx</th><th>YaRN Ctx</th>\r\n      </tr>\r\n    </thead>\r\n    <tbody>\r\n      <tr><td>Qwen3-0.6B</td><td>Dense</td><td>0.6 B</td><td>—</td><td>32 K</td><td>—</td></tr>\r\n      <tr><td>Qwen3-1.7B</td><td>Dense</td><td>1.7 B</td><td>—</td><td>32 K</td><td>—</td></tr>\r\n      <tr><td>Qwen3-4B</td><td>Dense</td><td>4 B</td><td>—</td><td>32 K</td><td>128 K</td></tr>\r\n      <tr><td>Qwen3-8B</td><td>Dense</td><td>8.2 B</td><td>—</td><td>32 K</td><td>128 K</td></tr>\r\n      <tr><td>Qwen3-14B</td><td>Dense</td><td>14 B</td><td>—</td><td>32 K</td><td>128 K</td></tr>\r\n      <tr><td>Qwen3-32B</td><td>Dense</td><td>32.8 B</td><td>—</td><td>32 K</td><td>128 K</td></tr>\r\n      <tr><td>Qwen3-30B-A3B</td><td>MoE</td><td>30.5 B</td><td>≈3.3 B</td><td>32 K</td><td>128 K</td></tr>\r\n      <tr><td>Qwen3-235B-A22B</td><td>MoE</td><td>235 B</td><td>≈22 B</td><td>32 K</td><td>128 K</td></tr>\r\n    </tbody>\r\n  </table>\r\n  <p style=\"font-size:0.9em;text-align:center;margin-top:5px;\">\r\n    <em>Official specs — April 2025 launch.</em>\r\n  </p>\r\n</div>\r\n\r\n<h2 id=\"getting-started-qwen3\">Getting Started with Qwen 3</h2>\r\n<p>\r\n  <strong>Cloud:</strong> Hit Qwen endpoints on Alibaba Cloud Model Studio / DashScope with OpenAI-compatible calls.<br/>\r\n  <strong>Local:</strong> Download weights from <a href=\"https://huggingface.co/Qwen\" target=\"_blank\" rel=\"noopener noreferrer\">Hugging Face</a>, <a href=\"https://www.modelscope.cn/models?name=qwen\" target=\"_blank\" rel=\"noopener noreferrer\">ModelScope</a> or GitHub, then serve with vLLM, llama.cpp, SGLang, or Ollama.  Quantised GGUF / AWQ / GPTQ builds slash VRAM needs by 70–80 %.\r\n</p>\r\n\r\n<h2 id=\"run-qwen3-ollama\">Run Qwen 3 Locally with Ollama</h2>\r\n<ol>\r\n  <li><strong>Install Ollama</strong> for Windows/macOS/Linux.</li>\r\n  <li><strong>Pull a model:</strong>\r\n    <code>ollama run qwen3:8b-q4_K_M</code> or\r\n    <code>ollama run qwen3:30b-a3b-q4_K_M</code>.\r\n  </li>\r\n  <li><strong>Chat:</strong> type your prompt and watch Qwen 3 think.</li>\r\n  <li><strong>Exit:</strong> <code>/bye</code>.</li>\r\n</ol>\r\n\r\n<h2 id=\"hardware-requirements-qwen3\">Hardware Requirements</h2>\r\n<ul>\r\n  <li><strong>0.6–1.7 B:</strong> 4 GB VRAM or even CPU-only for prototype bots.</li>\r\n  <li><strong>4–8 B:</strong> 8–16 GB VRAM — gaming laptop territory.</li>\r\n  <li><strong>14–32 B &amp; 30 B-MoE:</strong> 24 GB+ VRAM; runs comfortably on a single 4090 or A6000.</li>\r\n  <li><strong>235 B-MoE:</strong> multi-GPU H100 or A100 cluster; Kubernetes + vLLM recommended.</li>\r\n</ul>\r\n\r\n<h2 id=\"technical-architecture-innovations\">Architectural Highlights</h2>\r\n<p>\r\n  Qwen 3 keeps the Transformer backbone but layers on <strong>Grouped Query Attention</strong> for speed, <strong>QK-Norm</strong> for stability, and a 128-expert MoE grid with load-balancing loss to avoid expert collapse.  SwiGLU activations and RoPE-scaling extend context without hurting throughput.\r\n</p>\r\n\r\n<h2 id=\"hybrid-reasoning-engine\">Inside the Hybrid Reasoning Engine</h2>\r\n<p>\r\n  • <strong>Thinking Mode</strong> — emits explicit &lt;think&gt; chains, ideal for maths, STEM, multi-hop logic.<br/>\r\n  • <strong>Fast Mode</strong> — bypasses chain-of-thought to cut latency for support chat and search.<br/>\r\n  • <strong>Thinking Budget</strong> — hard-cap reasoning tokens: e.g. <code>max_thought_tokens=128</code>.\r\n</p>\r\n\r\n<h2 id=\"training-methodology-qwen3\">Training & Alignment</h2>\r\n<p>\r\n  <strong>Stage 1:</strong> 30 T mixed-quality web+code at 4 K seq → broad world knowledge.<br/>\r\n  <strong>Stage 2:</strong> 5 T high-quality STEM, coding &amp; reasoning → analytic strength.<br/>\r\n  <strong>Stage 3:</strong> 32 K seq long-context bootstrapping with hundreds of B tokens.<br/>\r\n  Post-training layers include multi-round SFT, reward-model RLHF, reasoning-focused RL and\r\n  on-policy distillation that shrinks compute by 90 % vs pure RL.\r\n</p>\r\n\r\n<h2 id=\"context-length-mcp\">Context and Model Context Protocol (MCP)</h2>\r\n<p>\r\n  Native 32 K context (GPU-friendly) extends to 128 K with YaRN.  MCP lets Qwen 3 call JSON-defined tools out-of-the-box:\r\n</p>\r\n<pre><code class=\"language-json\">{\r\n  \"name\": \"lookupWeather\",\r\n  \"description\": \"Get current weather\",\r\n  \"parameters\": { \"type\": \"object\", \"properties\": { \"city\": { \"type\": \"string\" } }, \"required\": [\"city\"] }\r\n}</code></pre>\r\n<p>\r\n  Your agent passes the call; Qwen 3 ingests the JSON response—no custom parsing needed.\r\n</p>\r\n\r\n<h2 id=\"qwen3-performance-benchmarks\">Benchmarks & Comparisons</h2>\r\n<p>\r\n  <strong>Qwen3-235B-A22B (thinking mode)</strong><br/>\r\n  • Arena-Hard 95.6 (≈Gemini 2.5 Pro)<br/>\r\n  • AIME’24 85.7 (math)<br/>\r\n  • LiveCodeBench 70.7 (coding)<br/>\r\n  • BFCL 70.8 (tool use)<br/>\r\n  <strong>Qwen3-30B-A3B</strong> hits Arena-Hard 91.0 at 1⁄8th the GPU budget of flagship dense models.  \r\n  Compact 8 B dense equals Llama 3 8 B on MMLU but beats it on C-Eval and MGSM.\r\n</p>\r\n\r\n<h2 id=\"use-cases-qwen3\">Prime Use Cases</h2>\r\n<ul>\r\n  <li><strong>Enterprise RAG:</strong> combine 128 K context with vector search for instant SOP answers.</li>\r\n  <li><strong>Autonomous Agents:</strong> MCP makes tool orchestration trivial.</li>\r\n  <li><strong>Code Co-pilots:</strong> 30 B-MoE solves 70 % of LiveCodeBench tasks out-of-the-box.  For dedicated agentic coding, see <a href=\"/qwen3-coder/\">Qwen3-Coder-Next</a> (80B MoE, 3B active).</li>\r\n  <li><strong>Multilingual CX:</strong> 119-language fluency for support chat and localisation.</li>\r\n  <li><strong>Long-form Analysis:</strong> ingest 500-page PDFs without chunking.</li>\r\n  <li><strong>Robotics / Edge:</strong> 1.7 B dense on Jetson Orin for low-latency control.</li>\r\n</ul>\r\n\r\n<h2 id=\"conclusion-qwen3\">Next Steps</h2>\r\n<p>\r\n  Qwen 3 delivers open-source SOTA with commercial-grade licensing.  Fork it on GitHub, fine-tune on domain data, or scale instantly via Alibaba Cloud APIs.  Need multimodal?  Pair with <a href=\"/voice-video-chat/\">Qwen 2.5-Omni</\r\n";
+const rawHtml = `
+<p>
+  <strong>Qwen 3</strong> is Alibaba Cloud's most ambitious open-source AI initiative to date. Launched in <strong>April 2025</strong> and continuously expanded ever since, the Qwen 3 family now spans text LLMs, coding agents, vision-language models, speech recognition, voice synthesis, embeddings, and a trillion-parameter cloud flagship. Every open-weight variant ships under the permissive <a href="https://www.apache.org/licenses/LICENSE-2.0" target="_blank" rel="noopener noreferrer">Apache 2.0 license</a>, trained on <strong>36 trillion tokens</strong> across <strong>119 languages</strong> — and competes head-to-head with GPT-5, Gemini 3, and Claude Opus. Explore the full lineup on the <a href="/">Qwen AI homepage</a>.
+</p>
+<div class="ad-afterintro-container"><div class="ad-afterintro-inner"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9609544329602409" data-ad-slot="8310388095" data-ad-format="auto" data-full-width-responsive="true"></ins></div></div>
+
+<div class="qwen-container" style="text-align:center;margin-bottom:30px;">
+  <div class="qwen-row" style="justify-content:center;">
+    <div class="qwen-col">
+      <a class="qwen-button pro" href="https://chat.qwen.ai/" target="_blank" rel="nofollow noopener noreferrer">
+        <span class="button-content"><span class="button-text">Try Qwen 3 free — chat.qwen.ai</span></span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<p>
+  From a <strong>0.6B-parameter</strong> edge model that fits on a Raspberry Pi to the <strong>1-trillion-parameter Qwen3-Max-Thinking</strong> that tops the HLE leaderboard, the Qwen 3 ecosystem covers every deployment scenario. Stand-out features include a <strong>Hybrid Reasoning Engine</strong>, sparsely-activated MoE architectures, context windows up to <strong>1 million tokens</strong>, and native tool calling. Below you'll find the complete model catalog, benchmarks, local deployment guides, and API pricing.
+</p>
+
+<center>
+  <img src="/wp-content/uploads/2025/04/qwen-3.webp"
+       alt="Alibaba Cloud Qwen 3 model family overview — dense and MoE variants"
+       width="520" height="272" class="aligncenter size-full"/>
+</center>
+
+<div class="qwen-toc">
+  <p class="qwen-toc-label">In This Guide</p>
+  <div class="qwen-toc-grid">
+    <a href="#ecosystem-map" class="qwen-toc-chip">Ecosystem Map</a>
+    <a href="#base-models" class="qwen-toc-chip">Base LLMs</a>
+    <a href="#2507-update" class="qwen-toc-chip">2507 Update</a>
+    <a href="#qwen3-max" class="qwen-toc-chip qwen-toc-highlight">Qwen3-Max</a>
+    <a href="#architecture" class="qwen-toc-chip">Architecture</a>
+    <a href="#hybrid-reasoning" class="qwen-toc-chip">Reasoning Engine</a>
+    <a href="#training" class="qwen-toc-chip">Training</a>
+    <a href="#benchmarks" class="qwen-toc-chip">Benchmarks</a>
+    <a href="#run-locally" class="qwen-toc-chip">Run Locally</a>
+    <a href="#api-pricing" class="qwen-toc-chip">API & Pricing</a>
+    <a href="#hardware" class="qwen-toc-chip">Hardware Guide</a>
+    <a href="#fine-tuning" class="qwen-toc-chip">Fine-Tuning</a>
+    <a href="#use-cases" class="qwen-toc-chip">Use Cases</a>
+    <a href="#limitations" class="qwen-toc-chip">Limitations</a>
+    <a href="#faq" class="qwen-toc-chip">FAQ</a>
+  </div>
+</div>
+
+<h2 id="ecosystem-map">The Qwen 3 Ecosystem</h2>
+<p>
+  What started as eight text models in April 2025 has evolved into a full-stack AI platform. Here's every sub-family at a glance:
+</p>
+<div class="qwen-table-wrapper">
+  <table class="qwen-table">
+    <thead>
+      <tr>
+        <th>Sub-family</th>
+        <th>Purpose</th>
+        <th>Params</th>
+        <th>License</th>
+        <th>Released</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Qwen3 (Base LLMs)</strong></td>
+        <td>General text: chat, reasoning, agents</td>
+        <td>0.6B → 235B</td>
+        <td>Apache 2.0</td>
+        <td>Apr 2025</td>
+      </tr>
+      <tr>
+        <td><strong>Qwen3-2507</strong></td>
+        <td>Updated Instruct &amp; Thinking splits</td>
+        <td>4B, 30B, 235B</td>
+        <td>Apache 2.0</td>
+        <td>Jul 2025</td>
+      </tr>
+      <tr>
+        <td><strong><a href="/qwen-3-max/">Qwen3-Max / Max-Thinking</a></strong></td>
+        <td>Closed-source flagship with test-time scaling</td>
+        <td>1T+ (MoE)</td>
+        <td>Proprietary</td>
+        <td>Sep 2025 / Jan 2026</td>
+      </tr>
+      <tr>
+        <td><strong><a href="/qwen3-coder/">Qwen3-Coder / Coder-Next</a></strong></td>
+        <td>Agentic coding with tool calling</td>
+        <td>30B–480B</td>
+        <td>Apache 2.0</td>
+        <td>Jul 2025 / Feb 2026</td>
+      </tr>
+      <tr>
+        <td><strong>Qwen3-VL</strong></td>
+        <td>Vision-Language understanding</td>
+        <td>2B → 32B</td>
+        <td>Apache 2.0</td>
+        <td>2025</td>
+      </tr>
+      <tr>
+        <td><strong>Qwen3-Omni</strong></td>
+        <td>Multimodal: text + image + audio + video</td>
+        <td>—</td>
+        <td>Apache 2.0</td>
+        <td>Sep 2025</td>
+      </tr>
+      <tr>
+        <td><strong><a href="/qwen-3-asr/">Qwen3-ASR</a></strong></td>
+        <td>Speech recognition (52 languages)</td>
+        <td>0.6B / 8B</td>
+        <td>Apache 2.0</td>
+        <td>2025</td>
+      </tr>
+      <tr>
+        <td><strong><a href="/qwen-3-tts/">Qwen3-TTS</a></strong></td>
+        <td>Text-to-speech &amp; voice cloning</td>
+        <td>0.6B</td>
+        <td>Apache 2.0</td>
+        <td>2025</td>
+      </tr>
+      <tr>
+        <td><strong>Qwen3-Embedding</strong></td>
+        <td>Text embeddings &amp; reranking</td>
+        <td>0.6B / 8B</td>
+        <td>Apache 2.0</td>
+        <td>Jun 2025</td>
+      </tr>
+      <tr>
+        <td><strong>Qwen3-Next</strong></td>
+        <td>Next-gen ultra-efficient architecture</td>
+        <td>—</td>
+        <td>Apache 2.0</td>
+        <td>Sep 2025</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<p>
+  This page focuses on the <strong>core text LLMs</strong> (base models, 2507 update, and Qwen3-Max). For specialized models, follow the links above to their dedicated guides.
+</p>
+
+<h2 id="base-models">Base LLM Line-up: Dense and MoE</h2>
+<p>
+  The original April 2025 launch introduced <strong>six dense models</strong> (0.6B to 32B) and <strong>two Mixture-of-Experts variants</strong> (30B-A3B and 235B-A22B). All share the same tokenizer, instruction format, and hybrid thinking/non-thinking capability — meaning you can swap model sizes without rewriting your code.
+</p>
+
+<h3>Dense Models (0.6B → 32B)</h3>
+<p>
+  Ideal for chatbots, real-time RAG pipelines, and edge deployment. The 8B variant runs comfortably under 10 GB VRAM with GGUF quantization while matching much larger competitors on multilingual benchmarks.
+</p>
+
+<h3>Mixture-of-Experts (MoE) Variants</h3>
+<ul>
+  <li><strong>Qwen3-30B-A3B</strong> — 30.5B total parameters, ~3.3B active per token. Runs in real time on a single RTX 4090 and delivers Arena-Hard scores of 91.0 — at 1/8th the GPU cost of comparable dense models.</li>
+  <li><strong>Qwen3-235B-A22B</strong> — 235B total, ~22B active (8 of 128 experts per token). The open-source flagship that rivals GPT-4-class reasoning while halving inference cost compared to a monolithic dense model of equivalent quality.</li>
+</ul>
+
+<h3>Specification Matrix (April 2025 Launch)</h3>
+<div class="qwen-table-wrapper">
+  <table class="qwen-table">
+    <thead>
+      <tr>
+        <th>Model</th><th>Type</th><th>Total Params</th><th>Active Params</th>
+        <th>Native Ctx</th><th>Extended Ctx</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Qwen3-0.6B</td><td>Dense</td><td>0.6B</td><td>—</td><td>32K</td><td>—</td></tr>
+      <tr><td>Qwen3-1.7B</td><td>Dense</td><td>1.7B</td><td>—</td><td>32K</td><td>—</td></tr>
+      <tr><td>Qwen3-4B</td><td>Dense</td><td>4B</td><td>—</td><td>32K</td><td>128K (YaRN)</td></tr>
+      <tr><td>Qwen3-8B</td><td>Dense</td><td>8.2B</td><td>—</td><td>32K</td><td>128K (YaRN)</td></tr>
+      <tr><td>Qwen3-14B</td><td>Dense</td><td>14B</td><td>—</td><td>32K</td><td>128K (YaRN)</td></tr>
+      <tr><td>Qwen3-32B</td><td>Dense</td><td>32.8B</td><td>—</td><td>32K</td><td>128K (YaRN)</td></tr>
+      <tr><td>Qwen3-30B-A3B</td><td>MoE</td><td>30.5B</td><td>~3.3B</td><td>32K</td><td>128K (YaRN)</td></tr>
+      <tr><td>Qwen3-235B-A22B</td><td>MoE</td><td>235B</td><td>~22B</td><td>32K</td><td>128K (YaRN)</td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:0.9em;text-align:center;margin-top:5px;">
+    <em>April 2025 launch specifications. See the 2507 update below for revised context lengths and dedicated variants.</em>
+  </p>
+</div>
+
+<h2 id="2507-update">The Qwen3-2507 Update (July 2025)</h2>
+<p>
+  Three months after the initial launch, the Qwen team released a <strong>major revision</strong> that changed the reasoning architecture philosophy. Instead of a single hybrid model that switches between thinking and non-thinking modes, the 2507 update introduced <strong>dedicated variants</strong>:
+</p>
+<ul>
+  <li><strong>Instruct-2507</strong> — Non-thinking only. Optimized for instruction following, chat, and tool use. No <code>&lt;think&gt;</code> blocks generated.</li>
+  <li><strong>Thinking-2507</strong> — Thinking only. Always reasons through problems. Optimized for math, STEM, and complex logic.</li>
+</ul>
+
+<h3>2507 Variant Matrix</h3>
+<div class="qwen-table-wrapper">
+  <table class="qwen-table">
+    <thead>
+      <tr>
+        <th>Model</th><th>Type</th><th>Mode</th><th>Native Ctx</th><th>Extended Ctx</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Qwen3-4B-Instruct-2507</td><td>Dense</td><td>Non-thinking</td><td>256K</td><td>—</td></tr>
+      <tr><td>Qwen3-4B-Thinking-2507</td><td>Dense</td><td>Thinking</td><td>256K</td><td>—</td></tr>
+      <tr><td>Qwen3-30B-A3B-Instruct-2507</td><td>MoE</td><td>Non-thinking</td><td>256K</td><td>~1M</td></tr>
+      <tr><td>Qwen3-30B-A3B-Thinking-2507</td><td>MoE</td><td>Thinking</td><td>256K</td><td>~1M</td></tr>
+      <tr><td>Qwen3-235B-A22B-Instruct-2507</td><td>MoE</td><td>Non-thinking</td><td>256K</td><td>~1M</td></tr>
+      <tr><td>Qwen3-235B-A22B-Thinking-2507</td><td>MoE</td><td>Thinking</td><td>256K</td><td>~1M</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<h3>Key Improvements in 2507</h3>
+<ul>
+  <li><strong>Context window jump:</strong> From 32K native / 128K extended to <strong>256K native</strong> and up to <strong>~1 million tokens</strong> using DCA + MInference sparse attention. The 235B-Instruct-2507 scores 82.5% accuracy on the RULER benchmark at 1M tokens.</li>
+  <li><strong>Massive non-thinking gains:</strong> The Instruct-2507 variants saw dramatic improvements — for example, AIME25 jumped from 24.7 to 70.3 and ZebraLogic from 37.7 to 95.0 on the 235B model.</li>
+  <li><strong>Better instruction following:</strong> Enhanced math, coding, tool use, and multilingual knowledge across all sizes.</li>
+  <li><strong>The 4B-Thinking-2507</strong> achieves AIME25 scores of 81.3 — rivaling the much larger Qwen2.5-72B-Instruct.</li>
+</ul>
+
+<h2 id="qwen3-max">Qwen3-Max &amp; Qwen3-Max-Thinking</h2>
+<p>
+  <strong>Qwen3-Max</strong> is Alibaba's closed-source flagship — a <strong>1+ trillion parameter</strong> MoE model available exclusively through API. Launched in <strong>September 2025</strong>, it received a major upgrade in <strong>January 2026</strong> with the addition of <strong>test-time scaling (TTS)</strong> under the name <strong>Qwen3-Max-Thinking</strong>.
+</p>
+<p>
+  The TTS mechanism isn't naive best-of-N sampling — it uses an <strong>experience-cumulative, multi-round reasoning strategy</strong> that progressively refines answers across multiple internal passes. This pushes several benchmarks to state-of-the-art levels.
+</p>
+
+<h3>What Qwen3-Max-Thinking Leads On</h3>
+<div class="qwen-grid qwen-grid-cols-2">
+  <div class="feature-item"><strong>#1 HLE with search</strong> — 58.3 (beats GPT-5.2 at 45.5 and Gemini 3 Pro at 45.0)</div>
+  <div class="feature-item"><strong>#1 IMO-AnswerBench</strong> — 91.5 (beats GPT-5.2 at 86.3)</div>
+  <div class="feature-item"><strong>#1 LiveCodeBench v6</strong> — 91.4 (beats Gemini 3 Pro at 90.7)</div>
+  <div class="feature-item"><strong>#1 Arena-Hard v2</strong> — 90.2 (general chat quality)</div>
+  <div class="feature-item"><strong>Perfect 100%</strong> on AIME 2025 and HMMT (with TTS)</div>
+  <div class="feature-item"><strong>GPQA Diamond</strong> — 92.8 (tied with GPT-5.2 at 92.4)</div>
+</div>
+
+<h3>Qwen3-Max Specifications</h3>
+<div class="qwen-table-wrapper">
+  <table class="qwen-table">
+    <tbody>
+      <tr><td><strong>Parameters</strong></td><td>1+ trillion (MoE)</td></tr>
+      <tr><td><strong>Context Window</strong></td><td>256K tokens (up to 1M referenced)</td></tr>
+      <tr><td><strong>License</strong></td><td>Proprietary (API-only)</td></tr>
+      <tr><td><strong>Thinking Mode</strong></td><td>Toggle via <code>enable_thinking</code> parameter</td></tr>
+      <tr><td><strong>Speed</strong></td><td>~38 tokens/second</td></tr>
+      <tr><td><strong>Languages</strong></td><td>100+</td></tr>
+      <tr><td><strong>API Compatibility</strong></td><td>OpenAI-compatible + Anthropic-compatible</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<h3>Benchmark Comparison: Qwen3-Max-Thinking vs Frontier Models</h3>
+<div class="qwen-table-wrapper">
+  <table class="qwen-table">
+    <thead>
+      <tr>
+        <th>Benchmark</th>
+        <th>Qwen3-Max (TTS)</th>
+        <th>GPT-5.2</th>
+        <th>Gemini 3 Pro</th>
+        <th>Claude Opus 4.5</th>
+        <th>DeepSeek V3.2</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>GPQA Diamond</td><td><strong>92.8</strong></td><td>92.4</td><td>91.9</td><td>87.0</td><td>82.4</td></tr>
+      <tr><td>HLE (with search)</td><td><strong>58.3</strong></td><td>45.5</td><td>45.0</td><td>43.2</td><td>40.8</td></tr>
+      <tr><td>IMO-AnswerBench</td><td><strong>91.5</strong></td><td>86.3</td><td>83.3</td><td>84.0</td><td>78.3</td></tr>
+      <tr><td>LiveCodeBench v6</td><td><strong>91.4</strong></td><td>87.7</td><td>90.7</td><td>84.8</td><td>80.8</td></tr>
+      <tr><td>SWE-Bench Verified</td><td>75.3</td><td>80.0</td><td>76.2</td><td><strong>80.9</strong></td><td>73.1</td></tr>
+      <tr><td>Arena-Hard v2</td><td><strong>90.2</strong></td><td>—</td><td>—</td><td>76.7</td><td>—</td></tr>
+      <tr><td>MMLU-Pro</td><td>85.7</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:0.9em;text-align:center;margin-top:5px;">
+    <em>Qwen3-Max-Thinking scores with test-time scaling enabled. January 2026 snapshot.</em>
+  </p>
+</div>
+
+<h2 id="architecture">Architecture Deep-Dive</h2>
+<p>
+  All Qwen 3 text models share a Transformer backbone with several key innovations:
+</p>
+<ul>
+  <li><strong>Grouped Query Attention (GQA)</strong> — Reduces KV-cache memory for faster inference and longer contexts.</li>
+  <li><strong>QK-Norm</strong> — Stabilizes attention logits during training, especially at large scale.</li>
+  <li><strong>SwiGLU Activations</strong> — Replaces standard FFN layers for better parameter efficiency.</li>
+  <li><strong>RoPE Scaling</strong> — Rotary position embeddings extended with YaRN for context beyond the training length.</li>
+</ul>
+<p>
+  The MoE variants use a <strong>128-expert grid</strong> (8 active per token on the 235B model) with a global-batch load-balancing loss to prevent expert collapse. This sparse routing means only ~22B parameters fire on each forward pass, cutting FLOPs by ~6× compared to a dense 235B model.
+</p>
+<p>
+  The later <strong>Qwen3-Next</strong> (September 2025) introduced a hybrid attention mechanism combining linear attention with standard self-attention for even greater efficiency, signaling the direction of future Qwen 3 releases.
+</p>
+
+<h2 id="hybrid-reasoning">The Hybrid Reasoning Engine</h2>
+<p>
+  One of Qwen 3's signature innovations is its <strong>dual-mode reasoning system</strong> — the ability to switch between deep chain-of-thought reasoning and instant direct responses:
+</p>
+<ul>
+  <li><strong>Thinking Mode</strong> — The model emits explicit <code>&lt;think&gt;</code> chains before answering, walking through problems step-by-step. Ideal for math, STEM, multi-hop logic, and coding.</li>
+  <li><strong>Non-Thinking (Fast) Mode</strong> — Bypasses chain-of-thought entirely for low-latency responses. Best for support chat, search, simple QA, and high-throughput scenarios.</li>
+  <li><strong>Thinking Budget</strong> — You can hard-cap reasoning tokens with <code>max_thought_tokens</code> to control the latency/accuracy trade-off.</li>
+</ul>
+<p>
+  In the original April 2025 release, both modes lived in a <strong>single hybrid model</strong> controlled by the <code>enable_thinking</code> parameter. The <strong>2507 update</strong> split this into <strong>dedicated Instruct (non-thinking) and Thinking variants</strong> — each optimized independently for its mode, resulting in significantly better performance on both sides.
+</p>
+
+<h2 id="training">Training &amp; Alignment</h2>
+<p>
+  The Qwen 3 training pipeline has three main pre-training stages followed by multi-step post-training:
+</p>
+<h3>Pre-training</h3>
+<ul>
+  <li><strong>Stage 1 (30T tokens):</strong> Mixed-quality web and code data at 4K sequence length — builds broad world knowledge.</li>
+  <li><strong>Stage 2 (5T tokens):</strong> High-quality STEM, coding, and reasoning data — sharpens analytic ability.</li>
+  <li><strong>Stage 3 (hundreds of B tokens):</strong> 32K sequence long-context bootstrapping — teaches the model to handle extended documents.</li>
+</ul>
+<h3>Post-training</h3>
+<ul>
+  <li>Multi-round <strong>supervised fine-tuning (SFT)</strong> with diverse instruction data</li>
+  <li><strong>Reward-model RLHF</strong> for alignment with human preferences</li>
+  <li><strong>Reasoning-focused reinforcement learning</strong> to improve chain-of-thought quality</li>
+  <li><strong>On-policy distillation</strong> that reduces compute by ~90% compared to pure RL</li>
+</ul>
+
+<h2 id="benchmarks">Benchmarks &amp; Performance</h2>
+<p>
+  Here's how the key Qwen 3 open-source models perform across major benchmarks, compared to competitors:
+</p>
+
+<h3>Qwen3-235B-A22B-Thinking-2507 (Open-Source Flagship)</h3>
+<div class="qwen-table-wrapper">
+  <table class="qwen-table">
+    <thead>
+      <tr>
+        <th>Benchmark</th>
+        <th>Qwen3-235B-T-2507</th>
+        <th>Category</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>AIME25</td><td><strong>92.3</strong></td><td>Math Competition</td></tr>
+      <tr><td>HMMT25</td><td><strong>83.9</strong></td><td>Math Competition</td></tr>
+      <tr><td>LiveCodeBench v6</td><td><strong>74.1</strong></td><td>Coding</td></tr>
+      <tr><td>Arena-Hard v2</td><td><strong>79.7</strong></td><td>General Chat</td></tr>
+      <tr><td>MMLU-Pro</td><td>84.4</td><td>Knowledge</td></tr>
+      <tr><td>GPQA Diamond</td><td>81.1</td><td>PhD-level Science</td></tr>
+      <tr><td>IFEval</td><td>87.8</td><td>Instruction Following</td></tr>
+      <tr><td>BFCL-v3</td><td>71.9</td><td>Function Calling</td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:0.9em;text-align:center;margin-top:5px;">
+    <em>The Thinking-2507 variant beats O4-mini on LiveCodeBench and rivals it on AIME25 (92.3 vs 92.7).</em>
+  </p>
+</div>
+
+<h3>April 2025 Launch Benchmarks (Original Models)</h3>
+<div class="qwen-table-wrapper">
+  <table class="qwen-table">
+    <thead>
+      <tr>
+        <th>Benchmark</th>
+        <th>Qwen3-235B (thinking)</th>
+        <th>Qwen3-30B-A3B</th>
+        <th>Category</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Arena-Hard</td><td>95.6</td><td>91.0</td><td>General Chat</td></tr>
+      <tr><td>AIME'24</td><td>85.7</td><td>—</td><td>Math</td></tr>
+      <tr><td>LiveCodeBench</td><td>70.7</td><td>—</td><td>Coding</td></tr>
+      <tr><td>BFCL</td><td>70.8</td><td>—</td><td>Tool Use</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<h2 id="run-locally">Run Qwen 3 Locally</h2>
+<p>
+  Every open-weight Qwen 3 model is available on <a href="https://huggingface.co/Qwen" target="_blank" rel="noopener noreferrer">Hugging Face</a> and <a href="https://www.modelscope.cn/models?name=qwen" target="_blank" rel="noopener noreferrer">ModelScope</a> in multiple formats. Here are the main deployment options:
+</p>
+
+<h3>Ollama (Easiest)</h3>
+<div class="command-box">
+  <code>ollama run qwen3:8b</code>
+</div>
+<p>
+  That's it — Ollama automatically downloads the quantized model and starts an interactive chat. Other popular tags:
+</p>
+<ul>
+  <li><code>ollama run qwen3:4b</code> — Lightweight, runs on 8GB VRAM</li>
+  <li><code>ollama run qwen3:14b</code> — Sweet spot for most users</li>
+  <li><code>ollama run qwen3:32b</code> — Near-frontier on a single GPU</li>
+  <li><code>ollama run qwen3:30b-a3b</code> — MoE: 30B params, only 3B active</li>
+</ul>
+
+<h3>vLLM (Production Serving)</h3>
+<div class="command-box">
+  <code>vllm serve Qwen/Qwen3-235B-A22B-Instruct-2507 --tensor-parallel-size 4</code>
+</div>
+<p>
+  vLLM provides OpenAI-compatible API endpoints with PagedAttention for maximum throughput. Recommended for multi-user deployments.
+</p>
+
+<h3>llama.cpp (CPU + GPU Hybrid)</h3>
+<div class="command-box">
+  <code>./llama-server -m qwen3-8b-q4_K_M.gguf -c 32768 -ngl 35</code>
+</div>
+<p>
+  GGUF quantized models run with partial GPU offloading, making Qwen 3 accessible even on machines with limited VRAM.
+</p>
+
+<h3>Transformers (Python)</h3>
+<pre><code class="language-python">from transformers import AutoModelForCausalLM, AutoTokenizer
+
+model = AutoModelForCausalLM.from_pretrained("Qwen/Qwen3-8B", torch_dtype="auto", device_map="auto")
+tokenizer = AutoTokenizer.from_pretrained("Qwen/Qwen3-8B")
+
+messages = [{"role": "user", "content": "Explain quantum entanglement simply."}]
+text = tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
+inputs = tokenizer([text], return_tensors="pt").to(model.device)
+output = model.generate(**inputs, max_new_tokens=512)
+print(tokenizer.decode(output[0], skip_special_tokens=True))</code></pre>
+
+<h2 id="api-pricing">API Access &amp; Pricing</h2>
+<p>
+  Alibaba Cloud offers Qwen 3 models through <strong>DashScope / Model Studio</strong> with OpenAI-compatible endpoints. The flagship Qwen3-Max-Thinking pricing:
+</p>
+<div class="qwen-table-wrapper">
+  <table class="qwen-table">
+    <thead>
+      <tr>
+        <th>Tier</th><th>Input</th><th>Output</th><th>Cache Read</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Standard (≤128K ctx)</td><td>$1.20 / 1M tokens</td><td>$6.00 / 1M tokens</td><td>$0.24 / 1M</td></tr>
+      <tr><td>Long context (&gt;128K)</td><td>$3.00 / 1M tokens</td><td>$15.00 / 1M tokens</td><td>$0.60 / 1M</td></tr>
+    </tbody>
+  </table>
+</div>
+<p>
+  The open-source models can also be served through third-party providers like <a href="https://openrouter.ai/" target="_blank" rel="nofollow noopener noreferrer">OpenRouter</a>, <a href="https://novita.ai/" target="_blank" rel="nofollow noopener noreferrer">Novita AI</a>, and <a href="https://fireworks.ai/" target="_blank" rel="nofollow noopener noreferrer">Fireworks AI</a> — often at lower per-token prices than self-hosting.
+</p>
+<p>
+  <strong>Base URL (International):</strong> <code>https://dashscope-intl.aliyuncs.com/compatible-mode/v1</code>
+</p>
+
+<h2 id="hardware">Hardware Requirements</h2>
+<div class="qwen-table-wrapper">
+  <table class="qwen-table">
+    <thead>
+      <tr><th>Model Size</th><th>Min VRAM (Q4)</th><th>Recommended GPU</th><th>Notes</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>0.6B – 1.7B</td><td>2–4 GB</td><td>Any GPU or CPU-only</td><td>Edge devices, Raspberry Pi, Jetson Nano</td></tr>
+      <tr><td>4B</td><td>4–6 GB</td><td>RTX 3060 / M1 Mac</td><td>Good for local prototyping</td></tr>
+      <tr><td>8B</td><td>6–10 GB</td><td>RTX 3070/4060</td><td>Sweet spot: quality vs. speed</td></tr>
+      <tr><td>14B</td><td>10–16 GB</td><td>RTX 4070 Ti / A4000</td><td>Strong all-rounder</td></tr>
+      <tr><td>32B</td><td>20–24 GB</td><td>RTX 4090 / A6000</td><td>Near-frontier on consumer hardware</td></tr>
+      <tr><td>30B-A3B (MoE)</td><td>20–24 GB</td><td>RTX 4090</td><td>Only 3B active — fast inference</td></tr>
+      <tr><td>235B-A22B (MoE)</td><td>80+ GB</td><td>2–4× A100/H100</td><td>vLLM + tensor parallelism recommended</td></tr>
+    </tbody>
+  </table>
+</div>
+<p>
+  <strong>Tip:</strong> GGUF quantization (Q4_K_M) reduces VRAM usage by 70–80% with minimal quality loss. For the 235B MoE, AWQ and GPTQ quantized builds on Hugging Face make single-node deployment feasible on 2× A100 80GB.
+</p>
+
+<h2 id="fine-tuning">Fine-Tuning Qwen 3</h2>
+<p>
+  Thanks to the Apache 2.0 license, you can fine-tune any open-weight Qwen 3 model on your own data. Common approaches:
+</p>
+<ul>
+  <li><strong>LoRA / QLoRA</strong> — Low-rank adaptation with 4-bit quantization. Fine-tune the 8B model on a single RTX 4090 with 24GB VRAM. Tools: <a href="https://github.com/unslothai/unsloth" target="_blank" rel="nofollow noopener noreferrer">Unsloth</a>, <a href="https://github.com/hiyouga/LLaMA-Factory" target="_blank" rel="nofollow noopener noreferrer">LLaMA-Factory</a>, or Hugging Face PEFT.</li>
+  <li><strong>Full fine-tuning</strong> — For maximum control. Requires multi-GPU setups for models above 8B. DeepSpeed ZeRO-3 or FSDP recommended.</li>
+  <li><strong>DPO / RLHF</strong> — Preference-based alignment to customize model behavior. Supported natively by TRL (Transformer Reinforcement Learning) library.</li>
+</ul>
+<p>
+  <strong>Recommended starting point:</strong> QLoRA on Qwen3-8B or Qwen3-14B with Unsloth for 2–4× speedup and 60% less memory.
+</p>
+
+<h2 id="use-cases">Use Cases</h2>
+<div class="qwen-grid qwen-grid-cols-2">
+  <div class="feature-item"><strong>Enterprise RAG</strong> — Combine 256K+ context with vector search for instant SOP and knowledge-base answers without chunking.</div>
+  <div class="feature-item"><strong>Autonomous Agents</strong> — Native tool calling (MCP) makes multi-step orchestration straightforward. The model can call APIs, query databases, and chain actions.</div>
+  <div class="feature-item"><strong>Agentic Coding</strong> — <a href="/qwen3-coder/">Qwen3-Coder-Next</a> (80B/3B active) autonomously debugs, tests, and fixes real-world software.</div>
+  <div class="feature-item"><strong>Multilingual CX</strong> — 119-language fluency for global customer support, localisation, and content translation.</div>
+  <div class="feature-item"><strong>Long-Form Analysis</strong> — Ingest 500-page PDFs, legal contracts, or full codebases without splitting into chunks.</div>
+  <div class="feature-item"><strong>Speech &amp; Voice</strong> — <a href="/qwen-3-asr/">Qwen3-ASR</a> transcribes 52 languages; <a href="/qwen-3-tts/">Qwen3-TTS</a> clones voices from 3 seconds of audio.</div>
+  <div class="feature-item"><strong>Edge / IoT</strong> — 0.6B and 1.7B dense models run on Jetson Orin, Raspberry Pi, and mobile devices for low-latency control.</div>
+  <div class="feature-item"><strong>Research &amp; STEM</strong> — Qwen3-Max-Thinking scores 100% on AIME 2025 and leads HLE with search — ideal for scientific reasoning tasks.</div>
+</div>
+
+<h2 id="limitations">Limitations &amp; Considerations</h2>
+<p>
+  While Qwen 3 is impressive, it's important to be aware of its boundaries:
+</p>
+<ul>
+  <li><strong>Hallucination:</strong> Like all LLMs, Qwen 3 can generate plausible-sounding but incorrect information. Always verify factual claims in critical applications.</li>
+  <li><strong>SWE-Bench gap:</strong> On real-world software engineering tasks (SWE-Bench Verified), Qwen3-Max-Thinking scores 75.3 — behind Claude Opus 4.5 (80.9) and GPT-5.2 (80.0).</li>
+  <li><strong>Speed vs. intelligence trade-off:</strong> Qwen3-Max-Thinking runs at ~38 tokens/second — significantly slower than lighter models. For latency-sensitive applications, consider the 30B-A3B or dense variants.</li>
+  <li><strong>Closed-source flagship:</strong> Qwen3-Max is API-only and proprietary. The most powerful Qwen model cannot be self-hosted or fine-tuned.</li>
+  <li><strong>MoE memory overhead:</strong> While MoE models activate fewer parameters, they still require loading all expert weights into memory. The 235B MoE needs ~80+ GB VRAM even quantized.</li>
+  <li><strong>Safety alignment:</strong> As with any open-weight model, fine-tuned variants may lose safety guardrails. Deploy responsibly with appropriate safeguards.</li>
+</ul>
+
+<h2 id="faq">Frequently Asked Questions</h2>
+
+<h3>Is Qwen 3 free to use commercially?</h3>
+<p>
+  Yes — all open-weight models (0.6B through 235B) are released under the <strong>Apache 2.0 license</strong>, which permits unrestricted commercial use, modification, and distribution. Only Qwen3-Max is proprietary (API-only).
+</p>
+
+<h3>What's the best Qwen 3 model for my hardware?</h3>
+<p>
+  For <strong>8 GB VRAM</strong>: Qwen3-4B or Qwen3-8B (Q4 quantized). For <strong>24 GB VRAM</strong>: Qwen3-32B or Qwen3-30B-A3B (MoE). For <strong>cloud/multi-GPU</strong>: Qwen3-235B-A22B-Thinking-2507.
+</p>
+
+<h3>Should I use the original models or the 2507 update?</h3>
+<p>
+  If a 2507 variant exists for your target size (4B, 30B-A3B, or 235B-A22B), <strong>always prefer the 2507 version</strong>. It offers dramatically better performance, larger context windows, and optimized reasoning. For sizes without a 2507 update (0.6B, 1.7B, 8B, 14B, 32B), the original models remain the latest available.
+</p>
+
+<h3>How does Qwen 3 compare to Llama, GPT, and Gemini?</h3>
+<p>
+  The open-source Qwen3-235B-Thinking-2507 competes directly with O4-mini and Gemini 2.5 Pro on math and coding benchmarks. The closed-source Qwen3-Max-Thinking trades blows with GPT-5.2 and Gemini 3 Pro, leading on several benchmarks (HLE, IMO, LiveCodeBench) while trailing on others (SWE-Bench).
+</p>
+
+<h3>Can I use Qwen 3 for tool calling and agents?</h3>
+<p>
+  Yes — Qwen 3 supports native <strong>JSON-defined tool calling</strong> compatible with the Model Context Protocol (MCP). Define your tools as JSON schemas and the model will generate structured function calls automatically. No custom parsing needed.
+</p>
+<pre><code class="language-json">{
+  "name": "lookupWeather",
+  "description": "Get current weather for a city",
+  "parameters": {
+    "type": "object",
+    "properties": { "city": { "type": "string" } },
+    "required": ["city"]
+  }
+}</code></pre>
+
+<h2 id="conclusion">Conclusion: The Most Complete Open AI Ecosystem</h2>
+<p>
+  Qwen 3 isn't just a language model — it's a complete AI platform. From edge-ready 0.6B models to the trillion-parameter Qwen3-Max-Thinking that leads frontier benchmarks, from agentic coding with <a href="/qwen3-coder/">Qwen3-Coder-Next</a> to voice cloning with <a href="/qwen-3-tts/">Qwen3-TTS</a> and 52-language transcription with <a href="/qwen-3-asr/">Qwen3-ASR</a> — Alibaba Cloud has built an ecosystem where every component is either open-source and free to fine-tune, or competitively priced via API.
+</p>
+<p>
+  Whether you're building an autonomous agent, deploying a multilingual support bot, running a local code assistant, or pushing the limits of mathematical reasoning, Qwen 3 has a model for your use case. Fork it on <a href="https://github.com/QwenLM/Qwen3" target="_blank" rel="noopener noreferrer">GitHub</a>, download weights from <a href="https://huggingface.co/Qwen" target="_blank" rel="noopener noreferrer">Hugging Face</a>, or start chatting right now at <a href="https://chat.qwen.ai/" target="_blank" rel="nofollow noopener noreferrer">chat.qwen.ai</a>. Explore the full ecosystem on the <a href="/">Qwen AI homepage</a>.
+</p>
+`;
 ---
-<BaseLayout title="Qwen 3" seoTitle="Qwen 3 Guide: Try &amp; Deploy Alibaba’s Open-Source Hybrid LLM" seoDescription="Learn about Qwen 3. Specifications, benchmarks, features and how to use this AI model from Alibaba Cloud.">
+<BaseLayout title="Qwen 3" seoTitle="Qwen 3: Complete Guide to Alibaba's Open-Source AI Ecosystem (2026)" seoDescription="The definitive Qwen 3 guide: all models (0.6B to 1T+), benchmarks vs GPT-5 & Gemini, local install, API pricing, 2507 update, and Qwen3-Max-Thinking.">
   <article class="qwen-container">
-    <h1>Qwen 3</h1>
+    <h1>Qwen 3: The Complete Guide</h1>
     <Fragment set:html={rawHtml} />
   </article>
 </BaseLayout>
