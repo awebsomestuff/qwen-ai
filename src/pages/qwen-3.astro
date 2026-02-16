@@ -1,6 +1,12 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 const rawHtml = `
+<div class="qwen-feature-highlight" style="margin-bottom:24px;">
+<div class="feature-highlight-body" style="padding:16px 20px;">
+<strong>🚀 Looking for the latest?</strong> <a href="/qwen-3-5/">Qwen 3.5</a> (February 2026) is now Alibaba's newest flagship — a 397B MoE unified vision-language model with 17B active parameters that surpasses Qwen 3 on most benchmarks. <a href="/qwen-3-5/">Read the full Qwen 3.5 guide →</a>
+</div>
+</div>
+
 <p>
   <strong>Qwen 3</strong> is Alibaba Cloud's most ambitious open-source AI initiative to date. Launched in <strong>April 2025</strong> and continuously expanded ever since, the Qwen 3 family now spans text LLMs, coding agents, vision-language models, speech recognition, voice synthesis, embeddings, and a trillion-parameter cloud flagship. Every open-weight variant ships under the permissive <a href="https://www.apache.org/licenses/LICENSE-2.0" target="_blank" rel="noopener noreferrer">Apache 2.0 license</a>, trained on <strong>36 trillion tokens</strong> across <strong>119 languages</strong> — and competes head-to-head with GPT-5, Gemini 3, and Claude Opus. Explore the full lineup on the <a href="/">Qwen AI homepage</a>.
 </p>
@@ -78,14 +84,14 @@ const rawHtml = `
         <td>Jul 2025</td>
       </tr>
       <tr>
-        <td><strong><a href="/qwen-3-max/">Qwen3-Max / Max-Thinking</a></strong></td>
+        <td><strong><a href="/qwen-max/">Qwen3-Max / Max-Thinking</a></strong></td>
         <td>Closed-source flagship with test-time scaling</td>
         <td>1T+ (MoE)</td>
         <td>Proprietary</td>
         <td>Sep 2025 / Jan 2026</td>
       </tr>
       <tr>
-        <td><strong><a href="/qwen3-coder/">Qwen3-Coder / Coder-Next</a></strong></td>
+        <td><strong><a href="/qwen-coder/">Qwen3-Coder / Coder-Next</a></strong></td>
         <td>Agentic coding with tool calling</td>
         <td>30B–480B</td>
         <td>Apache 2.0</td>
@@ -106,14 +112,14 @@ const rawHtml = `
         <td>Sep 2025</td>
       </tr>
       <tr>
-        <td><strong><a href="/qwen-3-asr/">Qwen3-ASR</a></strong></td>
+        <td><strong><a href="/qwen-asr/">Qwen3-ASR</a></strong></td>
         <td>Speech recognition (52 languages)</td>
         <td>0.6B / 8B</td>
         <td>Apache 2.0</td>
         <td>2025</td>
       </tr>
       <tr>
-        <td><strong><a href="/qwen-3-tts/">Qwen3-TTS</a></strong></td>
+        <td><strong><a href="/qwen-tts/">Qwen3-TTS</a></strong></td>
         <td>Text-to-speech &amp; voice cloning</td>
         <td>0.6B</td>
         <td>Apache 2.0</td>
@@ -486,10 +492,10 @@ print(tokenizer.decode(output[0], skip_special_tokens=True))</code></pre>
 <div class="qwen-grid qwen-grid-cols-2">
   <div class="feature-item"><strong>Enterprise RAG</strong> — Combine 256K+ context with vector search for instant SOP and knowledge-base answers without chunking.</div>
   <div class="feature-item"><strong>Autonomous Agents</strong> — Native tool calling (MCP) makes multi-step orchestration straightforward. The model can call APIs, query databases, and chain actions.</div>
-  <div class="feature-item"><strong>Agentic Coding</strong> — <a href="/qwen3-coder/">Qwen3-Coder-Next</a> (80B/3B active) autonomously debugs, tests, and fixes real-world software.</div>
+  <div class="feature-item"><strong>Agentic Coding</strong> — <a href="/qwen-coder/">Qwen3-Coder-Next</a> (80B/3B active) autonomously debugs, tests, and fixes real-world software.</div>
   <div class="feature-item"><strong>Multilingual CX</strong> — 119-language fluency for global customer support, localisation, and content translation.</div>
   <div class="feature-item"><strong>Long-Form Analysis</strong> — Ingest 500-page PDFs, legal contracts, or full codebases without splitting into chunks.</div>
-  <div class="feature-item"><strong>Speech &amp; Voice</strong> — <a href="/qwen-3-asr/">Qwen3-ASR</a> transcribes 52 languages; <a href="/qwen-3-tts/">Qwen3-TTS</a> clones voices from 3 seconds of audio.</div>
+  <div class="feature-item"><strong>Speech &amp; Voice</strong> — <a href="/qwen-asr/">Qwen3-ASR</a> transcribes 52 languages; <a href="/qwen-tts/">Qwen3-TTS</a> clones voices from 3 seconds of audio.</div>
   <div class="feature-item"><strong>Edge / IoT</strong> — 0.6B and 1.7B dense models run on Jetson Orin, Raspberry Pi, and mobile devices for low-latency control.</div>
   <div class="feature-item"><strong>Research &amp; STEM</strong> — Qwen3-Max-Thinking scores 100% on AIME 2025 and leads HLE with search — ideal for scientific reasoning tasks.</div>
 </div>
@@ -545,7 +551,7 @@ print(tokenizer.decode(output[0], skip_special_tokens=True))</code></pre>
 
 <h2 id="conclusion">Conclusion: The Most Complete Open AI Ecosystem</h2>
 <p>
-  Qwen 3 isn't just a language model — it's a complete AI platform. From edge-ready 0.6B models to the trillion-parameter Qwen3-Max-Thinking that leads frontier benchmarks, from agentic coding with <a href="/qwen3-coder/">Qwen3-Coder-Next</a> to voice cloning with <a href="/qwen-3-tts/">Qwen3-TTS</a> and 52-language transcription with <a href="/qwen-3-asr/">Qwen3-ASR</a> — Alibaba Cloud has built an ecosystem where every component is either open-source and free to fine-tune, or competitively priced via API.
+  Qwen 3 isn't just a language model — it's a complete AI platform. From edge-ready 0.6B models to the trillion-parameter Qwen3-Max-Thinking that leads frontier benchmarks, from agentic coding with <a href="/qwen-coder/">Qwen3-Coder-Next</a> to voice cloning with <a href="/qwen-tts/">Qwen3-TTS</a> and 52-language transcription with <a href="/qwen-asr/">Qwen3-ASR</a> — Alibaba Cloud has built an ecosystem where every component is either open-source and free to fine-tune, or competitively priced via API.
 </p>
 <p>
   Whether you're building an autonomous agent, deploying a multilingual support bot, running a local code assistant, or pushing the limits of mathematical reasoning, Qwen 3 has a model for your use case. Fork it on <a href="https://github.com/QwenLM/Qwen3" target="_blank" rel="noopener noreferrer">GitHub</a>, download weights from <a href="https://huggingface.co/Qwen" target="_blank" rel="noopener noreferrer">Hugging Face</a>, or start chatting right now at <a href="https://chat.qwen.ai/" target="_blank" rel="nofollow noopener noreferrer">chat.qwen.ai</a>. Explore the full ecosystem on the <a href="/">Qwen AI homepage</a>.

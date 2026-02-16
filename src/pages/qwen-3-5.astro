@@ -1,0 +1,493 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+const rawHtml = `
+<p>
+  <strong>Qwen 3.5</strong> (also written Qwen3.5) is Alibaba Cloud's latest flagship open-source model, released on <strong>February 16, 2026</strong>. It's a <strong>397-billion-parameter</strong> Mixture-of-Experts vision-language model with only <strong>17B active parameters</strong> per token — meaning you get frontier-level performance at a fraction of the compute cost. It ships under the <strong>Apache 2.0</strong> license, supports <strong>201 languages</strong>, and handles text, images, and video natively in a single unified model. No separate VL variant needed.
+</p>
+<div class="ad-afterintro-container"><div class="ad-afterintro-inner"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9609544329602409" data-ad-slot="8310388095" data-ad-format="auto" data-full-width-responsive="true"></ins></div></div>
+
+<div class="qwen-container" style="text-align:center;margin-bottom:30px;">
+  <div class="qwen-row" style="justify-content:center;">
+    <div class="qwen-col">
+      <a class="qwen-button pro" href="https://chat.qwen.ai/" target="_blank" rel="nofollow noopener noreferrer">
+        <span class="button-content"><span class="button-text">Try Qwen 3.5 free — chat.qwen.ai</span></span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<h3 style="text-align:center;">Official Launch Trailer</h3>
+<div id="tweet-trailer" style="display:flex;justify-content:center;margin:24px 0;">
+  <blockquote class="twitter-tweet" data-conversation="none" data-media-max-width="560"><p lang="en" dir="ltr">Qwen3.5 is here.<a href="https://t.co/trailer">pic.twitter.com/trailer</a></p>&mdash; Qwen (@Alibaba_Qwen) <a href="https://twitter.com/Alibaba_Qwen/status/2023335333895741778?ref_src=twsrc%5Etfw">February 16, 2026</a></blockquote>
+</div>
+
+<div class="qwen-toc">
+  <p class="qwen-toc-label">In This Guide</p>
+  <ul>
+    <li><a href="#specs">Technical Specifications</a></li>
+    <li><a href="#architecture">Architecture Deep Dive</a></li>
+    <li><a href="#benchmarks">Benchmarks vs GPT-5.2, Claude Opus 4.5, Gemini 3 Pro</a></li>
+    <li><a href="#multimodal">Multimodal Capabilities</a></li>
+    <li><a href="#agentic">Agentic AI Features</a></li>
+    <li><a href="#pricing">API Pricing</a></li>
+    <li><a href="#run-locally">Running Locally</a></li>
+    <li><a href="#api-usage">API &amp; Developer Guide</a></li>
+    <li><a href="#community">Community Testing Highlights</a></li>
+    <li><a href="#faq">FAQ</a></li>
+  </ul>
+</div>
+
+
+<h2 id="specs">Technical Specifications</h2>
+
+<p>
+  Qwen 3.5 is a sparse Mixture-of-Experts (MoE) model that activates only a small fraction of its total parameters for each token. This design gives it the quality of a much larger dense model while keeping inference costs low. Here's the complete spec sheet:
+</p>
+
+<div class="qwen-table-wrapper">
+<table class="qwen-table">
+<thead>
+<tr>
+  <th>Specification</th>
+  <th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr><td><strong>Total parameters</strong></td><td>397 billion</td></tr>
+<tr><td><strong>Active parameters per token</strong></td><td>17 billion</td></tr>
+<tr><td><strong>Architecture</strong></td><td>Hybrid Gated DeltaNet + Gated Attention + MoE</td></tr>
+<tr><td><strong>Number of layers</strong></td><td>60</td></tr>
+<tr><td><strong>MoE configuration</strong></td><td>512 total experts, 10 routed + 1 shared active</td></tr>
+<tr><td><strong>Context window (native)</strong></td><td>262,144 tokens</td></tr>
+<tr><td><strong>Context window (extended via YaRN)</strong></td><td>1,010,000 tokens (~1M)</td></tr>
+<tr><td><strong>Vocabulary size</strong></td><td>250,000 tokens (69% larger than <a href="/qwen-3/">Qwen 3</a>)</td></tr>
+<tr><td><strong>Languages supported</strong></td><td>201 languages and dialects</td></tr>
+<tr><td><strong>Modalities — input</strong></td><td>Text + Image + Video</td></tr>
+<tr><td><strong>Modalities — output</strong></td><td>Text only</td></tr>
+<tr><td><strong>Thinking mode</strong></td><td>Built-in (toggle on/off via API)</td></tr>
+<tr><td><strong>License</strong></td><td>Apache 2.0</td></tr>
+<tr><td><strong>HuggingFace</strong></td><td><a href="https://huggingface.co/Qwen/Qwen3.5-397B-A17B" target="_blank" rel="noopener noreferrer">Qwen/Qwen3.5-397B-A17B</a></td></tr>
+<tr><td><strong>Release date</strong></td><td>February 16, 2026</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>
+  For context, the previous <a href="/qwen-3/">Qwen 3</a> flagship (Qwen3-235B-A22B) used 22B active parameters from 235B total. Qwen 3.5 nearly doubles the total parameter count while <em>reducing</em> active parameters to 17B — a significant efficiency improvement made possible by the new hybrid architecture.
+</p>
+
+<h3>MoE Model Comparison</h3>
+<p>How does Qwen 3.5 compare to other large MoE models on foundational benchmarks? Here's the full picture:</p>
+<img src="/wp-content/uploads/qwen-3-5-moe-comparison.webp"
+     alt="Benchmark comparison table of Qwen3.5-397B-A17B vs Qwen3-235B-A22B, GLM-4.5-355B, DeepSeek-V3.2-671B, and K2-IT across General Knowledge, Reasoning, STEM, and Coding"
+     width="680" height="547" class="aligncenter" />
+<p style="text-align:center;font-size:14px;color:#666;margin-top:-8px;"><em>Qwen 3.5 leads across most categories despite activating only 17B parameters — fewer than any competitor in this comparison.</em></p>
+
+
+<h2 id="architecture">Architecture Deep Dive</h2>
+
+<p>
+  Qwen 3.5 introduces a <strong>hybrid architecture</strong> that combines two different attention mechanisms. This is one of the most technically interesting aspects of the model and directly explains its efficiency gains.
+</p>
+
+<h3>Gated DeltaNet (Linear Attention)</h3>
+<p>
+  The majority of layers use <strong>Gated DeltaNet</strong>, a linear attention mechanism originally explored in the Qwen 3 Next experimental family. Unlike standard quadratic attention (where compute scales with the square of context length), linear attention scales linearly. This means Qwen 3.5 can process long contexts — up to 1M tokens — without the memory explosion that plagues traditional transformers.
+</p>
+<p>
+  In practical terms: longer prompts consume significantly less GPU memory than they would with a standard attention model of equivalent quality.
+</p>
+
+<h3>Gated Attention (Standard)</h3>
+<p>
+  A subset of layers still uses traditional gated attention for tasks that benefit from full quadratic attention. The model learns when to use each mechanism, creating a best-of-both-worlds approach: efficient processing for most tokens, with full-power attention where it matters most.
+</p>
+
+<h3>Sparse Mixture of Experts</h3>
+<p>
+  On top of the hybrid attention, Qwen 3.5 uses an MoE architecture with <strong>512 total experts</strong>. For each token, only <strong>11 experts</strong> are activated (10 routed + 1 shared), keeping inference fast. The result: the model has access to 397B parameters of knowledge while only running 17B parameters' worth of compute per token.
+</p>
+
+<h3>Unified Vision-Language Model</h3>
+<p>
+  Previous <a href="/qwen-vision/">Qwen vision models</a> required a separate VL (Vision-Language) variant. Qwen 3.5 merges everything into a single checkpoint. Vision capabilities are built in through early fusion — not bolted on as an adapter. This means the same model that writes code, answers questions, and reasons through math can also analyze images and watch videos. For image <em>generation</em> rather than understanding, see <a href="/qwen-image/">Qwen-Image-2.0</a> — Alibaba's dedicated 7B text-to-image and editing model.
+</p>
+
+<h3>Inference Speed: Decode Throughput</h3>
+<p>The hybrid architecture pays off massively in inference speed. Thanks to Gated DeltaNet's linear scaling, Qwen 3.5 is dramatically faster than previous Qwen models — especially at long contexts:</p>
+<img src="/wp-content/uploads/qwen-3-5-decode-throughput.webp"
+     alt="Decode throughput comparison showing Qwen3.5-397B-A17B is 8.6x faster than Qwen3-Max at 32K context and 19x faster at 256K context"
+     width="679" height="288" class="aligncenter" />
+<p style="text-align:center;font-size:14px;color:#666;margin-top:-8px;"><em>Qwen 3.5 decode throughput: 8.6× faster at 32K and 19× faster at 256K context vs Qwen3-Max.</em></p>
+
+
+<h2 id="benchmarks">Benchmarks vs GPT-5.2, Claude Opus 4.5 &amp; Gemini 3 Pro</h2>
+
+<p>
+  Qwen 3.5 was evaluated against the current frontier models across a wide range of benchmarks. The results show it's competitive across the board, with particular strengths in instruction following, multimodal document understanding, and agentic tasks.
+</p>
+
+<div class="qwen-table-wrapper">
+<table class="qwen-table">
+<thead>
+<tr>
+  <th>Benchmark</th>
+  <th>Category</th>
+  <th>Qwen3.5</th>
+  <th>GPT-5.2</th>
+  <th>Claude Opus 4.5</th>
+  <th>Gemini 3 Pro</th>
+</tr>
+</thead>
+<tbody>
+<tr><td><strong>MMLU-Pro</strong></td><td>Knowledge</td><td>87.8</td><td>87.4</td><td>89.5</td><td>89.8</td></tr>
+<tr><td><strong>GPQA</strong></td><td>Doctoral Science</td><td>88.4</td><td>92.4</td><td>87.0</td><td>91.9</td></tr>
+<tr><td><strong>IFBench</strong></td><td>Instruction Following</td><td><strong>76.5 🥇</strong></td><td>75.4</td><td>58.0</td><td>70.4</td></tr>
+<tr><td><strong>MultiChallenge</strong></td><td>Complex Reasoning</td><td><strong>67.6 🥇</strong></td><td>57.9</td><td>54.2</td><td>64.2</td></tr>
+<tr><td><strong>SWE-bench Verified</strong></td><td>Coding</td><td>76.4</td><td>80.0</td><td><strong>80.9</strong></td><td>76.2</td></tr>
+<tr><td><strong>LiveCodeBench v6</strong></td><td>Live Coding</td><td>83.6</td><td>87.7</td><td>84.8</td><td><strong>90.7</strong></td></tr>
+<tr><td><strong>HLE</strong></td><td>Humanity's Last Exam</td><td>28.7</td><td>35.5</td><td>30.8</td><td><strong>37.5</strong></td></tr>
+<tr><td><strong>MMMU</strong></td><td>Multimodal Understanding</td><td>85.0</td><td>86.7</td><td>80.7</td><td><strong>87.2</strong></td></tr>
+<tr><td><strong>MathVision</strong></td><td>Multimodal Math</td><td><strong>88.6 🥇</strong></td><td>83.0</td><td>74.3</td><td>86.6</td></tr>
+<tr><td><strong>OmniDocBench1.5</strong></td><td>Document Understanding</td><td><strong>90.8 🥇</strong></td><td>85.7</td><td>87.7</td><td>88.5</td></tr>
+<tr><td><strong>BrowseComp</strong></td><td>Browser Automation</td><td><strong>69.0 🥇</strong></td><td>65.8</td><td>67.8</td><td>59.2</td></tr>
+<tr><td><strong>NOVA-63</strong></td><td>Agentic Tasks</td><td><strong>59.1 🥇</strong></td><td>54.6</td><td>56.7</td><td>56.7</td></tr>
+<tr><td><strong>AndroidWorld</strong></td><td>Mobile Automation</td><td><strong>66.8 🥇</strong></td><td>—</td><td>—</td><td>—</td></tr>
+</tbody>
+</table>
+</div>
+
+<img src="/wp-content/uploads/qwen-3-5-benchmarks-chart.webp"
+     alt="Bar chart comparing Qwen3.5-397B-A17B against GPT-5.2, Claude Opus 4.5, and Gemini 3 Pro across 12 benchmarks including IFBench, GPQA, BrowseComp, MMMU, SWE-bench, and more"
+     width="680" height="440" class="aligncenter" />
+<p style="text-align:center;font-size:14px;color:#666;margin-top:-8px;"><em>Visual comparison across 12 major benchmarks — Qwen 3.5 (purple) leads on instruction following, agentic tasks, and document understanding.</em></p>
+
+<h3>Full Benchmark Details</h3>
+<p>For a more granular view, here are the complete benchmark tables covering text-only and multimodal evaluations:</p>
+<img src="/wp-content/uploads/qwen-3-5-benchmarks-table-text.webp"
+     alt="Detailed benchmark table for text capabilities: Knowledge, Instruction Following, Long Context, STEM, Reasoning, Agentic, Search Agent, Multilingual, and Coding Agent scores"
+     width="361" height="680" class="aligncenter" />
+<p style="text-align:center;font-size:14px;color:#666;margin-top:-8px;"><em>Text benchmark results — note the dominant performance on Agentic and Search Agent categories.</em></p>
+
+<img src="/wp-content/uploads/qwen-3-5-benchmarks-table-multimodal.webp"
+     alt="Detailed benchmark table for multimodal capabilities: STEM and Math, General QA, Text Recognition, Natural Language Understanding, Video Understanding, Visual Agent, and Medical scores"
+     width="366" height="679" class="aligncenter" />
+<p style="text-align:center;font-size:14px;color:#666;margin-top:-8px;"><em>Multimodal benchmark results — leading scores in Visual Agent and Document Understanding categories.</em></p>
+
+<h3>Key Takeaways</h3>
+<ul>
+  <li><strong>Qwen 3.5 leads in</strong>: instruction following (IFBench), multimodal math (MathVision), document understanding (OmniDocBench), and all agentic benchmarks (BrowseComp, NOVA-63, AndroidWorld).</li>
+  <li><strong>Claude Opus 4.5 leads in</strong>: real-world coding tasks (SWE-bench Verified at 80.9).</li>
+  <li><strong>Gemini 3 Pro leads in</strong>: competitive programming (LiveCodeBench), HLE, and general multimodal understanding (MMMU).</li>
+  <li><strong>GPT-5.2 leads in</strong>: doctoral-level science (GPQA) and abstract reasoning (ARC-AGI-2 at 54.2%).</li>
+</ul>
+
+<p>
+  Worth noting: Qwen 3.5 outperforms the previous closed-source <a href="/qwen-max/">Qwen3-Max-Thinking</a> on most benchmarks — meaning an open-weight, Apache 2.0 model now exceeds what was Alibaba's best proprietary offering just months ago.
+</p>
+
+<div style="display:flex;justify-content:center;margin:24px 0;">
+  <blockquote class="twitter-tweet" data-conversation="none" data-media-max-width="560"><p lang="en" dir="ltr">Qwen3.5 benchmarks</p>&mdash; Qwen (@Alibaba_Qwen) <a href="https://twitter.com/Alibaba_Qwen/status/2023334590409330801?ref_src=twsrc%5Etfw">February 16, 2026</a></blockquote>
+</div>
+
+
+<h2 id="multimodal">Multimodal Capabilities</h2>
+
+<p>
+  Qwen 3.5 is a unified vision-language model. It processes text, images, and video through a single architecture — no need for a separate VL model. Here's what it can handle:
+</p>
+
+<h3>Image Understanding</h3>
+<ul>
+  <li><strong>Document analysis</strong>: Charts, graphs, tables, PDFs, handwritten notes — scores 90.8 on OmniDocBench1.5, the best of any model tested.</li>
+  <li><strong>Medical imaging</strong>: Community testers report strong performance with X-rays, histopathology slides, and dermatology images — producing structured diagnoses with appropriate caveats.</li>
+  <li><strong>Technical diagrams</strong>: Can parse complex numerical graphs and explain them in accessible language.</li>
+  <li><strong>Creative tasks</strong>: SVG generation from reference photos, wireframe-to-code conversion from hand-drawn sketches.</li>
+</ul>
+
+<h3>Video Understanding</h3>
+<ul>
+  <li>Accepts video input up to <strong>2 hours</strong> in length.</li>
+  <li>Accurately describes scenes, counts animals/objects, identifies locations, and summarizes action sequences.</li>
+  <li>Community tests with African savanna footage showed correct animal counts and accurate location guesses (Serengeti, Tanzania / Masai Mara, Kenya).</li>
+</ul>
+
+<h3>Code from Vision</h3>
+<p>
+  One of the most practical multimodal use cases: Qwen 3.5 can take a hand-drawn wireframe and generate functional HTML/CSS/JS. Community testers built complete portfolio websites, browser-based OS interfaces (with working calculators, games, and settings panels), and even 3D simulations — all from text or image prompts.
+</p>
+
+
+<h2 id="agentic">Agentic AI Features</h2>
+
+<p>
+  Alibaba positions Qwen 3.5 as a model for the "agentic AI era." This isn't just marketing — the benchmarks back it up. Qwen 3.5 leads on every agent-focused evaluation:
+</p>
+
+<ul>
+  <li><strong>BrowseComp</strong> (browser automation): 69.0 — beats GPT-5.2 (65.8) and Claude Opus 4.5 (67.8).</li>
+  <li><strong>NOVA-63</strong> (general agentic tasks): 59.1 — top of the field.</li>
+  <li><strong>AndroidWorld</strong> (mobile app automation): 66.8 — a benchmark where competitors haven't even published scores.</li>
+</ul>
+
+<p>
+  In practice, this means Qwen 3.5 can independently interact with mobile and desktop applications, take actions across apps, fill out forms, navigate websites, and complete multi-step workflows. Combined with its vision capabilities, it can literally see what's on screen and act on it.
+</p>
+
+<img src="/wp-content/uploads/qwen-3-5-agentic-scaling.webp"
+     alt="Graph showing Average Ranking vs Environment Scaling — Qwen3.5-397B-A17B achieves top ranking as training environments increase, surpassing Claude Opus 4.5, GPT-5.2, and Gemini 3 Pro"
+     width="680" height="399" class="aligncenter" />
+<p style="text-align:center;font-size:14px;color:#666;margin-top:-8px;"><em>Agentic scaling: Qwen 3.5 (Thinking) achieves the best average ranking as the number of training environments increases.</em></p>
+
+<div style="display:flex;justify-content:center;margin:24px 0;">
+  <blockquote class="twitter-tweet" data-conversation="none" data-media-max-width="560"><p lang="en" dir="ltr">Qwen3.5 visual agentic capabilities</p>&mdash; Qwen (@Alibaba_Qwen) <a href="https://twitter.com/Alibaba_Qwen/status/2023336014975275206?ref_src=twsrc%5Etfw">February 16, 2026</a></blockquote>
+</div>
+
+<h3>Tool Use &amp; Function Calling</h3>
+<p>
+  Qwen 3.5 supports native <strong>function calling</strong>, <strong>structured output</strong> (JSON mode), and <strong>tool use</strong>. The API is OpenAI-compatible, making it a drop-in replacement in many existing workflows. It also powers <strong>Qwen Code</strong>, Alibaba's developer CLI for delegating coding tasks via natural language.
+</p>
+
+<div style="display:flex;justify-content:center;margin:24px 0;">
+  <blockquote class="twitter-tweet" data-conversation="none" data-media-max-width="560"><p lang="en" dir="ltr">Introducing Qwen Code</p>&mdash; Qwen (@Alibaba_Qwen) <a href="https://twitter.com/Alibaba_Qwen/status/2023339169217728723?ref_src=twsrc%5Etfw">February 16, 2026</a></blockquote>
+</div>
+
+
+<h2 id="pricing">API Pricing</h2>
+
+<p>
+  Qwen 3.5 is available through Alibaba Cloud's Model Studio as <strong>Qwen3.5-Plus</strong>. The pricing is aggressive — significantly cheaper than competing frontier models:
+</p>
+
+<div class="qwen-table-wrapper">
+<table class="qwen-table">
+<thead>
+<tr>
+  <th>Context Range</th>
+  <th>Input (per 1M tokens)</th>
+  <th>Output (per 1M tokens)</th>
+</tr>
+</thead>
+<tbody>
+<tr><td><strong>0–256K tokens</strong></td><td>$0.40</td><td>$2.40</td></tr>
+<tr><td><strong>256K–1M tokens</strong></td><td>$1.20</td><td>$7.20</td></tr>
+</tbody>
+</table>
+</div>
+
+<ul>
+  <li><strong>Batch mode</strong>: 50% discount for asynchronous batch processing.</li>
+  <li><strong>Thinking mode</strong>: Same price regardless of whether thinking is enabled or disabled — no separate thinking surcharge.</li>
+  <li><strong>Model ID</strong>: <code>qwen3.5-plus-2026-02-15</code></li>
+</ul>
+
+<p>
+  For reference, this pricing is <strong>roughly 70% cheaper</strong> than GPT-5 series API calls for comparable tasks, and <strong>about 60% cheaper</strong> than previous Qwen models. In the Chinese market, pricing starts as low as ¥0.8 per million tokens — approximately 1/18th the cost of Gemini 3 Pro.
+</p>
+
+<p>
+  Qwen 3.5 is also available for free testing on <a href="/chat/">chat.qwen.ai</a> with rate limits.
+</p>
+
+
+<h2 id="run-locally">Running Locally</h2>
+
+<p>
+  With 397B total parameters, Qwen 3.5 is a large model — but the MoE architecture means RAM requirements are based on total parameters (all experts must be loaded), not just active parameters. Here's what you need:
+</p>
+
+<h3>Hardware Requirements</h3>
+
+<div class="qwen-table-wrapper">
+<table class="qwen-table">
+<thead>
+<tr>
+  <th>Quantization</th>
+  <th>Approx. Size</th>
+  <th>Minimum RAM/VRAM</th>
+  <th>Recommended Hardware</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>BF16 (full precision)</td><td>~780 GB</td><td>800+ GB</td><td>Multi-GPU server (4–8× A100 80GB)</td></tr>
+<tr><td>Q8_0</td><td>~400 GB</td><td>420+ GB</td><td>Mac Studio 512GB / Multi-GPU</td></tr>
+<tr><td>Q4_K_XL</td><td>~220 GB</td><td>240+ GB</td><td>Mac Studio 256GB / 2× RTX 5090</td></tr>
+<tr><td>Q2_K_XL</td><td>~140 GB</td><td>160+ GB</td><td>Mac Studio 192GB (slow)</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>
+  <strong>Important</strong>: the 128GB unified memory Macs (M4 Max, etc.) are <em>not enough</em> to run Qwen 3.5, even at aggressive quantization levels. You need at least <strong>256GB</strong> of unified memory, which means a Mac Studio or Mac Pro. For more details on hardware options, see our <a href="/hardware-requirements/">hardware requirements guide</a>.
+</p>
+
+<h3>Supported Frameworks</h3>
+<ul>
+  <li><strong>HuggingFace Transformers</strong> — requires latest version</li>
+  <li><strong>vLLM</strong> ≥ 0.8.5</li>
+  <li><strong>SGLang</strong> ≥ 0.4.6.post1</li>
+  <li><strong>Ollama</strong> — via GGUF format</li>
+  <li><strong>LM Studio</strong> — via GGUF format</li>
+  <li><strong>llama.cpp</strong> — via GGUF format</li>
+</ul>
+
+<p>
+  GGUF quantizations are available from <a href="https://huggingface.co/unsloth/Qwen3.5-397B-A17B-GGUF" target="_blank" rel="noopener noreferrer">Unsloth on HuggingFace</a> in formats ranging from Q2_K to Q8_0. For a complete local deployment walkthrough, check our <a href="/run-locally/">Run Qwen Locally</a> guide.
+</p>
+
+
+<h2 id="api-usage">API &amp; Developer Guide</h2>
+
+<p>
+  The Qwen 3.5 API is <strong>OpenAI-compatible</strong>, which means you can use existing OpenAI SDK clients by simply changing the base URL and API key. Here's a quick start:
+</p>
+
+<h3>Python (OpenAI SDK)</h3>
+<pre><code>from openai import OpenAI
+
+client = OpenAI(
+    api_key="YOUR_DASHSCOPE_API_KEY",
+    base_url="https://dashscope-intl.aliyuncs.com/compatible-mode/v1"
+)
+
+response = client.chat.completions.create(
+    model="qwen3.5-plus-2026-02-15",
+    messages=[
+        {"role": "user", "content": "Explain quantum entanglement simply."}
+    ],
+    extra_body={"enable_thinking": True}  # Toggle thinking mode
+)
+
+print(response.choices[0].message.content)
+</code></pre>
+
+<h3>Multimodal (Image Input)</h3>
+<pre><code>response = client.chat.completions.create(
+    model="qwen3.5-plus-2026-02-15",
+    messages=[{
+        "role": "user",
+        "content": [
+            {"type": "image_url", "image_url": {"url": "https://example.com/chart.png"}},
+            {"type": "text", "text": "Explain this chart in simple words."}
+        ]
+    }]
+)
+</code></pre>
+
+<h3>Recommended Sampling Parameters</h3>
+
+<div class="qwen-table-wrapper">
+<table class="qwen-table">
+<thead>
+<tr>
+  <th>Mode</th>
+  <th>Temperature</th>
+  <th>Top-P</th>
+  <th>Top-K</th>
+  <th>Presence Penalty</th>
+</tr>
+</thead>
+<tbody>
+<tr><td><strong>Thinking mode</strong></td><td>0.6</td><td>0.95</td><td>20</td><td>0.0</td></tr>
+<tr><td><strong>Standard mode</strong></td><td>0.7</td><td>0.8</td><td>20</td><td>1.5</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>
+  <strong>Recommended max output tokens</strong>: 32,768 for general queries; up to 81,920 for complex math/coding tasks. The API also supports <strong>structured output</strong> (JSON mode) and <strong>function calling</strong> for tool-use workflows.
+</p>
+
+
+<h2 id="community">Community Testing Highlights</h2>
+
+<p>
+  Within hours of launch, the community began stress-testing Qwen 3.5 across creative, technical, and practical tasks. Here are the standout results:
+</p>
+
+<h3>Coding &amp; Creative Generation</h3>
+<ul>
+  <li><strong>Browser OS</strong>: Generated a fully interactive browser-based operating system with working calculator, snake game, memory game, settings panel with wallpaper customization, and a Matrix-style screensaver — from a single prompt.</li>
+  <li><strong>3D Games</strong>: Created functional 3D games (flight combat simulator, naval combat, jet ski simulator, Cube Runner 3D) in JavaScript without external libraries — using raw math only.</li>
+  <li><strong>SVG from Photos</strong>: Converted real photographs into detailed SVG replicas, capturing colors, shadows, and composition with notably higher fidelity than previous open-source models.</li>
+  <li><strong>Wireframe to Code</strong>: Turned hand-drawn portfolio wireframes into fully functional, styled portfolio websites with iterative improvement (the second attempt was described as significantly better than the first).</li>
+</ul>
+
+<h3>Vision &amp; Medical Reasoning</h3>
+<ul>
+  <li><strong>Graph Analysis</strong>: Given a complex numerical chart, produced an explanation that was described as "a masterclass in making complex numerical analysis accessible" — breaking down axes, curves, and key takeaways with concrete examples.</li>
+  <li><strong>Medical Imaging</strong>: When given X-rays, histopathology, and dermatology images in a single prompt, produced a structured clinical assessment bridging multiple specialties — radiology, pathology, and lab interpretation — into a coherent diagnostic picture, plus a compassionate draft patient email.</li>
+  <li><strong>Video Analysis</strong>: Accurately described an African savanna scene from video, correctly counting animals, identifying species (lions, zebras, deer), and guessing the filming location as Serengeti/Masai Mara.</li>
+</ul>
+
+<h3>Creative Writing</h3>
+<ul>
+  <li>Given an AI-generated image of two people in a room, produced a detailed romance novel outline with character backstories, motivations tied to visual cues in the image, a three-act structure, and even context for the specific cover image moment. Then successfully pivoted to a horror/true-crime version on request.</li>
+</ul>
+
+<p>
+  Testers consistently noted that Qwen 3.5's <strong>language quality</strong> has improved significantly — responses are more targeted, less embellished, and show better structural organization compared to previous versions.
+</p>
+
+<div style="display:flex;justify-content:center;margin:24px 0;">
+  <blockquote class="twitter-tweet" data-conversation="none" data-media-max-width="560"><p lang="en" dir="ltr">Qwen ecosystem and community</p>&mdash; Qwen (@Alibaba_Qwen) <a href="https://twitter.com/Alibaba_Qwen/status/2023341532678631870?ref_src=twsrc%5Etfw">February 16, 2026</a></blockquote>
+</div>
+
+
+<h2 id="faq">Frequently Asked Questions</h2>
+
+<div class="qwen-section">
+<h3>Is Qwen 3.5 Plus a different model from Qwen 3.5?</h3>
+<p>
+  No. <strong>Qwen3.5-Plus</strong> is simply the hosted API version of the open-weight Qwen3.5-397B-A17B model, available through Alibaba Cloud's Model Studio. It comes with production features like a default 1M context window and built-in tool integration. The underlying model weights are the same.
+</p>
+
+<h3>Can I run Qwen 3.5 on my Mac?</h3>
+<p>
+  Only if you have a <strong>Mac Studio or Mac Pro with at least 256GB unified memory</strong>. The 128GB M4 Max systems are too small, even with aggressive quantization. The Q4_K_XL quantization needs ~220GB of storage plus ~240GB of RAM. See our <a href="/hardware-requirements/">hardware requirements</a> page for details.
+</p>
+
+<h3>How does Qwen 3.5 compare to Qwen 3?</h3>
+<p>
+  Qwen 3.5 brings three major upgrades: (1) a <strong>hybrid attention architecture</strong> that dramatically reduces memory usage at long contexts, (2) <strong>unified multimodal capabilities</strong> — no separate VL model needed, and (3) a <strong>69% larger vocabulary</strong> (250K vs 148K tokens) enabling better multilingual performance across 201 languages. It also outperforms the closed-source Qwen3-Max-Thinking on most benchmarks. See our full <a href="/qwen-3/">Qwen 3 guide</a> for the previous generation's specs.
+</p>
+
+<h3>Is fine-tuning available?</h3>
+<p>
+  Fine-tuning is <strong>not yet available</strong> through Alibaba Cloud's Model Studio as of launch. However, since the model is Apache 2.0 and weights are on HuggingFace, community fine-tuning with tools like LoRA/QLoRA is possible for those with sufficient hardware.
+</p>
+
+<h3>What's the thinking mode?</h3>
+<p>
+  Like <a href="/qwq/">QwQ</a> and other reasoning models, Qwen 3.5 can output its internal reasoning process in <code>&lt;think&gt;...&lt;/think&gt;</code> tags before giving a final answer. This is enabled by default and can be toggled off via the API parameter <code>enable_thinking: false</code>. Both modes cost the same — no pricing premium for thinking.
+</p>
+
+<h3>What languages does it support?</h3>
+<p>
+  Qwen 3.5 supports <strong>201 languages and dialects</strong>, up from 119 in Qwen 3. The expanded 250K-token vocabulary enables 10–60% cost reduction for multilingual applications through more efficient tokenization.
+</p>
+</div>
+
+
+<section class="qwen-feature-highlight">
+<div class="feature-highlight-header">
+<h2>Bottom Line</h2>
+</div>
+<div class="feature-highlight-body">
+<p>
+  Qwen 3.5 is a genuinely competitive frontier model that's free to use, free to deploy, and free to modify. It leads on agentic benchmarks, matches or exceeds GPT-5.2 on instruction following and document understanding, and brings unified vision-language capabilities to the open-source world for the first time at this quality level. The aggressive API pricing makes it viable for production workloads, and the Apache 2.0 license means you can self-host without restrictions.
+</p>
+<p>
+  <strong>If you're building AI agents, processing documents at scale, or need a capable multimodal model without vendor lock-in — Qwen 3.5 should be at the top of your evaluation list.</strong>
+</p>
+</div>
+</section>
+`;
+---
+<BaseLayout title="Qwen 3.5 — Alibaba's Flagship Open-Source Model" seoTitle="Qwen 3.5: Specs, Benchmarks, Pricing & How to Use (2026)" seoDescription="Complete guide to Qwen 3.5 (397B MoE): benchmarks vs GPT-5.2 & Claude, API pricing, local deployment, multimodal features. Apache 2.0 open-source.">
+  <article class="qwen-container">
+    <h1>Qwen 3.5: Complete Guide to Alibaba's Flagship Open-Source Model</h1>
+    <Fragment set:html={rawHtml} />
+  </article>
+  <script is:inline async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+</BaseLayout>

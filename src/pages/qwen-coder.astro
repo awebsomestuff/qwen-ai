@@ -1,0 +1,468 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+const rawHtml = `
+<p>
+  <strong>Qwen3-Coder-Next</strong> is Alibaba Cloud's newest code-focused AI model, launched on <strong>February 3, 2026</strong>. Built on a <strong>Mixture-of-Experts (MoE)</strong> architecture with 80 billion total parameters but only <strong>3 billion active</strong> during inference, it delivers frontier-level coding performance at a fraction of the compute cost. The model supports a massive <strong>256K token context window</strong>, native tool calling, and agentic workflows — making it one of the most efficient open-source coding models available today under the <a href="https://www.apache.org/licenses/LICENSE-2.0" target="_blank" rel="noopener noreferrer">Apache 2.0 license</a>.
+</p>
+<div class="ad-afterintro-container"><div class="ad-afterintro-inner"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9609544329602409" data-ad-slot="8310388095" data-ad-format="auto" data-full-width-responsive="true"></ins></div></div>
+
+<div class="qwen-container" style="text-align:center;margin-bottom:30px;">
+  <div class="qwen-row" style="justify-content:center;">
+    <div class="qwen-col">
+      <a class="qwen-button pro" href="https://huggingface.co/Qwen/Qwen3-Coder-Next" target="_blank" rel="nofollow noopener noreferrer">
+        <span class="button-content"><span class="button-text">Download Qwen3-Coder-Next on Hugging Face</span></span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<p>
+  What makes Qwen3-Coder-Next stand out isn't just raw intelligence — it's <em>how</em> that intelligence is delivered. With only 3B parameters active per token (out of 512 experts), inference speeds reach <strong>60–70 tokens per second</strong> on consumer hardware. Early testers have reported running six simultaneous inference windows at a combined 150 tokens/second using batch processing. This model isn't designed to just autocomplete your code — it's trained to <strong>autonomously debug, test, and fix</strong> real-world software. For the broader Qwen ecosystem, check the <a href="/qwen-3/">Qwen 3 family overview</a>.
+</p>
+
+<div class="qwen-toc">
+  <p class="qwen-toc-label">In This Guide</p>
+  <div class="qwen-toc-grid">
+    <a href="#key-specs" class="qwen-toc-chip">Key Specs</a>
+    <a href="#architecture" class="qwen-toc-chip">Architecture</a>
+    <a href="#from-assistant-to-agent" class="qwen-toc-chip">From Assistant to Agent</a>
+    <a href="#benchmarks" class="qwen-toc-chip">Benchmarks</a>
+    <a href="#available-variants" class="qwen-toc-chip">Variants</a>
+    <a href="#run-locally" class="qwen-toc-chip qwen-toc-highlight">Run Locally</a>
+    <a href="#hardware-requirements" class="qwen-toc-chip">Hardware Reqs</a>
+    <a href="#field-tests" class="qwen-toc-chip">Field Tests</a>
+    <a href="#agentic-capabilities" class="qwen-toc-chip">Agentic &amp; IDE</a>
+    <a href="#limitations" class="qwen-toc-chip">Limitations</a>
+    <a href="#conclusion" class="qwen-toc-chip">Verdict</a>
+  </div>
+</div>
+
+<h2 id="key-specs">Key Specifications</h2>
+<div class="qwen-table-wrapper">
+  <table class="qwen-table">
+    <tbody>
+      <tr>
+        <td><strong>Developer</strong></td>
+        <td>Alibaba Cloud — Qwen Team</td>
+      </tr>
+      <tr>
+        <td><strong>Release Date</strong></td>
+        <td>February 3, 2026</td>
+      </tr>
+      <tr>
+        <td><strong>Total Parameters</strong></td>
+        <td>80 billion (79B non-embedding)</td>
+      </tr>
+      <tr>
+        <td><strong>Active Parameters</strong></td>
+        <td>3 billion per token</td>
+      </tr>
+      <tr>
+        <td><strong>Architecture</strong></td>
+        <td>Hybrid MoE — Gated DeltaNet + Gated Attention</td>
+      </tr>
+      <tr>
+        <td><strong>Total Experts</strong></td>
+        <td>512 (10 active + 1 shared per token)</td>
+      </tr>
+      <tr>
+        <td><strong>Context Length</strong></td>
+        <td>262,144 tokens (256K native), up to ~1M with YaRN</td>
+      </tr>
+      <tr>
+        <td><strong>Layers</strong></td>
+        <td>48 (hybrid layout)</td>
+      </tr>
+      <tr>
+        <td><strong>Hidden Dimension</strong></td>
+        <td>2,048</td>
+      </tr>
+      <tr>
+        <td><strong>License</strong></td>
+        <td>Apache 2.0 (fully open, commercial use allowed)</td>
+      </tr>
+      <tr>
+        <td><strong>Thinking Mode</strong></td>
+        <td>Non-thinking only (no &lt;think&gt; blocks)</td>
+      </tr>
+      <tr>
+        <td><strong>Key Strengths</strong></td>
+        <td>Agentic coding, tool calling, error recovery, long-horizon reasoning</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<h2 id="architecture">Architecture: Hybrid MoE with Gated DeltaNet</h2>
+<p>
+  Qwen3-Coder-Next introduces a novel hybrid architecture that sets it apart from traditional transformer-based coding models. Each of its 48 layers follows a repeating pattern: <strong>12 × (3 × Gated DeltaNet → MoE + 1 × Gated Attention → MoE)</strong>. This design combines two complementary attention mechanisms:
+</p>
+<ul>
+  <li><strong>Gated DeltaNet</strong> — A linear attention variant with 32 value heads and 16 query/key heads (128-dim each). This mechanism is specifically optimized for long-horizon reasoning and efficient context handling, allowing the model to process massive codebases without the quadratic memory cost of full attention.</li>
+  <li><strong>Gated Attention</strong> — Traditional multi-head attention with 16 query heads, 2 key/value heads, and 256-dim heads plus 64-dim rotary position embeddings. This handles tasks that require precise token-level attention patterns.</li>
+</ul>
+<p>
+  The MoE layer routes each token to <strong>10 out of 512 available experts</strong> (plus 1 shared expert), each with a compact 512-dimensional intermediate size. This extreme sparsity is what allows the model to have 80B total parameters while only activating 3B — achieving what researchers call the <strong>"Pareto frontier"</strong> of efficiency: maximum intelligence at minimum compute cost.
+</p>
+<p>
+  A critical practical benefit: the hybrid attention design means context length can scale to 256K tokens without the massive VRAM ballooning typically seen with standard self-attention models. Early testers have confirmed that running at 65K context on quantized versions keeps memory usage well within consumer hardware limits.
+</p>
+
+<h2 id="from-assistant-to-agent">From Assistant to Agent: The Paradigm Shift</h2>
+<p>
+  Previous coding models were essentially sophisticated autocomplete engines — they predicted the next token based on training patterns. Qwen3-Coder-Next represents a fundamental shift from <strong>code assistance to code agency</strong>.
+</p>
+<p>
+  The model was trained with what Alibaba calls <strong>"agentic training signals"</strong> across over <strong>800,000 verifiable tasks</strong>. Instead of learning from static code examples, it was trained in a simulator-like environment where it could write code, execute it, observe failures, and iteratively correct until the tests pass — all without human intervention.
+</p>
+<p>
+  In practice, this means Qwen3-Coder-Next can:
+</p>
+<div class="qwen-grid qwen-grid-cols-2">
+  <div class="feature-item"><strong>Write & Execute</strong>: Generate code, open a terminal, run tests, and read error output autonomously.</div>
+  <div class="feature-item"><strong>Self-Correct</strong>: Identify failing logic, write unit tests to prove the failure, fix the code, and verify — all in a single loop.</div>
+  <div class="feature-item"><strong>Use Tools</strong>: Native tool calling support allows integration with browsers, file systems, and external APIs.</div>
+  <div class="feature-item"><strong>Recover from Failures</strong>: Long-horizon reasoning lets it backtrack from dead ends rather than getting stuck in loops.</div>
+</div>
+<p>
+  Community testers have demonstrated the model taking a real bug from an open-source repository, identifying edge-case validation failures, writing a unit test, fixing the code, and verifying the solution — all in approximately <strong>45 seconds</strong>.
+</p>
+
+<h2 id="benchmarks">Benchmarks & Performance</h2>
+<p>
+  Qwen3-Coder-Next positions itself on the <strong>Pareto frontier</strong> of coding model efficiency — delivering near-frontier performance at a fraction of the compute cost of larger models.
+</p>
+<div class="qwen-table-wrapper">
+  <table class="qwen-table">
+    <thead>
+      <tr>
+        <th>Benchmark</th>
+        <th>Qwen3-Coder-Next</th>
+        <th>Key Comparison</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>SWE-Bench (Coding Agents)</strong></td>
+        <td><strong>70.5%</strong></td>
+        <td>Outperforms DeepSeek V2.5, GLM 4.7</td>
+      </tr>
+      <tr>
+        <td><strong>SWE-Bench Pro</strong></td>
+        <td><strong>44%</strong></td>
+        <td>Near Claude Sonnet with 3B active params</td>
+      </tr>
+      <tr>
+        <td><strong>Active Parameters</strong></td>
+        <td><strong>3B</strong></td>
+        <td>10–20× more efficient than comparable models</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<figure style="margin:2em 0;text-align:center;">
+  <img src="/wp-content/uploads/2026/02/qwen3-coder-benchmarks.webp" alt="Qwen3-Coder-Next performance on coding agent benchmarks — SWE-Bench Verified, Multilingual, Pro, Terminal-Bench, and Aider compared to DeepSeek-V3.2, GLM-4.7, and MiniMax M2.1" width="900" height="395" loading="lazy" style="max-width:100%;height:auto;border-radius:8px;" />
+  <figcaption style="margin-top:0.5em;font-size:0.9em;color:#6b7280;">Qwen3-Coder-Next vs. DeepSeek-V3.2, GLM-4.7, and MiniMax M2.1 across five coding agent benchmarks.</figcaption>
+</figure>
+<p>
+  On SWE-Bench, the standard benchmark for autonomous software engineering, the model achieves <strong>70.5% accuracy</strong> — navigating large repositories, identifying bugs, and generating fixes autonomously. This surpasses models like DeepSeek V2.5 and GLM 4.7, and sits close to Claude Sonnet on specific coding tasks, although Claude Opus 4.5 still leads overall. The key differentiator is efficiency: Qwen3-Coder-Next achieves these scores with dramatically fewer active parameters than any competitor in its performance tier.
+</p>
+<figure style="margin:2em 0;text-align:center;">
+  <img src="/wp-content/uploads/2026/02/qwen3-coder-swebench-pro.webp" alt="Pareto frontier chart showing Qwen3-Coder-Next achieving 44% on SWE-Bench Pro with only 3B active parameters versus Claude Opus 4.5, DeepSeek-V3.2, GLM-4.7, and others" width="900" height="483" loading="lazy" style="max-width:100%;height:auto;border-radius:8px;" />
+  <figcaption style="margin-top:0.5em;font-size:0.9em;color:#6b7280;">SWE-Bench Pro Pareto frontier — Qwen3-Coder-Next delivers near-frontier performance with 10–20× fewer active parameters.</figcaption>
+</figure>
+
+<h2 id="available-variants">Available Variants on Hugging Face</h2>
+<p>
+  The model is available in four official variants, all released under Apache 2.0:
+</p>
+<div class="qwen-table-wrapper">
+  <table class="qwen-table">
+    <thead>
+      <tr>
+        <th>Variant</th>
+        <th>Description</th>
+        <th>Best For</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a href="https://huggingface.co/Qwen/Qwen3-Coder-Next" target="_blank" rel="nofollow noopener noreferrer"><strong>Qwen3-Coder-Next</strong></a></td>
+        <td>Full BF16 instruct model (safetensors)</td>
+        <td>Multi-GPU server deployment with SGLang/vLLM</td>
+      </tr>
+      <tr>
+        <td><a href="https://huggingface.co/Qwen/Qwen3-Coder-Next-FP8" target="_blank" rel="nofollow noopener noreferrer"><strong>Qwen3-Coder-Next-FP8</strong></a></td>
+        <td>FP8 quantized (block size 128)</td>
+        <td>Reduced VRAM with near-lossless quality</td>
+      </tr>
+      <tr>
+        <td><a href="https://huggingface.co/Qwen/Qwen3-Coder-Next-Base" target="_blank" rel="nofollow noopener noreferrer"><strong>Qwen3-Coder-Next-Base</strong></a></td>
+        <td>Pre-trained base model (no instruction tuning)</td>
+        <td>Fine-tuning and custom training pipelines</td>
+      </tr>
+      <tr>
+        <td><a href="https://huggingface.co/Qwen/Qwen3-Coder-Next-GGUF" target="_blank" rel="nofollow noopener noreferrer"><strong>Qwen3-Coder-Next-GGUF</strong></a></td>
+        <td>Quantized GGUF formats (Q4 through Q8)</td>
+        <td>Local inference with llama.cpp, LM Studio, Ollama</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<h3>GGUF Quantization Options</h3>
+<p>
+  The GGUF variant is the most popular choice for local deployment. Available quantization levels:
+</p>
+<div class="qwen-table-wrapper">
+  <table class="qwen-table">
+    <thead>
+      <tr>
+        <th>Quantization</th>
+        <th>Size</th>
+        <th>Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Q4_K_M (4-bit)</td>
+        <td>~48 GB</td>
+        <td>Minimum viable — needs 45+ GB combined RAM</td>
+      </tr>
+      <tr>
+        <td>Q5_K_M (5-bit)</td>
+        <td>~57 GB</td>
+        <td>Good balance — 95% token accuracy, fits 64 GB systems</td>
+      </tr>
+      <tr>
+        <td>Q6_K (6-bit)</td>
+        <td>~66 GB</td>
+        <td>Higher quality</td>
+      </tr>
+      <tr>
+        <td>Q8_0 (8-bit)</td>
+        <td>~85 GB</td>
+        <td>Near-lossless — requires 128 GB systems</td>
+      </tr>
+      <tr>
+        <td>Q9 (9-bit)</td>
+        <td>~83 GB</td>
+        <td>Near-lossless compression, best quality-to-size ratio</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<h2 id="run-locally">How to Run Qwen3-Coder-Next Locally</h2>
+<p>
+  There are multiple ways to run this model on your own hardware. Below are the most popular options.
+</p>
+
+<div class="skills-section">
+<div class="skills-grid">
+<div class="skill-steps">
+<h3>Option 1: llama.cpp (Recommended for GGUF)</h3>
+<p>The most common approach for local inference with quantized GGUF files.</p>
+<ol>
+  <li><strong>Download the GGUF model:</strong>
+    <div class="command-box" style="padding: 1rem; background: #f5f5f5; border-radius: 4px; margin: 0.5em 0;"><code>huggingface-cli download Qwen/Qwen3-Coder-Next-GGUF --include "Qwen3-Coder-Next-Q5_K_M/*"</code></div>
+  </li>
+  <li><strong>Run with llama.cpp:</strong>
+    <div class="command-box" style="padding: 1rem; background: #f5f5f5; border-radius: 4px; margin: 0.5em 0;"><code>./llama-cli -m ./Qwen3-Coder-Next-Q5_K_M/Qwen3-Coder-Next-00001-of-00004.gguf --jinja -ngl 99 -fa on -sm row --temp 1.0 --top-k 40 --top-p 0.95 --min-p 0 -c 40960 -n 32768 --no-context-shift</code></div>
+  </li>
+</ol>
+</div>
+</div>
+</div>
+
+<div class="skills-section">
+<div class="skills-grid">
+<div class="skill-steps">
+<h3>Option 2: Ollama</h3>
+<p>The easiest option for getting started quickly.</p>
+<ol>
+  <li><strong>Install Ollama</strong> from <a href="https://ollama.com" target="_blank" rel="nofollow noopener noreferrer">ollama.com</a> (Windows, macOS, Linux).</li>
+  <li><strong>Pull and run the model:</strong>
+    <div class="command-box" style="padding: 1rem; background: #f5f5f5; border-radius: 4px; margin: 0.5em 0;"><code>ollama run qwen3-coder-next</code></div>
+  </li>
+</ol>
+</div>
+</div>
+</div>
+
+<div class="skills-section">
+<div class="skills-grid">
+<div class="skill-steps">
+<h3>Option 3: LM Studio</h3>
+<p>A GUI-based option for users who prefer a visual interface.</p>
+<ol>
+  <li>Download <a href="https://lmstudio.ai" target="_blank" rel="nofollow noopener noreferrer">LM Studio</a>.</li>
+  <li>Search for <code>Qwen3-Coder-Next</code> in the model browser.</li>
+  <li>Select your preferred quantization (Q5 for 64 GB systems, Q8 for 128 GB+).</li>
+  <li>Set recommended sampling: <code>temperature=1.0</code>, <code>top_p=0.95</code>, <code>top_k=40</code>.</li>
+</ol>
+</div>
+</div>
+</div>
+
+<div class="skills-section">
+<div class="skills-grid">
+<div class="skill-steps">
+<h3>Option 4: vLLM / SGLang (Server Deployment)</h3>
+<p>For production-grade or multi-GPU deployments with OpenAI-compatible API endpoints.</p>
+<div class="command-box" style="padding: 1rem; background: #f5f5f5; border-radius: 4px; margin: 0.5em 0;"><code>vllm serve Qwen/Qwen3-Coder-Next --port 8000 --tensor-parallel-size 2 --enable-auto-tool-choice --tool-call-parser qwen3_coder</code></div>
+<div class="command-box" style="padding: 1rem; background: #f5f5f5; border-radius: 4px; margin: 0.5em 0;"><code>python -m sglang.launch_server --model Qwen/Qwen3-Coder-Next --port 30000 --tp-size 2 --tool-call-parser qwen3_coder</code></div>
+<p>Both expose OpenAI-compatible endpoints at their respective ports with full tool calling support.</p>
+</div>
+</div>
+</div>
+
+<h3>Recommended Sampling Parameters</h3>
+<p>
+  Regardless of the deployment method, the Qwen team recommends these settings for best results:
+</p>
+<div class="qwen-table-wrapper">
+  <table class="qwen-table">
+    <thead>
+      <tr><th>Parameter</th><th>Value</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Temperature</td><td>1.0</td></tr>
+      <tr><td>Top P</td><td>0.95</td></tr>
+      <tr><td>Top K</td><td>40</td></tr>
+      <tr><td>Max New Tokens</td><td>65,536</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<h2 id="hardware-requirements">Hardware Requirements</h2>
+<p>
+  Thanks to the MoE architecture, Qwen3-Coder-Next is far more accessible than its 80B total parameter count would suggest. The key requirement is <strong>combined system memory</strong> (RAM + VRAM), not just GPU memory alone.
+</p>
+<div class="qwen-table-wrapper">
+  <table class="qwen-table">
+    <thead>
+      <tr>
+        <th>Setup</th>
+        <th>Quantization</th>
+        <th>Memory Needed</th>
+        <th>Expected Speed</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Consumer PC (64 GB RAM)</td>
+        <td>Q5_K_M (5-bit)</td>
+        <td>~57 GB combined</td>
+        <td>~60–70 t/s</td>
+      </tr>
+      <tr>
+        <td>High-end workstation (128 GB RAM)</td>
+        <td>Q8/Q9 (8-9 bit)</td>
+        <td>~83–85 GB combined</td>
+        <td>~60+ t/s</td>
+      </tr>
+      <tr>
+        <td>GPU server (H100 80 GB)</td>
+        <td>Full / FP8</td>
+        <td>~48–80 GB VRAM</td>
+        <td>Very fast</td>
+      </tr>
+      <tr>
+        <td>Multi-GPU (2× A100/H100)</td>
+        <td>BF16 full precision</td>
+        <td>Distributed</td>
+        <td>Production-grade</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<p>
+  <strong>Important:</strong> The hybrid attention architecture means context length scales without the typical VRAM explosion. A 4-bit quantization at 65K context has been confirmed to run within consumer-level memory budgets. If you encounter out-of-memory issues, reducing context to 32K is a quick fix. For extended context up to ~1M tokens, YaRN rope scaling is supported in llama.cpp.
+</p>
+<p>
+  You don't need to own a high-end GPU — cloud GPU rental services offer H100 instances by the hour at reasonable cost. For a deeper dive into running Qwen models on your own hardware, see our <a href="/run-locally/">guide to running Qwen locally</a> and our <a href="/hardware-requirements/">hardware requirements page</a>.
+</p>
+
+<h2 id="field-tests">Real-World Field Tests</h2>
+<p>
+  Independent testers have put Qwen3-Coder-Next through extensive practical evaluations. Here's what stood out from community testing:
+</p>
+
+<h3>Software Development & Web Design</h3>
+<ul>
+  <li><strong>Browser-based OS</strong> — Generated a fully functional MacOS-style operating system in the browser, complete with working calculator, image gallery, wallpaper customization, and a real-time audio visualizer using the Web Audio API. Testers called it one of the most feature-complete single-shot HTML generations they'd seen.</li>
+  <li><strong>EV Startup Landing Page</strong> — Created a modern responsive page with working animated counters, charts without visual deformations, glassmorphism cards, interactive tabs, and creative copywriting — all in a single HTML file. Reviewers described it as competitive with outputs from leading proprietary models.</li>
+  <li><strong>SQL Optimization</strong> — Correctly identified three major performance issues (non-sargable predicates, correlated subqueries) and provided two solid optimization approaches with indexing recommendations. Described as production-quality advice by experienced database engineers.</li>
+</ul>
+
+<h3>Games & Simulations</h3>
+<ul>
+  <li><strong>Minecraft (Voxel World)</strong> — Generated what testers called the best AI-made Minecraft clone, with real-time voxel editing functionality.</li>
+  <li><strong>3D Racing Game</strong> — Produced a highway racing game with vehicle physics (lean on turns), collision effects, multiple car models, and smooth death transitions. Rated better than equivalents produced by Claude in similar tests.</li>
+  <li><strong>3D Printer Simulation</strong> — After one iteration to fix a browser compatibility issue, delivered a working simulation with layer-by-layer building, nozzle color changes when heated, and a movable gantry.</li>
+</ul>
+
+<h3>Iterative Improvement</h3>
+<p>
+  A consistent finding across all tests: the model excels at <strong>iteratively fixing its own code</strong>. When given error output from a browser console or test runner, it could identify the problem and produce a corrected version — often dramatically improving the result on the second or third attempt. This aligns with its agentic training methodology.
+</p>
+
+<h2 id="agentic-capabilities">Agentic Capabilities & IDE Integration</h2>
+<p>
+  Qwen3-Coder-Next is specifically designed for agentic coding workflows — not just answering questions about code, but actively operating within development environments.
+</p>
+
+<h3>Supported Coding Environments</h3>
+<p>
+  The model integrates with major IDE-based coding agents:
+</p>
+<ul>
+  <li><strong>OpenCode / Open Claw</strong> — Functions as a local alternative to cloud-based coding assistants, processing the system prompt and responding to agentic tasks at high speed.</li>
+  <li><strong>Claude Code, Qwen Code, Cline, Kilo, Trae, Qoder</strong> — Compatible with scaffolds from multiple AI coding platforms.</li>
+  <li><strong>Browser automation</strong> — Can operate web browsers, search for products, interact with web applications, and automate desktop tasks.</li>
+</ul>
+
+<h3>Tool Calling</h3>
+<p>
+  Native tool calling is a first-class feature. The model can invoke external tools through structured function calls, enabling workflows like: reading files → running tests → analyzing output → applying fixes. Both vLLM and SGLang support the dedicated <code>qwen3_coder</code> tool-call parser for seamless integration.
+</p>
+
+<h3>Official Video Demo</h3>
+<p>
+  The Qwen team published a <a href="https://www.youtube.com/watch?v=UwVi2iu-xyA" target="_blank" rel="nofollow noopener noreferrer">demo video on YouTube</a> showcasing the model's agentic capabilities — including desktop cleanup, web page creation, browser automation, and chat interface generation.
+</p>
+
+<h2 id="limitations">Limitations & Considerations</h2>
+<p>
+  Despite its impressive capabilities, Qwen3-Coder-Next has some notable limitations to be aware of:
+</p>
+<ul>
+  <li><strong>No thinking mode</strong> — Unlike models with explicit chain-of-thought (CoT), this model operates in non-thinking mode only. While this boosts speed, it means less transparency in complex reasoning steps.</li>
+  <li><strong>Hit-or-miss on complex single-shot tasks</strong> — Ambitious tasks like flight combat simulators or full Photoshop clones have proven unreliable in one-shot generation. The model often needs iterative refinement for complex projects.</li>
+  <li><strong>Tool calling learning curve</strong> — Some testers reported that the model occasionally struggles with multi-step tool-calling chains, particularly web browsing tools, where it may need manual guidance or broken-down instructions.</li>
+  <li><strong>Quantization trade-offs</strong> — While 4-bit quants are usable, testers observed that 5-bit (Q5) offers 95% token accuracy and is the sweet spot for most users. Going below Q4 may noticeably degrade quality.</li>
+  <li><strong>Website design variety</strong> — When generating multiple websites in sequence, outputs tend toward similar minimalist layouts. Detailed design prompts help mitigate this.</li>
+</ul>
+
+<h2 id="conclusion">Final Verdict</h2>
+<p>
+  Qwen3-Coder-Next represents a significant milestone in open-source coding AI. By achieving near-frontier performance with only 3 billion active parameters, it democratizes access to powerful autonomous coding agents — something previously locked behind expensive API calls or massive GPU clusters.
+</p>
+<p>
+  Its strengths are clear: exceptional speed, efficient memory usage, strong agentic capabilities, and impressive iterative self-correction. The Apache 2.0 license makes it viable for commercial use, and the diverse deployment options (llama.cpp, Ollama, LM Studio, vLLM, SGLang) mean there's an entry point for virtually any setup.
+</p>
+<p>
+  For developers exploring local AI coding agents, this is currently one of the most compelling options available. It won't replace frontier models like Claude Opus for the most complex tasks, but for the vast majority of coding workflows — especially agentic, iterative ones — it delivers outstanding value.
+</p>
+<p>
+  Looking for more Qwen models? Explore the full <a href="/qwen-3/">Qwen 3 family</a>, try <a href="/chat/">Qwen AI Chat</a>, or check our <a href="/run-locally/">guide to running Qwen models locally</a>.
+</p>
+`;
+---
+<BaseLayout title="Qwen3-Coder-Next" seoTitle="Qwen3-Coder-Next — 80B MoE Coding Model (3B Active)" seoDescription="Complete guide to Qwen3-Coder-Next: 80B MoE with 3B active params, 256K context, benchmarks, local setup with Ollama & llama.cpp. Apache 2.0 license.">
+  <article class="qwen-container">
+    <h1>Qwen3-Coder-Next: Alibaba's 80B Open-Source Coding Agent</h1>
+    <Fragment set:html={rawHtml} />
+  </article>
+</BaseLayout>

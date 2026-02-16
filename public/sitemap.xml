@@ -1,229 +1,128 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://qwen-ai.com/qwen-2-5/</loc>
-    <lastmod>2026-02-08</lastmod>
-  </url>
-  <url>
-    <loc>https://qwen-ai.com/qwen-2-5-coder/</loc>
-    <lastmod>2026-02-08</lastmod>
-  </url>
-  <url>
-    <loc>https://qwen-ai.com/2-math/</loc>
-    <lastmod>2026-01-29</lastmod>
-  </url>
+  <!-- Core pages -->
   <url>
     <loc>https://qwen-ai.com/</loc>
-    <lastmod>2026-01-29</lastmod>
+    <lastmod>2026-02-16</lastmod>
   </url>
   <url>
-    <loc>https://qwen-ai.com/2-vl/</loc>
-    <lastmod>2026-01-29</lastmod>
-  </url>
-  <url>
-    <loc>https://qwen-ai.com/2-audio/</loc>
-    <lastmod>2026-01-29</lastmod>
-  </url>
-  <url>
-    <loc>https://qwen-ai.com/requirements/</loc>
-    <lastmod>2026-01-29</lastmod>
-  </url>
-  <url>
-    <loc>https://qwen-ai.com/advantages-disadvantages/</loc>
-    <lastmod>2026-01-29</lastmod>
-  </url>
-  <url>
-    <loc>https://qwen-ai.com/chat/</loc>
-    <lastmod>2026-01-29</lastmod>
-  </url>
-  <url>
-    <loc>https://qwen-ai.com/deepseek-r1-distill-1-5b/</loc>
-    <lastmod>2026-01-29</lastmod>
-  </url>
-  <url>
-    <loc>https://qwen-ai.com/deepseek-r1-distill-7b/</loc>
-    <lastmod>2026-01-29</lastmod>
-  </url>
-  <url>
-    <loc>https://qwen-ai.com/deepseek-r1-distill-14b/</loc>
-    <lastmod>2026-01-29</lastmod>
-  </url>
-  <url>
-    <loc>https://qwen-ai.com/deepseek-r1-distill-32b/</loc>
-    <lastmod>2026-01-29</lastmod>
-  </url>
-  <url>
-    <loc>https://qwen-ai.com/2-5-vl/</loc>
-    <lastmod>2026-01-29</lastmod>
-  </url>
-  <url>
-    <loc>https://qwen-ai.com/2-5-max/</loc>
-    <lastmod>2026-01-29</lastmod>
-  </url>
-  <url>
-    <loc>https://qwen-ai.com/qwq-max/</loc>
-    <lastmod>2026-01-29</lastmod>
-  </url>
-  <url>
-    <loc>https://qwen-ai.com/qwq-32b/</loc>
-    <lastmod>2026-01-29</lastmod>
-  </url>
-  <url>
-    <loc>https://qwen-ai.com/blog/</loc>
-    <lastmod>2026-01-29</lastmod>
+    <loc>https://qwen-ai.com/qwen-3-5/</loc>
+    <lastmod>2026-02-16</lastmod>
   </url>
   <url>
     <loc>https://qwen-ai.com/qwen-3/</loc>
-    <lastmod>2026-02-09</lastmod>
+    <lastmod>2026-02-16</lastmod>
   </url>
   <url>
-    <loc>https://qwen-ai.com/qwen3-coder/</loc>
-    <lastmod>2026-02-08</lastmod>
+    <loc>https://qwen-ai.com/qwen-2-5/</loc>
+    <lastmod>2026-02-16</lastmod>
   </url>
   <url>
-    <loc>https://qwen-ai.com/qwen-3-asr/</loc>
-    <lastmod>2026-02-09</lastmod>
+    <loc>https://qwen-ai.com/chat/</loc>
+    <lastmod>2026-02-16</lastmod>
+  </url>
+
+  <!-- Model family pages (evergreen) -->
+  <url>
+    <loc>https://qwen-ai.com/qwen-coder/</loc>
+    <lastmod>2026-02-16</lastmod>
   </url>
   <url>
-    <loc>https://qwen-ai.com/qwen-3-tts/</loc>
-    <lastmod>2026-02-09</lastmod>
+    <loc>https://qwen-ai.com/qwen-max/</loc>
+    <lastmod>2026-02-16</lastmod>
   </url>
   <url>
-    <loc>https://qwen-ai.com/qwen-3-max/</loc>
-    <lastmod>2026-02-09</lastmod>
+    <loc>https://qwen-ai.com/qwen-plus/</loc>
+    <lastmod>2026-02-16</lastmod>
   </url>
   <url>
-    <loc>https://qwen-ai.com/images/</loc>
-    <lastmod>2026-01-29</lastmod>
+    <loc>https://qwen-ai.com/qwq/</loc>
+    <lastmod>2026-02-16</lastmod>
   </url>
   <url>
-    <loc>https://qwen-ai.com/prompts/flirt/</loc>
-    <lastmod>2026-01-29</lastmod>
+    <loc>https://qwen-ai.com/qwen-vision/</loc>
+    <lastmod>2026-02-16</lastmod>
   </url>
   <url>
-    <loc>https://qwen-ai.com/prompts/ye-apologizes/</loc>
-    <lastmod>2026-01-29</lastmod>
+    <loc>https://qwen-ai.com/qwen-audio/</loc>
+    <lastmod>2026-02-16</lastmod>
   </url>
   <url>
-    <loc>https://qwen-ai.com/prompts/therapy-session/</loc>
-    <lastmod>2026-01-29</lastmod>
+    <loc>https://qwen-ai.com/qwen-asr/</loc>
+    <lastmod>2026-02-16</lastmod>
   </url>
   <url>
-    <loc>https://qwen-ai.com/prompts/explained-drama/</loc>
-    <lastmod>2026-01-29</lastmod>
+    <loc>https://qwen-ai.com/qwen-tts/</loc>
+    <lastmod>2026-02-16</lastmod>
   </url>
   <url>
-    <loc>https://qwen-ai.com/prompts/cancel-itself/</loc>
-    <lastmod>2026-01-29</lastmod>
+    <loc>https://qwen-ai.com/qwen-math/</loc>
+    <lastmod>2026-02-16</lastmod>
   </url>
   <url>
-    <loc>https://qwen-ai.com/prompts/</loc>
-    <lastmod>2026-01-29</lastmod>
+    <loc>https://qwen-ai.com/qwen-omni/</loc>
+    <lastmod>2026-02-16</lastmod>
   </url>
   <url>
-    <loc>https://qwen-ai.com/prompts/super-bowl-commercial/</loc>
-    <lastmod>2026-01-29</lastmod>
+    <loc>https://qwen-ai.com/qwen-image/</loc>
+    <lastmod>2026-02-16</lastmod>
+  </url>
+
+  <!-- Guides & tools -->
+  <url>
+    <loc>https://qwen-ai.com/run-locally/</loc>
+    <lastmod>2026-02-16</lastmod>
   </url>
   <url>
-    <loc>https://qwen-ai.com/prompts/create-a-religion/</loc>
-    <lastmod>2026-01-29</lastmod>
-  </url>
-  <url>
-    <loc>https://qwen-ai.com/prompts/board-game/</loc>
-    <lastmod>2026-01-29</lastmod>
-  </url>
-  <url>
-    <loc>https://qwen-ai.com/prompts/images/</loc>
-    <lastmod>2026-01-29</lastmod>
-  </url>
-  <url>
-    <loc>https://qwen-ai.com/video/</loc>
-    <lastmod>2026-01-29</lastmod>
-  </url>
-  <url>
-    <loc>https://qwen-ai.com/prompts/video/</loc>
-    <lastmod>2026-01-29</lastmod>
-  </url>
-  <url>
-    <loc>https://qwen-ai.com/prompts/coding/</loc>
-    <lastmod>2026-01-29</lastmod>
-  </url>
-  <url>
-    <loc>https://qwen-ai.com/voice-video-chat/</loc>
-    <lastmod>2026-01-29</lastmod>
-  </url>
-  <url>
-    <loc>https://qwen-ai.com/web-dev/</loc>
-    <lastmod>2026-01-29</lastmod>
-  </url>
-  <url>
-    <loc>https://qwen-ai.com/vs-deepseek-r1/</loc>
-    <lastmod>2026-01-29</lastmod>
-  </url>
-  <url>
-    <loc>https://qwen-ai.com/manus/</loc>
-    <lastmod>2026-01-29</lastmod>
-  </url>
-  <url>
-    <loc>https://qwen-ai.com/manus-alliance/</loc>
-    <lastmod>2026-01-29</lastmod>
-  </url>
-  <url>
-    <loc>https://qwen-ai.com/vs-gemma-3-27b/</loc>
-    <lastmod>2026-01-29</lastmod>
-  </url>
-  <url>
-    <loc>https://qwen-ai.com/takes-on-deepseek/</loc>
-    <lastmod>2026-01-29</lastmod>
-  </url>
-  <url>
-    <loc>https://qwen-ai.com/quark/</loc>
-    <lastmod>2026-01-29</lastmod>
+    <loc>https://qwen-ai.com/hardware-requirements/</loc>
+    <lastmod>2026-02-16</lastmod>
   </url>
   <url>
     <loc>https://qwen-ai.com/deep-research/</loc>
-    <lastmod>2026-01-29</lastmod>
+    <lastmod>2026-02-16</lastmod>
   </url>
+
+  <!-- Comparatives -->
   <url>
-    <loc>https://qwen-ai.com/download-models-locally/</loc>
-    <lastmod>2026-01-29</lastmod>
+    <loc>https://qwen-ai.com/vs-deepseek/</loc>
+    <lastmod>2026-02-16</lastmod>
   </url>
   <url>
     <loc>https://qwen-ai.com/vs-chatgpt/</loc>
-    <lastmod>2026-01-29</lastmod>
-  </url>
-  <url>
-    <loc>https://qwen-ai.com/safety/</loc>
-    <lastmod>2026-01-29</lastmod>
-  </url>
-  <url>
-    <loc>https://qwen-ai.com/limitations/</loc>
-    <lastmod>2026-01-29</lastmod>
-  </url>
-  <url>
-    <loc>https://qwen-ai.com/roadmap/</loc>
-    <lastmod>2026-01-29</lastmod>
+    <lastmod>2026-02-16</lastmod>
   </url>
   <url>
     <loc>https://qwen-ai.com/vs-mistral/</loc>
-    <lastmod>2026-01-29</lastmod>
+    <lastmod>2026-02-16</lastmod>
+  </url>
+
+  <!-- Use cases & prompts -->
+  <url>
+    <loc>https://qwen-ai.com/use-cases/</loc>
+    <lastmod>2026-02-16</lastmod>
   </url>
   <url>
-    <loc>https://qwen-ai.com/for-content-creation/</loc>
-    <lastmod>2026-01-29</lastmod>
+    <loc>https://qwen-ai.com/prompts/</loc>
+    <lastmod>2026-02-16</lastmod>
+  </url>
+
+  <!-- Ecosystem -->
+  <url>
+    <loc>https://qwen-ai.com/manus/</loc>
+    <lastmod>2026-02-16</lastmod>
   </url>
   <url>
-    <loc>https://qwen-ai.com/for-finance/</loc>
-    <lastmod>2026-01-29</lastmod>
+    <loc>https://qwen-ai.com/quark/</loc>
+    <lastmod>2026-02-16</lastmod>
   </url>
+
+  <!-- Analysis & info -->
   <url>
-    <loc>https://qwen-ai.com/personal-assistant/</loc>
-    <lastmod>2026-01-29</lastmod>
+    <loc>https://qwen-ai.com/safety/</loc>
+    <lastmod>2026-02-16</lastmod>
   </url>
-  <url>
-    <loc>https://qwen-ai.com/tts/</loc>
-    <lastmod>2026-01-29</lastmod>
-  </url>
+
+  <!-- Legal -->
   <url>
     <loc>https://qwen-ai.com/privacy-policy/</loc>
     <lastmod>2026-01-29</lastmod>

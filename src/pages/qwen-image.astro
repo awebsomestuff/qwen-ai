@@ -1,0 +1,388 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+const rawHtml = `<p>
+  <strong>Qwen-Image-2.0</strong> is Alibaba's unified image generation and editing model — a 7-billion-parameter powerhouse that creates native 2K images, renders multilingual text with near-perfect accuracy, and handles both generation and editing in a single architecture. Released on <strong>February 10, 2026</strong>, it replaces the previous 20B-parameter Qwen-Image series with a model that's 3× smaller yet significantly more capable. Whether you need photorealistic product shots, professional infographics with precise typography, or complex image editing — Qwen-Image-2.0 does it all in one model.
+</p>
+<div class="ad-afterintro-container"><div class="ad-afterintro-inner"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9609544329602409" data-ad-slot="8310388095" data-ad-format="auto" data-full-width-responsive="true"></ins></div></div>
+
+<img src="/wp-content/uploads/qwen-image-2-sample-hero.webp"
+     alt="Qwen-Image-2.0 official announcement image showcasing text rendering, 2K resolution, and unified generation capabilities"
+     width="800" height="450" class="aligncenter" />
+
+<div class="qwen-container">
+  <div class="qwen-row" style="justify-content: center;">
+    <div class="qwen-col" style="margin-right: 5px;">
+      <a class="qwen-button pro" href="https://chat.qwen.ai/" target="_blank" rel="nofollow noopener noreferrer">
+        <span class="button-content"><span class="button-text">Try Qwen-Image-2.0 Free (Qwen Chat)</span></span>
+      </a>
+    </div>
+    <div class="qwen-col" style="margin-left: 5px;">
+      <a class="qwen-button pro" href="https://github.com/QwenLM/Qwen-Image" target="_blank" rel="noopener noreferrer">
+        <span class="button-content"><span class="button-text">GitHub Repository</span></span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<p><strong>Navigate this guide:</strong></p>
+<ul>
+  <li><a href="#what-is">What Is Qwen-Image-2.0?</a></li>
+  <li><a href="#specs">Technical Specs & Architecture</a></li>
+  <li><a href="#capabilities">5 Core Capabilities</a></li>
+  <li><a href="#launch-video">Official Launch Video</a></li>
+  <li><a href="#benchmarks">Benchmarks & Rankings</a></li>
+  <li><a href="#vs-competitors">Qwen-Image-2.0 vs GPT-Image-1.5 vs FLUX.2 vs Nano Banana</a></li>
+  <li><a href="#text-rendering">Text Rendering: The Killer Feature</a></li>
+  <li><a href="#api">API Access & Pricing</a></li>
+  <li><a href="#local">Running Locally & Hardware Requirements</a></li>
+  <li><a href="#code">Quick-Start Code Examples</a></li>
+  <li><a href="#evolution">Version History & Evolution</a></li>
+  <li><a href="#ecosystem">Ecosystem & Community</a></li>
+  <li><a href="#faq">FAQ</a></li>
+</ul>
+
+<h2 id="what-is">What Is Qwen-Image-2.0?</h2>
+<p>
+  Qwen-Image-2.0 is the next generation of Alibaba's text-to-image foundation model. Unlike its predecessor — which required <em>separate models</em> for generation (Qwen-Image) and editing (Qwen-Image-Edit) — version 2.0 <strong>unifies both tasks into a single 7B-parameter model</strong>. This means improvements to generation quality automatically enhance editing capabilities too, since both share the same weights.
+</p>
+<p>
+  The model is built on an <strong>MMDiT (Multimodal Diffusion Transformer)</strong> architecture, using an 8B Qwen3-VL encoder to understand text prompts and input images, feeding into a 7B diffusion decoder that generates output at up to <strong>2048×2048 native resolution</strong>. It supports prompts up to 1,000 tokens long — enough for detailed creative direction including multi-paragraph infographic layouts, comic scripts, or complex editing instructions.
+</p>
+
+<h2 id="specs">Technical Specs & Architecture</h2>
+<div class="qwen-table-wrapper">
+<table class="qwen-table">
+  <thead><tr><th>Specification</th><th>Qwen-Image-2.0</th><th>Qwen-Image v1</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Parameters</strong></td><td>7B</td><td>20B</td></tr>
+    <tr><td><strong>Architecture</strong></td><td>MMDiT (Unified Gen+Edit)</td><td>MMDiT (Separate models)</td></tr>
+    <tr><td><strong>Encoder</strong></td><td>8B Qwen3-VL</td><td>—</td></tr>
+    <tr><td><strong>Decoder</strong></td><td>7B Diffusion</td><td>20B Diffusion</td></tr>
+    <tr><td><strong>Max Resolution</strong></td><td>2048×2048 (native 2K)</td><td>~1328×1328</td></tr>
+    <tr><td><strong>Max Prompt Length</strong></td><td>1,000 tokens</td><td>~256 tokens</td></tr>
+    <tr><td><strong>Generation + Editing</strong></td><td>Unified (one model)</td><td>Separate models required</td></tr>
+    <tr><td><strong>Text Rendering</strong></td><td>Professional-grade bilingual</td><td>Good (English-focused)</td></tr>
+    <tr><td><strong>Inference Speed</strong></td><td>5–8 seconds</td><td>10–15 seconds</td></tr>
+    <tr><td><strong>License</strong></td><td>Apache 2.0 (expected)</td><td>Apache 2.0</td></tr>
+  </tbody>
+</table>
+</div>
+<p>
+  The architecture pipeline flows as: <strong>Text/Image Input → 8B Qwen3-VL Encoder → 7B Diffusion Decoder → 2048×2048 Output</strong>. The Qwen3-VL encoder handles both text understanding and image comprehension, which is what enables the unified generation-and-editing capability — the model "sees" existing images and understands editing instructions in the same way it processes generation prompts.
+</p>
+
+<h2 id="capabilities">5 Core Capabilities</h2>
+<p>
+  Alibaba highlights five major breakthroughs in Qwen-Image-2.0 compared to the previous generation:
+</p>
+
+<h3>1. Unified Generation & Editing</h3>
+<p>
+  No more switching between models. Qwen-Image-2.0 handles text-to-image generation, single-image editing, multi-image compositing, background replacement, and style transfer — all in one model call. Since both tasks share weights, improvements compound: better generation automatically means better editing.
+</p>
+
+<h3>2. Native 2K Resolution</h3>
+<p>
+  Most AI image generators create at 1024×1024 and then upscale. Qwen-Image-2.0 generates <strong>natively at 2048×2048</strong>, which means fine details — skin pores, fabric weave, architectural textures — are actually rendered during generation, not interpolated after the fact. The model supports multiple aspect ratios including 1:1, 16:9, 9:16, 4:3, 3:4, 3:2, and 2:3.
+</p>
+
+<h3>3. 1,000-Token Prompt Support</h3>
+<p>
+  Where most image models cap prompts at ~77 tokens (SDXL) or ~256 tokens, Qwen-Image-2.0 accepts up to <strong>1,000 tokens</strong>. This enables direct generation of complex layouts like multi-slide presentations, detailed infographics, multi-panel comics, and posters with extensive text — all from a single prompt.
+</p>
+
+<h3>4. Professional Typography Rendering</h3>
+<p>
+  The model renders text on images with near-perfect accuracy across English, Chinese, and mixed-language content. It handles multiple calligraphy styles (including Emperor Huizong's "Slender Gold Script"), generates presentation slides with accurate timelines, and places text correctly on varied surfaces — glass whiteboards, clothing, magazine covers — respecting lighting, reflections, and perspective.
+</p>
+
+<h3>5. Photorealistic Visual Quality</h3>
+<p>
+  Qwen-Image-2.0 produces extreme detail differentiation. In test scenes, the model distinguishes <strong>over 23 shades of green</strong> with distinct textures — from waxy leaf surfaces to velvety moss cushions. It handles photorealistic, anime, watercolor, and hand-drawn artistic styles with equal competence.
+</p>
+
+<img src="/wp-content/uploads/qwen-image-2-sample-2.webp"
+     alt="Forest scene generated by Qwen-Image-2.0 showing over 23 shades of green with distinct textures in foliage, moss, and leaves"
+     width="600" height="400" class="aligncenter" />
+<p style="text-align:center;font-size:14px;color:#666;margin-top:-8px;"><em>Generated by Qwen-Image-2.0 — note the differentiation between waxy leaves, velvety moss, and translucent foliage.</em></p>
+
+<h3>Sample Generations Gallery</h3>
+<p>Here are more examples of Qwen-Image-2.0's output quality across different styles and subjects:</p>
+<div class="qwen-gallery">
+  <div class="item">
+    <img class="thumbnail" src="/wp-content/uploads/qwen-image-2-sample-1.webp" alt="European canal street scene generated by Qwen-Image-2.0" />
+    <div class="caption">Photorealistic street scene</div>
+  </div>
+  <div class="item">
+    <img class="thumbnail" src="/wp-content/uploads/qwen-image-2-sample-3.webp" alt="Three frogs on a mossy rock generated by Qwen-Image-2.0" />
+    <div class="caption">Nature & wildlife detail</div>
+  </div>
+  <div class="item">
+    <img class="thumbnail" src="/wp-content/uploads/qwen-image-2-sample-4.webp" alt="Photorealistic portrait of a woman in a garden generated by Qwen-Image-2.0" />
+    <div class="caption">Portrait generation</div>
+  </div>
+  <div class="item">
+    <img class="thumbnail" src="/wp-content/uploads/qwen-image-2-sample-5.webp" alt="Portrait of an elderly man generated by Qwen-Image-2.0 with fine skin and hair detail" />
+    <div class="caption">Fine detail rendering</div>
+  </div>
+  <div class="item">
+    <img class="thumbnail" src="/wp-content/uploads/qwen-image-2-sample-6.webp" alt="Extreme close-up of eyes and eyelashes generated by Qwen-Image-2.0" />
+    <div class="caption">Macro-level precision</div>
+  </div>
+</div>
+
+<h2 id="launch-video">Official Launch Video</h2>
+<p>
+  The Qwen team published this showcase video highlighting Qwen-Image-2.0's generation quality, text rendering, and editing capabilities:
+</p>
+<div id="tweet-container" style="display:flex;justify-content:center;margin:24px 0;">
+  <blockquote class="twitter-tweet" data-media-max-width="560"><p lang="zxx" dir="ltr"><a href="https://t.co/1nintc2Ouy">pic.twitter.com/1nintc2Ouy</a></p>&mdash; Qwen (@Alibaba_Qwen) <a href="https://twitter.com/Alibaba_Qwen/status/2021209925859299660?ref_src=twsrc%5Etfw">February 10, 2026</a></blockquote>
+</div>
+<h2 id="benchmarks">Benchmarks & Rankings</h2>
+<p>
+  Qwen-Image-2.0 performs competitively against the best closed-source image models despite being significantly smaller and open-weight.
+</p>
+
+<h3>AI Arena Rankings (Blind Human Evaluation)</h3>
+<p>
+  The AI Arena leaderboard uses an ELO rating system based on blind head-to-head comparisons where judges don't know which model produced which image:
+</p>
+<img src="/wp-content/uploads/qwen-image-arena-t2i.webp"
+     alt="AI Arena Text-to-Image ELO Leaderboard showing Qwen-Image-2.0 ranked 3rd with 1029 ELO score"
+     width="800" height="450" class="aligncenter" />
+<p style="text-align:center;font-size:14px;color:#666;margin-top:-8px;"><em>AI Arena Text-to-Image Leaderboard — Qwen-Image-2.0 at #3 (ELO 1029, 47.29% win rate).</em></p>
+<div class="qwen-table-wrapper">
+<table class="qwen-table">
+  <thead><tr><th>Task</th><th>Qwen-Image-2.0 Rank</th><th>Ahead Of</th><th>Behind</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Text-to-Image</strong></td><td>#3 (ELO 1029)</td><td>Gemini-2.5-Flash, Imagen 4, Seedream 4.5, FLUX.2</td><td>Gemini-3-Pro (1050), GPT-Image-1.5 (1043)</td></tr>
+    <tr><td><strong>Image Editing</strong></td><td>#2 (ELO 1034)</td><td>Seedream 4.5, Qwen-Image-Edit-2511, FLUX.2</td><td>Gemini-3-Pro (1042)</td></tr>
+  </tbody>
+</table>
+</div>
+
+<img src="/wp-content/uploads/qwen-image-arena-edit.webp"
+     alt="AI Arena Image Edit ELO Leaderboard showing Qwen-Image-2.0 ranked 2nd with 1034 ELO score"
+     width="800" height="400" class="aligncenter" />
+<p style="text-align:center;font-size:14px;color:#666;margin-top:-8px;"><em>AI Arena Image Edit Leaderboard — Qwen-Image-2.0 at #2 (ELO 1034, 35.97% win rate).</em></p>
+
+<h3>Automated Benchmark Scores</h3>
+<div class="qwen-table-wrapper">
+<table class="qwen-table">
+  <thead><tr><th>Benchmark</th><th>Qwen-Image-2.0</th><th>GPT-Image-1</th><th>FLUX.1 (12B)</th></tr></thead>
+  <tbody>
+    <tr><td><strong>GenEval</strong></td><td><strong>0.91</strong></td><td>—</td><td>—</td></tr>
+    <tr><td><strong>DPG-Bench</strong></td><td><strong>88.32</strong></td><td>85.15</td><td>83.84</td></tr>
+  </tbody>
+</table>
+</div>
+<p>
+  On DPG-Bench (which measures prompt-following fidelity), Qwen-Image-2.0 outperforms GPT-Image-1 by <strong>+3.17 points</strong> and FLUX.1 by <strong>+4.48 points</strong>. The model is also rated as the strongest open-source image model on T2I-CoreBench for composition and reasoning tasks.
+</p>
+
+<h2 id="vs-competitors">Qwen-Image-2.0 vs Competitors</h2>
+<div class="qwen-table-wrapper">
+<table class="qwen-table">
+  <thead><tr><th>Feature</th><th>Qwen-Image-2.0</th><th>GPT-Image-1.5</th><th>Gemini 3 Pro Image</th><th>FLUX.2 Max</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Parameters</strong></td><td>7B</td><td>Undisclosed</td><td>Undisclosed</td><td>~12B+</td></tr>
+    <tr><td><strong>Unified Gen+Edit</strong></td><td>Yes</td><td>Yes</td><td>Yes</td><td>No</td></tr>
+    <tr><td><strong>Max Resolution</strong></td><td>2K native</td><td>2K+</td><td>2K</td><td>2K</td></tr>
+    <tr><td><strong>Chinese Text Quality</strong></td><td>Excellent</td><td>Good</td><td>Good</td><td>Limited</td></tr>
+    <tr><td><strong>Inference Speed</strong></td><td>5–8s</td><td>10–15s</td><td>5–10s</td><td>10–20s</td></tr>
+    <tr><td><strong>Open Weights</strong></td><td>Yes (Apache 2.0)</td><td>No</td><td>No</td><td>Partial</td></tr>
+    <tr><td><strong>Local Deployment</strong></td><td>Yes (~24GB VRAM)</td><td>No</td><td>No</td><td>Yes</td></tr>
+    <tr><td><strong>Max Prompt Length</strong></td><td>1,000 tokens</td><td>~4,000 chars</td><td>~1,000 tokens</td><td>~256 tokens</td></tr>
+  </tbody>
+</table>
+</div>
+<p>
+  The standout differentiator is that Qwen-Image-2.0 is the <strong>only top-3 image model that's fully open-source</strong>. GPT-Image-1.5 and Nano Banana Pro are closed-source API-only, while FLUX.2 offers partial weights but requires separate models for editing. For organizations that need on-premise deployment, fine-tuning control, or data privacy — Qwen-Image-2.0 is currently the strongest option available.
+</p>
+
+<h2 id="text-rendering">Text Rendering: The Killer Feature</h2>
+<p>
+  If there's one area where Qwen-Image-2.0 genuinely leads the entire field, it's <strong>text rendering in generated images</strong>. The model can:
+</p>
+<ul>
+  <li><strong>Generate complete PowerPoint slides</strong> with accurate timelines, charts, and picture-in-picture compositions</li>
+  <li><strong>Render professional posters</strong> with mixed font sizes, weights, and colors — all correctly spelled</li>
+  <li><strong>Create multi-panel comics</strong> with consistent character design and readable speech bubbles</li>
+  <li><strong>Handle Chinese calligraphy</strong> including classical styles — it rendered nearly the entire "Preface to the Orchid Pavilion" with only a handful of character errors</li>
+  <li><strong>Place text on 3D surfaces</strong> like glass whiteboards, t-shirts, and curved bottles with correct perspective and lighting</li>
+</ul>
+<p>
+  This makes the model particularly valuable for <strong>e-commerce</strong> (product images with pricing overlays), <strong>marketing</strong> (social media graphics and banners), and <strong>content creation</strong> (infographics and presentation visuals).
+</p>
+
+<img src="/wp-content/uploads/qwen-image-2-text-rendering-demo.webp"
+     alt="Qwen-Image-2.0 generated image demonstrating text rendering on a glass whiteboard with complex typography and annotations"
+     width="800" height="450" class="aligncenter" />
+<p style="text-align:center;font-size:14px;color:#666;margin-top:-8px;"><em>AI-generated image by Qwen-Image-2.0 — note the legible text on the glass whiteboard, accurate rendering on the t-shirt, and realistic perspective throughout.</em></p>
+
+<h2 id="api">API Access & Pricing</h2>
+<p>
+  Qwen-Image-2.0 is currently in <strong>invite-only API testing</strong> on Alibaba Cloud's DashScope (BaiLian) platform. A free demo is available on <a href="https://chat.qwen.ai/" target="_blank" rel="nofollow noopener noreferrer">Qwen Chat</a> for anyone to try.
+</p>
+
+<h3>Current Pricing (DashScope & Third-Party)</h3>
+<div class="qwen-table-wrapper">
+<table class="qwen-table">
+  <thead><tr><th>Provider</th><th>Model</th><th>Price per Image</th></tr></thead>
+  <tbody>
+    <tr><td>Alibaba Cloud DashScope</td><td>qwen-image-max</td><td>¥0.50 (~$0.07)</td></tr>
+    <tr><td>Alibaba Cloud DashScope</td><td>qwen-image-plus</td><td>¥0.20 (~$0.03)</td></tr>
+    <tr><td>Replicate</td><td>Qwen-Image</td><td>$0.030</td></tr>
+    <tr><td>Fal.ai</td><td>Qwen-Image-Edit</td><td>$0.021</td></tr>
+  </tbody>
+</table>
+</div>
+<p>
+  <em>Note: These prices reflect the v1 series models currently available via API. Qwen-Image-2.0 specific pricing hasn't been finalized yet. Given the smaller model size (7B vs 20B), prices are expected to be competitive or lower.</em>
+</p>
+
+<h2 id="local">Running Locally & Hardware Requirements</h2>
+<p>
+  The open-source weights for Qwen-Image-2.0 are expected to be released under <strong>Apache 2.0</strong> approximately one month after launch (based on Alibaba's pattern with previous Qwen-Image releases). Meanwhile, the v1 models are fully available for local deployment.
+</p>
+
+<h3>Expected Hardware Requirements</h3>
+<div class="qwen-table-wrapper">
+<table class="qwen-table">
+  <thead><tr><th>Setup</th><th>VRAM</th><th>Notes</th></tr></thead>
+  <tbody>
+    <tr><td>Full precision (BF16)</td><td>~24GB</td><td>RTX 4090, A6000, or similar</td></tr>
+    <tr><td>FP8 quantized</td><td>~12–16GB</td><td>RTX 4070 Ti Super / 3090</td></tr>
+    <tr><td>Layer-by-layer offload</td><td><strong>4GB VRAM</strong></td><td>Via DiffSynth-Studio (slow but works)</td></tr>
+  </tbody>
+</table>
+</div>
+<p>
+  <a href="https://github.com/modelscope/DiffSynth-Studio" target="_blank" rel="noopener noreferrer">DiffSynth-Studio</a> provides comprehensive local deployment support including low-VRAM layer-by-layer offload (as low as 4GB), FP8 quantization, and LoRA/full fine-tuning. For high-performance inference, both <strong>vLLM-Omni</strong> and <strong>SGLang-Diffusion</strong> offer day-0 support, and <strong>Qwen-Image-Lightning</strong> achieves a ~42× speedup with <strong>LightX2V</strong> acceleration.
+</p>
+<p>
+  For more details on running Qwen models locally, see our <a href="/run-locally/">complete local deployment guide</a> and <a href="/hardware-requirements/">hardware requirements breakdown</a>.
+</p>
+
+<h2 id="code">Quick-Start Code Examples</h2>
+<h3>Text-to-Image Generation</h3>
+<pre><code>from diffusers import QwenImagePipeline
+import torch
+
+pipe = QwenImagePipeline.from_pretrained(
+    "Qwen/Qwen-Image-2512",
+    torch_dtype=torch.bfloat16
+).to("cuda")
+
+image = pipe(
+    prompt="A professional infographic about renewable energy, with charts and statistics, clean modern design",
+    negative_prompt="blurry, low quality, distorted text",
+    width=1664,
+    height=928,
+    num_inference_steps=50,
+    true_cfg_scale=4.0,
+    generator=torch.Generator(device="cuda").manual_seed(42)
+).images[0]
+
+image.save("output.png")</code></pre>
+
+<h3>Image Editing</h3>
+<pre><code>from diffusers import QwenImageEditPlusPipeline
+from PIL import Image
+
+pipeline = QwenImageEditPlusPipeline.from_pretrained(
+    "Qwen/Qwen-Image-Edit-2511",
+    torch_dtype=torch.bfloat16
+).to("cuda")
+
+source_image = Image.open("photo.jpg")
+
+result = pipeline(
+    image=[source_image],
+    prompt="Change the background to a sunset beach scene",
+    num_inference_steps=40,
+    true_cfg_scale=4.0,
+    guidance_scale=1.0
+).images[0]
+
+result.save("edited.png")</code></pre>
+<p>
+  <strong>Requirements:</strong> <code>transformers >= 4.51.3</code> and latest <code>diffusers</code> from source (<code>pip install git+https://github.com/huggingface/diffusers</code>).
+</p>
+
+<h2 id="evolution">Version History & Evolution</h2>
+<div class="qwen-table-wrapper">
+<table class="qwen-table">
+  <thead><tr><th>Date</th><th>Model</th><th>Key Advancement</th></tr></thead>
+  <tbody>
+    <tr><td>Aug 2025</td><td>Qwen-Image</td><td>20B MMDiT, strong text rendering, Apache 2.0</td></tr>
+    <tr><td>Aug 2025</td><td>Qwen-Image-Edit</td><td>Dedicated single-image editing model</td></tr>
+    <tr><td>Sep 2025</td><td>Qwen-Image-Edit-2509</td><td>Multi-image editing support</td></tr>
+    <tr><td>Dec 2025</td><td>Qwen-Image-2512</td><td>Enhanced detail, texture quality, realism</td></tr>
+    <tr><td>Dec 2025</td><td>Qwen-Image-Edit-2511</td><td>Improved consistency across edits</td></tr>
+    <tr><td>Dec 2025</td><td>Qwen-Image-Layered</td><td>Layered image generation</td></tr>
+    <tr><td><strong>Feb 10, 2026</strong></td><td><strong>Qwen-Image-2.0</strong></td><td><strong>Unified 7B, native 2K, 1000-token prompts</strong></td></tr>
+  </tbody>
+</table>
+</div>
+<p>
+  The evolution shows a clear trajectory: from specialized models (separate generation and editing) toward a unified, smaller, more capable architecture. The 65% parameter reduction (20B → 7B) while improving quality across all metrics is a significant engineering achievement.
+</p>
+
+<h2 id="ecosystem">Ecosystem & Community</h2>
+<p>
+  The Qwen-Image ecosystem has grown rapidly since its August 2025 launch:
+</p>
+<ul>
+  <li><strong>7,400+ GitHub stars</strong> and 429 forks on the <a href="https://github.com/QwenLM/Qwen-Image" target="_blank" rel="noopener noreferrer">official repository</a></li>
+  <li><strong>484+ LoRA adapters</strong> available on Hugging Face for custom styles and domains</li>
+  <li><strong>ComfyUI native support</strong> for workflow integration</li>
+  <li><strong>Multi-hardware support</strong> via LightX2V: NVIDIA, Hygon, Metax, Ascend, and Cambricon</li>
+  <li><strong>LeMiCa cache acceleration</strong> achieving ~3× lossless speedup</li>
+</ul>
+<p>
+  The prior Qwen-Image series models are already fully open-sourced under Apache 2.0, with weights available on <a href="https://huggingface.co/Qwen" target="_blank" rel="noopener noreferrer">Hugging Face</a> and ModelScope. Community-created LoRA fine-tunes (like MajicBeauty for portrait enhancement) demonstrate the model's adaptability to specialized use cases. Qwen-Image-2.0 weights are expected to follow the same open-source path.
+</p>
+
+<h2 id="faq">Frequently Asked Questions</h2>
+
+<h3>Is Qwen-Image-2.0 free to use?</h3>
+<p>
+  Yes — you can try it for free at <a href="https://chat.qwen.ai/" target="_blank" rel="nofollow noopener noreferrer">chat.qwen.ai</a>. For API access, DashScope pricing starts at ~$0.03/image for the Plus tier. The open-source weights (expected under Apache 2.0) will allow unlimited free local use once released.
+</p>
+
+<h3>Can I run Qwen-Image-2.0 on my own GPU?</h3>
+<p>
+  Once weights are released, yes. At 7B parameters, the model fits on a 24GB GPU at full precision, or as low as 4GB VRAM using DiffSynth-Studio's layer-by-layer offload. See our <a href="/hardware-requirements/">hardware requirements guide</a> for detailed recommendations.
+</p>
+
+<h3>How does it compare to Midjourney or DALL-E?</h3>
+<p>
+  On the AI Arena blind evaluation leaderboard, Qwen-Image-2.0 ranks #3 for text-to-image and #2 for image editing. The key advantage over Midjourney and DALL-E is that it's open-source, supports local deployment, allows fine-tuning, and has significantly better multilingual text rendering.
+</p>
+
+<h3>What's the difference between Qwen-Image-2.0 and Qwen 3.5's multimodal capabilities?</h3>
+<p>
+  <a href="/qwen-3-5/">Qwen 3.5</a> has unified vision-language understanding — it can <em>analyze</em> images, documents, and video. Qwen-Image-2.0 is a dedicated <em>generation</em> model — it <em>creates</em> and <em>edits</em> images. They're complementary: use Qwen 3.5 to understand visual content, and Qwen-Image-2.0 to generate it.
+</p>
+
+<h3>Is Qwen-Image-2.0 open source?</h3>
+<p>
+  The previous Qwen-Image series is fully open-source under Apache 2.0. Qwen-Image-2.0's weights haven't been released yet as of February 2026, but Alibaba has consistently open-sourced their models — typically within ~1 month of launch. The Apache 2.0 license allows free commercial use, modification, and redistribution.
+</p>
+
+<h3>What happened to the separate Qwen-Image-Edit model?</h3>
+<p>
+  It's been absorbed into Qwen-Image-2.0. The new unified architecture handles both generation and editing in one model, eliminating the need for separate specialized models.
+</p>
+
+<p style="text-align:center;margin-top:32px;">Updated · February 2026</p>
+`;
+---
+<BaseLayout title="Qwen-Image-2.0" seoTitle="Qwen-Image-2.0: Specs, Benchmarks & How to Use (2026)" seoDescription="Complete guide to Qwen-Image-2.0: 7B unified generation & editing, native 2K, text rendering, benchmarks vs GPT-Image-1.5. Open-source under Apache 2.0.">
+  <article class="qwen-container">
+    <h1>Qwen-Image-2.0: AI Image Generation & Editing</h1>
+    <Fragment set:html={rawHtml} />
+  </article>
+  <script is:inline async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+</BaseLayout>

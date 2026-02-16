@@ -1,0 +1,157 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+const rawHtml = `
+<p>
+  <strong>Qwen AI</strong> powers everything from customer support chatbots to scientific research pipelines. With models ranging from 0.6B to 397B parameters — plus specialized variants for <a href="/qwen-coder/">coding</a>, <a href="/qwen-vision/">vision</a>, <a href="/qwen-audio/">audio</a>, and <a href="/qwen-image/">image generation</a> — there's a Qwen model for virtually every use case. This page covers the most impactful ways teams are using Qwen in production today.
+</p>
+<div class="ad-afterintro-container"><div class="ad-afterintro-inner"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9609544329602409" data-ad-slot="8310388095" data-ad-format="auto" data-full-width-responsive="true"></ins></div></div>
+
+<div class="qwen-toc">
+  <p class="qwen-toc-label">Use Cases</p>
+  <ul>
+    <li><a href="#coding">Software Development & Coding</a></li>
+    <li><a href="#content">Content Creation & Marketing</a></li>
+    <li><a href="#research">Research & Data Analysis</a></li>
+    <li><a href="#business">Business & Enterprise</a></li>
+    <li><a href="#education">Education & Learning</a></li>
+    <li><a href="#creative">Creative & Design</a></li>
+    <li><a href="#agents">AI Agents & Automation</a></li>
+    <li><a href="#choosing">Choosing the Right Model</a></li>
+  </ul>
+</div>
+
+
+<h2 id="coding">Software Development & Coding</h2>
+<p>
+  Qwen's coding capabilities span from quick scripts to full application architecture. <a href="/qwen-coder/">Qwen-Coder</a> models are purpose-built for code generation, while the flagship <a href="/qwen-3-5/">Qwen 3.5</a> scores 76.4 on SWE-bench Verified — competitive with GPT-5.2 and Claude Opus 4.5.
+</p>
+<ul>
+  <li><strong>Code generation & completion</strong> — write functions, classes, and full modules from natural language descriptions</li>
+  <li><strong>Bug detection & debugging</strong> — identify issues in existing code and suggest fixes with explanations</li>
+  <li><strong>Code review & refactoring</strong> — analyze PRs, suggest improvements, and refactor for readability or performance</li>
+  <li><strong>Multi-language support</strong> — Python, JavaScript, TypeScript, Rust, Go, Java, C++, and 50+ other languages</li>
+  <li><strong>Wireframe to code</strong> — Qwen 3.5's vision capabilities can convert hand-drawn sketches into functional HTML/CSS/JS</li>
+  <li><strong>Qwen Code CLI</strong> — Alibaba's open-source terminal agent for delegating coding tasks via natural language</li>
+</ul>
+<p><strong>Best models:</strong> <a href="/qwen-coder/">Qwen-Coder</a> for dedicated coding tasks, <a href="/qwen-3-5/">Qwen 3.5</a> for coding + reasoning + vision combined.</p>
+
+
+<h2 id="content">Content Creation & Marketing</h2>
+<p>
+  From blog posts to social media copy to product descriptions — Qwen handles the full content pipeline. The 201-language support makes it especially powerful for international marketing teams.
+</p>
+<ul>
+  <li><strong>Long-form writing</strong> — articles, reports, whitepapers, documentation (up to 1M token context)</li>
+  <li><strong>SEO content</strong> — keyword-optimized posts, meta descriptions, and content briefs</li>
+  <li><strong>Social media</strong> — platform-specific copy for Twitter/X, LinkedIn, Instagram, TikTok</li>
+  <li><strong>Email campaigns</strong> — subject lines, body copy, A/B variants, and personalized sequences</li>
+  <li><strong>Product descriptions</strong> — e-commerce listings with consistent tone and SEO optimization</li>
+  <li><strong>Translation & localization</strong> — 201 languages with cultural context awareness</li>
+  <li><strong>Image generation</strong> — <a href="/qwen-image/">Qwen-Image-2.0</a> creates product shots, social graphics, and marketing visuals with text rendering</li>
+</ul>
+<p><strong>Best models:</strong> <a href="/qwen-3-5/">Qwen 3.5</a> for writing quality, Qwen-Turbo for high-volume content, <a href="/qwen-image/">Qwen-Image-2.0</a> for visuals.</p>
+
+
+<h2 id="research">Research & Data Analysis</h2>
+<p>
+  Qwen 3.5's thinking mode and massive context window make it a strong research assistant. It can process entire papers, datasets, and multi-document analyses in a single prompt.
+</p>
+<ul>
+  <li><strong>Literature review</strong> — summarize and cross-reference multiple papers with 262K native context</li>
+  <li><strong>Data interpretation</strong> — analyze charts, tables, and graphs via multimodal input (90.8 on OmniDocBench)</li>
+  <li><strong>Scientific reasoning</strong> — doctoral-level science questions (88.4 on GPQA Diamond)</li>
+  <li><strong>Medical analysis</strong> — structured diagnostic assessment from X-rays, histopathology, and lab results</li>
+  <li><strong>Financial analysis</strong> — process earnings reports, regulatory filings, and market data at scale</li>
+  <li><strong>Mathematical proofs</strong> — step-by-step reasoning with built-in thinking mode (88.6 on MathVision)</li>
+</ul>
+<p><strong>Best models:</strong> <a href="/qwen-3-5/">Qwen 3.5</a> with thinking mode enabled, <a href="/qwq/">QwQ</a> for pure reasoning tasks.</p>
+
+
+<h2 id="business">Business & Enterprise</h2>
+<p>
+  The Apache 2.0 license means enterprises can self-host Qwen without vendor lock-in. Combined with aggressive API pricing ($0.40/1M input tokens), it's a cost-effective alternative to proprietary models.
+</p>
+<ul>
+  <li><strong>Customer support chatbots</strong> — multilingual, context-aware conversations with tool-calling capabilities</li>
+  <li><strong>Document processing</strong> — extract data from invoices, contracts, and forms via vision capabilities</li>
+  <li><strong>Internal knowledge bases</strong> — RAG pipelines with Qwen embeddings for company-specific Q&A</li>
+  <li><strong>Meeting summaries</strong> — process audio recordings via <a href="/qwen-audio/">Qwen-Audio</a> and generate structured notes</li>
+  <li><strong>Compliance & legal</strong> — review contracts, flag risks, and draft responses in regulated industries</li>
+  <li><strong>Data privacy</strong> — self-hosted deployment keeps sensitive data on-premise with no third-party access</li>
+</ul>
+<p><strong>Best models:</strong> Qwen3.5-Plus API for hosted solutions, open-weight Qwen 3.5 for self-hosted enterprise deployment.</p>
+
+
+<h2 id="education">Education & Learning</h2>
+<ul>
+  <li><strong>Tutoring systems</strong> — adaptive explanations with step-by-step thinking mode for math, science, and coding</li>
+  <li><strong>Exam preparation</strong> — generate practice questions, grade essays, and provide detailed feedback</li>
+  <li><strong>Language learning</strong> — conversation practice in 201 languages with pronunciation via <a href="/qwen-tts/">Qwen-TTS</a></li>
+  <li><strong>Accessible education</strong> — convert textbooks to audio, generate image descriptions, summarize lectures from video</li>
+  <li><strong>Research mentoring</strong> — help students structure papers, find relevant citations, and improve academic writing</li>
+</ul>
+
+
+<h2 id="creative">Creative & Design</h2>
+<ul>
+  <li><strong>Image generation</strong> — <a href="/qwen-image/">Qwen-Image-2.0</a> creates 2K images with accurate text rendering, supporting photorealistic, anime, and artistic styles</li>
+  <li><strong>Image editing</strong> — unified generation and editing model handles style transfer, inpainting, and compositing</li>
+  <li><strong>Video analysis</strong> — Qwen 3.5 processes video up to 2 hours for scene description, content moderation, and creative direction</li>
+  <li><strong>SVG & illustration</strong> — convert photos to SVG art, generate icons, and create technical diagrams</li>
+  <li><strong>Music & audio</strong> — <a href="/qwen-audio/">Qwen-Audio</a> for audio understanding, <a href="/qwen-tts/">Qwen-TTS</a> for voice synthesis</li>
+  <li><strong>Game development</strong> — community testers built 3D games (flight simulators, racing games) entirely from Qwen 3.5 prompts</li>
+</ul>
+
+
+<h2 id="agents">AI Agents & Automation</h2>
+<p>
+  Qwen 3.5 leads every agentic benchmark tested — BrowseComp (69.0), NOVA-63 (59.1), and AndroidWorld (66.8). This makes it the top open-source choice for building autonomous AI agents.
+</p>
+<ul>
+  <li><strong>Browser automation</strong> — navigate websites, fill forms, extract data, and complete multi-step workflows</li>
+  <li><strong>Mobile app control</strong> — interact with Android apps via screenshot analysis and action generation</li>
+  <li><strong>Desktop automation</strong> — see screen content and execute actions across applications</li>
+  <li><strong>Tool orchestration</strong> — native function calling, web search, code execution, and API integration</li>
+  <li><strong>Multi-agent systems</strong> — coordinate multiple Qwen instances for complex workflows</li>
+  <li><strong>DevOps & CI/CD</strong> — automate deployment pipelines, monitor logs, and respond to incidents</li>
+</ul>
+<p><strong>Best models:</strong> <a href="/qwen-3-5/">Qwen 3.5</a> (best agentic scores), smaller Qwen 3 models for cost-sensitive automation.</p>
+
+
+<h2 id="choosing">Choosing the Right Qwen Model</h2>
+<div class="qwen-table-wrapper">
+<table class="qwen-table">
+<thead>
+<tr>
+  <th>Use Case</th>
+  <th>Recommended Model</th>
+  <th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>General-purpose chat</td><td><a href="/qwen-3-5/">Qwen 3.5</a></td><td>Best overall quality, multimodal, 201 languages</td></tr>
+<tr><td>Code generation</td><td><a href="/qwen-coder/">Qwen-Coder</a></td><td>Purpose-built for coding tasks</td></tr>
+<tr><td>Image creation</td><td><a href="/qwen-image/">Qwen-Image-2.0</a></td><td>Native 2K, text rendering, unified gen+edit</td></tr>
+<tr><td>Math & reasoning</td><td><a href="/qwq/">QwQ</a></td><td>Dedicated reasoning model with deep thinking</td></tr>
+<tr><td>Document analysis</td><td><a href="/qwen-vision/">Qwen-Vision</a></td><td>Charts, PDFs, handwriting recognition</td></tr>
+<tr><td>Voice applications</td><td><a href="/qwen-omni/">Qwen-Omni</a></td><td>Real-time voice + video + text multimodal</td></tr>
+<tr><td>High-volume / low-cost</td><td>Qwen-Turbo API</td><td>1M context, lowest pricing, 5M TPM</td></tr>
+<tr><td>AI agents</td><td><a href="/qwen-3-5/">Qwen 3.5</a></td><td>Leads all agentic benchmarks</td></tr>
+<tr><td>On-device / mobile</td><td>Qwen 3 0.6B–4B</td><td>Fits on smartphones and edge devices</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>
+  For a hands-on start, try any Qwen model free at <a href="/chat/">chat.qwen.ai</a>. For local deployment, see our <a href="/run-locally/">Run Qwen Locally</a> guide and <a href="/hardware-requirements/">hardware requirements</a>.
+</p>
+
+<p style="text-align:center;margin-top:32px;">Updated · February 2026</p>
+`;
+---
+<BaseLayout title="Qwen AI Use Cases" seoTitle="Qwen AI Use Cases: Coding, Content, Agents & More (2026)" seoDescription="Discover how teams use Qwen AI: coding, content creation, research, enterprise, education, AI agents. Find the right Qwen model for your use case.">
+  <article class="qwen-container">
+    <h1>Qwen AI Use Cases</h1>
+    <Fragment set:html={rawHtml} />
+  </article>
+</BaseLayout>

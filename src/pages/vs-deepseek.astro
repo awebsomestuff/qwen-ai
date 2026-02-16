@@ -1,0 +1,229 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+const rawHtml = `
+<p>
+  <strong>Qwen and DeepSeek</strong> are the two leading open-weight AI model families from China, and both are pushing the boundaries of what's possible with open-source AI. With the release of <a href="/qwen-3-5/">Qwen 3.5</a> and DeepSeek V3, the competition has never been closer. This guide compares their latest models across benchmarks, architecture, capabilities, and practical use cases to help you choose the right one.
+</p>
+<div class="ad-afterintro-container"><div class="ad-afterintro-inner"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9609544329602409" data-ad-slot="8310388095" data-ad-format="auto" data-full-width-responsive="true"></ins></div></div>
+
+<ul class="qwen-toc">
+  <li><a href="#model-lineup">Current Model Lineups</a></li>
+  <li><a href="#flagship-comparison">Flagship Comparison: Qwen 3.5 vs DeepSeek V3</a></li>
+  <li><a href="#benchmarks">Benchmark Comparison</a></li>
+  <li><a href="#reasoning">Reasoning Models: QwQ vs DeepSeek R1</a></li>
+  <li><a href="#coding">Coding: Qwen Coder vs DeepSeek Coder</a></li>
+  <li><a href="#multimodal">Multimodal Capabilities</a></li>
+  <li><a href="#architecture">Architecture & Efficiency</a></li>
+  <li><a href="#ecosystem">Ecosystem & Availability</a></li>
+  <li><a href="#which-to-choose">Which Should You Choose?</a></li>
+</ul>
+
+<h2 id="model-lineup">Current Model Lineups</h2>
+
+<p>Both Qwen and DeepSeek offer a broad range of specialized models. Here's how their ecosystems compare:</p>
+
+<div class="qwen-table-wrapper">
+<table class="qwen-table">
+<thead><tr><th>Category</th><th>Qwen</th><th>DeepSeek</th></tr></thead>
+<tbody>
+<tr><td><strong>Flagship</strong></td><td><a href="/qwen-3-5/">Qwen 3.5</a> (MoE)</td><td>DeepSeek V3 (MoE, 671B)</td></tr>
+<tr><td><strong>Reasoning</strong></td><td><a href="/qwq/">QwQ</a> (thinking mode)</td><td>DeepSeek R1 (chain-of-thought)</td></tr>
+<tr><td><strong>Coding</strong></td><td><a href="/qwen-coder/">Qwen Coder</a></td><td>DeepSeek Coder V2</td></tr>
+<tr><td><strong>Vision</strong></td><td><a href="/qwen-vision/">Qwen Vision</a></td><td>DeepSeek VL2</td></tr>
+<tr><td><strong>Math</strong></td><td><a href="/qwen-math/">Qwen Math</a></td><td>DeepSeek Math</td></tr>
+<tr><td><strong>Audio/Voice</strong></td><td><a href="/qwen-audio/">Qwen Audio</a>, <a href="/qwen-omni/">Qwen Omni</a></td><td>—</td></tr>
+<tr><td><strong>Image Generation</strong></td><td><a href="/qwen-image/">Qwen Image</a></td><td>—</td></tr>
+<tr><td><strong>Text-to-Speech</strong></td><td><a href="/qwen-tts/">Qwen TTS</a></td><td>—</td></tr>
+</tbody>
+</table>
+</div>
+
+<p><strong>Key difference:</strong> Qwen's ecosystem is significantly broader, covering audio, voice, image generation, and TTS — areas where DeepSeek has no direct offerings. DeepSeek focuses more narrowly on text-based reasoning and coding.</p>
+
+<h2 id="flagship-comparison">Flagship Comparison: Qwen 3.5 vs DeepSeek V3</h2>
+
+<p>The flagship models represent the best each family has to offer. Both use Mixture-of-Experts (MoE) architecture for efficiency.</p>
+
+<div class="qwen-table-wrapper">
+<table class="qwen-table">
+<thead><tr><th>Feature</th><th>Qwen 3.5</th><th>DeepSeek V3</th></tr></thead>
+<tbody>
+<tr><td><strong>Architecture</strong></td><td>MoE (Mixture of Experts)</td><td>MoE (Mixture of Experts)</td></tr>
+<tr><td><strong>Total Parameters</strong></td><td>Undisclosed (estimated ~400B+)</td><td>671B (37B active)</td></tr>
+<tr><td><strong>Context Window</strong></td><td>Up to 1M tokens</td><td>128K tokens</td></tr>
+<tr><td><strong>Thinking Mode</strong></td><td>Yes (hybrid thinking/non-thinking)</td><td>No (separate R1 model for reasoning)</td></tr>
+<tr><td><strong>Multimodal</strong></td><td>Text, image, audio, video input</td><td>Text only</td></tr>
+<tr><td><strong>Agentic Capabilities</strong></td><td>Strong (MCP, tool use, code execution)</td><td>Basic tool use</td></tr>
+<tr><td><strong>License</strong></td><td>Apache 2.0</td><td>MIT</td></tr>
+<tr><td><strong>API Access</strong></td><td>Qwen Chat, Alibaba Cloud, third-party</td><td>DeepSeek API, third-party</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2 id="benchmarks">Benchmark Comparison</h2>
+
+<p>Based on publicly available benchmarks and evaluations, here's how the flagship models perform head-to-head:</p>
+
+<h3>General Knowledge & Reasoning</h3>
+
+<div class="qwen-table-wrapper">
+<table class="qwen-table">
+<thead><tr><th>Benchmark</th><th>Qwen 3.5</th><th>DeepSeek V3</th><th>Notes</th></tr></thead>
+<tbody>
+<tr><td><strong>MMLU-Pro</strong></td><td>~78</td><td>~75</td><td>Multi-task academic knowledge</td></tr>
+<tr><td><strong>GPQA Diamond</strong></td><td>~71</td><td>~59</td><td>Graduate-level science questions</td></tr>
+<tr><td><strong>LiveBench</strong></td><td>~75</td><td>~70</td><td>Real-time updated evaluation</td></tr>
+<tr><td><strong>AIME 2025</strong></td><td>~82</td><td>~70</td><td>Competition math (with thinking)</td></tr>
+</tbody>
+</table>
+</div>
+
+<p><strong>Note:</strong> Benchmark scores vary by evaluation methodology, quantization, and test conditions. These figures represent approximate performance from recent evaluations. Qwen 3.5 scores include thinking mode when applicable, which substantially boosts reasoning performance.</p>
+
+<h3>Coding Benchmarks</h3>
+
+<div class="qwen-table-wrapper">
+<table class="qwen-table">
+<thead><tr><th>Benchmark</th><th>Qwen 3.5</th><th>DeepSeek V3</th></tr></thead>
+<tbody>
+<tr><td><strong>LiveCodeBench</strong></td><td>~70</td><td>~65</td></tr>
+<tr><td><strong>HumanEval+</strong></td><td>~90</td><td>~87</td></tr>
+<tr><td><strong>SWE-Bench Verified</strong></td><td>~55</td><td>~42</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>Qwen 3.5's integrated thinking mode gives it a significant advantage on coding tasks that require multi-step reasoning, like SWE-Bench (real-world GitHub issue resolution).</p>
+
+<h2 id="reasoning">Reasoning Models: QwQ vs DeepSeek R1</h2>
+
+<p>Both families offer dedicated reasoning models that use chain-of-thought / extended thinking:</p>
+
+<div class="qwen-table-wrapper">
+<table class="qwen-table">
+<thead><tr><th>Feature</th><th><a href="/qwq/">QwQ</a></th><th>DeepSeek R1</th></tr></thead>
+<tbody>
+<tr><td><strong>Parameters</strong></td><td>32B</td><td>671B (37B active)</td></tr>
+<tr><td><strong>Approach</strong></td><td>Reinforcement learning + thinking mode</td><td>Chain-of-thought RL</td></tr>
+<tr><td><strong>AIME 2024</strong></td><td>~79.5%</td><td>~79.8%</td></tr>
+<tr><td><strong>Hardware Needed</strong></td><td>Single GPU (~24GB VRAM quantized)</td><td>Multi-GPU cluster (~1.5TB VRAM full)</td></tr>
+<tr><td><strong>Key Advantage</strong></td><td>Matching R1 at 1/20th the size</td><td>Scale and broad domain coverage</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>QwQ's efficiency story is remarkable: it matches or comes very close to DeepSeek R1 on most reasoning benchmarks while being dramatically smaller and cheaper to run. With <a href="/qwen-3-5/">Qwen 3.5</a> now offering integrated thinking mode, QwQ's reasoning capabilities have been further evolved in the flagship model.</p>
+
+<h2 id="coding">Coding: Qwen Coder vs DeepSeek Coder</h2>
+
+<p><a href="/qwen-coder/">Qwen Coder</a> and DeepSeek Coder V2 are both specialized for software development:</p>
+
+<ul>
+  <li><strong>Qwen Coder</strong> benefits from tight integration with the Qwen ecosystem, including thinking mode for complex debugging and multi-file refactoring. Available in multiple sizes from 1.5B to 32B parameters.</li>
+  <li><strong>DeepSeek Coder V2</strong> is built on the MoE architecture (236B total, 21B active) and performs well on standard coding benchmarks.</li>
+</ul>
+
+<p>For dedicated coding workflows, both are competitive. Qwen Coder's advantage is the broader ecosystem — you can pair it with <a href="/qwen-vision/">Qwen Vision</a> for UI screenshots, or use thinking mode for architectural decisions. See our <a href="/qwen-coder/">full Qwen Coder guide</a> for details.</p>
+
+<h2 id="multimodal">Multimodal Capabilities</h2>
+
+<p>This is where the gap between Qwen and DeepSeek is most significant:</p>
+
+<div class="qwen-table-wrapper">
+<table class="qwen-table">
+<thead><tr><th>Capability</th><th>Qwen</th><th>DeepSeek</th></tr></thead>
+<tbody>
+<tr><td><strong>Image Understanding</strong></td><td><a href="/qwen-vision/">Qwen Vision</a> (strong)</td><td>DeepSeek VL2 (good)</td></tr>
+<tr><td><strong>Video Understanding</strong></td><td>Qwen 3.5 (native)</td><td>Limited</td></tr>
+<tr><td><strong>Audio Input</strong></td><td><a href="/qwen-audio/">Qwen Audio</a></td><td>Not available</td></tr>
+<tr><td><strong>Voice Conversation</strong></td><td><a href="/qwen-omni/">Qwen Omni</a> (real-time)</td><td>Not available</td></tr>
+<tr><td><strong>Image Generation</strong></td><td><a href="/qwen-image/">Qwen Image</a></td><td>Not available</td></tr>
+<tr><td><strong>Text-to-Speech</strong></td><td><a href="/qwen-tts/">Qwen TTS</a></td><td>Not available</td></tr>
+<tr><td><strong>Agentic (MCP, tools)</strong></td><td>Strong native support</td><td>Basic</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>Qwen's multimodal ecosystem is significantly more comprehensive. If your use case involves anything beyond text — processing images, understanding audio, generating visuals, or building voice-enabled applications — Qwen is the clear choice.</p>
+
+<h2 id="architecture">Architecture & Efficiency</h2>
+
+<h3>Mixture of Experts (MoE)</h3>
+<p>Both Qwen 3.5 and DeepSeek V3 use MoE architecture, which routes each input to a subset of specialized "expert" sub-networks. This means:</p>
+<ul>
+  <li>Only a fraction of total parameters are active per inference</li>
+  <li>Better performance per compute dollar than dense models</li>
+  <li>Larger total knowledge capacity without proportional cost increase</li>
+</ul>
+
+<h3>Thinking Mode vs Separate Reasoning Model</h3>
+<p>A key architectural difference: <strong>Qwen 3.5 integrates thinking mode directly</strong>, allowing the same model to flexibly use extended reasoning when needed. DeepSeek separates this into a dedicated model (R1), meaning users must choose and switch between models depending on the task. Qwen's approach is more practical for most deployments.</p>
+
+<h3>Running Locally</h3>
+<p>For local deployment, both families offer smaller variants. Qwen provides a wider range of model sizes (0.6B to 235B+), making it more accessible for different hardware setups. See our <a href="/run-locally/">guide to running Qwen locally</a> and <a href="/hardware-requirements/">hardware requirements</a>.</p>
+
+<h2 id="ecosystem">Ecosystem & Availability</h2>
+
+<div class="qwen-table-wrapper">
+<table class="qwen-table">
+<thead><tr><th>Factor</th><th>Qwen</th><th>DeepSeek</th></tr></thead>
+<tbody>
+<tr><td><strong>Model Sizes</strong></td><td>0.6B – 235B+ (many sizes)</td><td>1.3B – 671B (fewer options)</td></tr>
+<tr><td><strong>Hugging Face Models</strong></td><td>100+ variants</td><td>~30 variants</td></tr>
+<tr><td><strong>API Providers</strong></td><td>Alibaba Cloud, OpenRouter, many others</td><td>DeepSeek API, OpenRouter, others</td></tr>
+<tr><td><strong>Free Chat Interface</strong></td><td><a href="/chat/">Qwen Chat</a></td><td>DeepSeek Chat</td></tr>
+<tr><td><strong>Framework Support</strong></td><td>vLLM, Ollama, llama.cpp, SGLang</td><td>vLLM, Ollama, llama.cpp, SGLang</td></tr>
+<tr><td><strong>Developer Backing</strong></td><td>Alibaba Group (Qwen Team)</td><td>DeepSeek AI (High-Flyer Capital)</td></tr>
+<tr><td><strong>Update Frequency</strong></td><td>Very active (monthly releases)</td><td>Active (quarterly releases)</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2 id="which-to-choose">Which Should You Choose?</h2>
+
+<h3>Choose Qwen if:</h3>
+<ul>
+  <li><strong>You need multimodal capabilities</strong> — image, audio, video, or voice processing</li>
+  <li><strong>You want integrated thinking mode</strong> — one model that flexibly reasons when needed</li>
+  <li><strong>You're building agentic systems</strong> — Qwen 3.5's MCP and tool-use support is more mature</li>
+  <li><strong>You need a wide range of model sizes</strong> — from tiny (0.6B) to massive, for diverse deployment needs</li>
+  <li><strong>You value ecosystem breadth</strong> — TTS, image generation, ASR, and more under one umbrella</li>
+</ul>
+
+<h3>Choose DeepSeek if:</h3>
+<ul>
+  <li><strong>You need pure text performance</strong> — DeepSeek V3 is competitive on text-only tasks</li>
+  <li><strong>You prefer MIT license</strong> — slightly more permissive than Apache 2.0</li>
+  <li><strong>You have specific R1 use cases</strong> — DeepSeek R1's chain-of-thought approach works well for certain reasoning tasks</li>
+  <li><strong>Your infrastructure is already set up for DeepSeek</strong> — switching has a cost</li>
+</ul>
+
+<h3>The Bottom Line</h3>
+<p>In early 2025, the comparison was <a href="/qwq/">QwQ-32B</a> vs DeepSeek R1, and they were nearly tied. In 2026, <a href="/qwen-3-5/">Qwen 3.5</a> has pulled ahead in most categories — especially in multimodal capabilities, agentic AI, and ecosystem breadth. DeepSeek remains a strong choice for text-focused tasks, but Qwen's broader coverage makes it the more versatile platform.</p>
+
+<div class="qwen-grid">
+  <div class="feature-item">
+    <h3><a href="/qwen-3-5/">Qwen 3.5 Overview</a></h3>
+    <p>The latest and most capable Qwen model — benchmarks, architecture, and features.</p>
+  </div>
+  <div class="feature-item">
+    <h3><a href="/qwq/">QwQ Reasoning Model</a></h3>
+    <p>Dedicated reasoning model that matches 20x larger models in math and logic.</p>
+  </div>
+  <div class="feature-item">
+    <h3><a href="/run-locally/">Run Qwen Locally</a></h3>
+    <p>Complete guide to running Qwen models on your own hardware.</p>
+  </div>
+  <div class="feature-item">
+    <h3><a href="/chat/">Try Qwen Chat</a></h3>
+    <p>Test Qwen's capabilities directly — free, no setup required.</p>
+  </div>
+</div>
+`;
+---
+<BaseLayout title="Qwen vs DeepSeek" seoTitle="Qwen vs DeepSeek: Full Comparison (2026) — Models & Benchmarks" seoDescription="Compare Qwen 3.5 vs DeepSeek V3: benchmarks, reasoning, coding, multimodal capabilities, and ecosystem. Find out which AI model family is right for you.">
+  <article class="qwen-container">
+    <h1>Qwen vs DeepSeek: Complete Comparison</h1>
+    <Fragment set:html={rawHtml} />
+  </article>
+</BaseLayout>

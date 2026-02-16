@@ -1,213 +1,291 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-const rawHtml = `<div class="qwen-page-wrapper"><style>
-        /* 1 – reserve space for hero content → CLS ↓ */
-        .qwen-hero-content{min-height:280px}
-    </style><section class="qwen-hero">
-<div class="qwen-hero-content"><center>
-<img src="/wp-content/uploads/2025/05/Qwen-AI-Alibaba-Cloud-Generative-AI.webp" alt="Qwen AI Alibaba Cloud Generative AI - Logo" width="150" height="45" /></center><strong>Qwen AI</strong> is Alibaba Cloud's next-gen <em>open-source</em> and proprietary ecosystem of large language &amp; multimodal models. From the flagship <strong>Qwen 3</strong> family to the brand-new <strong>Qwen3-Coder-Next</strong> coding agent, it delivers state-of-the-art reasoning, 256K-to-1M-token context and real-time text-image-audio-video interaction — under the permissive Apache 2.0 licence or fully managed in the cloud.
-<div class="qwen-container">
-<div class="qwen-row" style="justify-content: center; margin-bottom: 10px;">
-<div class="qwen-col" style="flex-grow: 0;"><a class="qwen-button pro" href="/qwen-3/"><span class="new-badge">NEW</span> Qwen 3</a></div>
-</div>
-<div class="qwen-row" style="justify-content: center;">
-<div class="qwen-col" style="flex-grow: 0;"><a class="qwen-button primary" href="#flagship-models">Explore Models ↓</a></div>
-</div>
+const rawHtml = `
+<section class="qwen-hero">
+<div class="qwen-hero-content">
+<p class="qwen-hero-subtitle" style="margin-bottom:0.5em;font-size:1.1rem;color:var(--qwen-gray-500);text-transform:uppercase;letter-spacing:0.1em;font-weight:600;">Alibaba Cloud's Open-Source AI</p>
+<p class="qwen-hero-subtitle" style="margin-top:0;">The most comprehensive ecosystem of open-weight language, vision, audio and multimodal models — from the 0.6B edge model to the 397B flagship. 100+ models on Hugging Face, 40M+ downloads, Apache 2.0 licensed.</p>
+<div class="qwen-hero-cta">
+<a class="qwen-button pro" href="/qwen-3-5/" style="width:auto;padding:16px 40px;"><span class="new-badge">NEW</span> Explore Qwen 3.5</a>
+<a class="qwen-button primary" href="/chat/" style="width:auto;padding:16px 40px;">Try Qwen Chat</a>
 </div>
 </div>
 </section>
 
-<section id="flagship-models" class="qwen-section">
-<div class="qwen-section-header">
-<h2>Flagship Models — Latest &amp; Most Powerful</h2>
+<!-- Stats bar -->
+<div style="display:flex;flex-wrap:wrap;justify-content:center;gap:32px;padding:24px 0 8px 0;margin-bottom:1em;">
+<div style="text-align:center;">
+<div style="font-family:var(--qwen-font-sans);font-size:2rem;font-weight:700;color:var(--qwen-primary);line-height:1;">100+</div>
+<div style="font-family:var(--qwen-font-sans);font-size:0.85rem;color:var(--qwen-gray-500);margin-top:4px;">Open Models</div>
 </div>
-<div class="qwen-container">
-<div class="qwen-row">
-<div class="qwen-col"><a class="qwen-button pro" href="/qwen-3/">
-<span class="button-content"><span class="button-text">Qwen 3 Family</span></span>
-<span class="new-badge">FLAGSHIP</span></a></div>
-<div class="qwen-col"><a class="qwen-button pro" href="/qwen3-coder/">
-<span class="button-content"><span class="button-text">Qwen3-Coder-Next (80B)</span></span>
-<span class="new-badge">NEW</span></a></div>
+<div style="text-align:center;">
+<div style="font-family:var(--qwen-font-sans);font-size:2rem;font-weight:700;color:var(--qwen-primary);line-height:1;">40M+</div>
+<div style="font-family:var(--qwen-font-sans);font-size:0.85rem;color:var(--qwen-gray-500);margin-top:4px;">Downloads</div>
 </div>
-<div class="qwen-row">
-<div class="qwen-col"><a class="qwen-button pro" href="/qwen-3-max/">
-<span class="button-content"><span class="button-text">Qwen3-Max-Thinking (1T+)</span></span>
-<span class="new-badge">NEW</span></a></div>
-<div class="qwen-col"><a class="qwen-button primary" href="/qwq-max/">
-<span class="button-content"><span class="button-text">QwQ Max (Reasoning)</span></span>
-</a></div>
-<div class="qwen-col"><a class="qwen-button primary" href="/chat/">
-<span class="button-content"><span class="button-text">Try Qwen AI Chat</span></span>
-</a></div>
+<div style="text-align:center;">
+<div style="font-family:var(--qwen-font-sans);font-size:2rem;font-weight:700;color:var(--qwen-primary);line-height:1;">201</div>
+<div style="font-family:var(--qwen-font-sans);font-size:0.85rem;color:var(--qwen-gray-500);margin-top:4px;">Languages</div>
+</div>
+<div style="text-align:center;">
+<div style="font-family:var(--qwen-font-sans);font-size:2rem;font-weight:700;color:var(--qwen-primary);line-height:1;">Apache 2.0</div>
+<div style="font-family:var(--qwen-font-sans);font-size:0.85rem;color:var(--qwen-gray-500);margin-top:4px;">License</div>
 </div>
 </div>
-</section>
-
-<div class="ad-afterintro-container"><div class="ad-afterintro-inner"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9609544329602409" data-ad-slot="8310388095" data-ad-format="auto" data-full-width-responsive="true"></ins></div></div>
-
-<section class="qwen-section">
-<div class="qwen-section-header">
-<h2>Specialized &amp; Multimodal Models</h2>
-</div>
-<div class="qwen-container">
-<div class="qwen-row">
-<div class="qwen-col"><a class="qwen-button primary" href="/2-5-vl/">
-<span class="button-content"><span class="button-text">Qwen 2.5-VL (Vision)</span></span>
-</a></div>
-<div class="qwen-col"><a class="qwen-button primary" href="/voice-video-chat/">
-<span class="button-content"><span class="button-text">Voice &amp; Video AI (Omni)</span></span>
-</a></div>
-</div>
-<div class="qwen-row">
-<div class="qwen-col"><a class="qwen-button primary" href="/images/">
-<span class="button-content"><span class="button-text">AI Image Generation</span></span>
-</a></div>
-<div class="qwen-col"><a class="qwen-button primary" href="/video/">
-<span class="button-content"><span class="button-text">AI Video Solutions</span></span>
-</a></div>
-<div class="qwen-col"><a class="qwen-button primary" href="/2-audio/">
-<span class="button-content"><span class="button-text">Qwen Audio</span></span>
-</a></div>
-</div>
-<div class="qwen-row">
-<div class="qwen-col"><a class="qwen-button primary" href="/qwen-3-asr/">
-<span class="button-content"><span class="button-text">Qwen3-ASR (Speech Recognition)</span></span>
-<span class="new-badge">NEW</span></a></div>
-<div class="qwen-col"><a class="qwen-button primary" href="/qwen-3-tts/">
-<span class="button-content"><span class="button-text">Qwen3-TTS (Text-to-Speech)</span></span>
-<span class="new-badge">NEW</span></a></div>
-</div>
-</div>
-</section>
-
-<section class="qwen-section">
-<div class="qwen-section-header">
-<h2>Developer Resources &amp; Guides</h2>
-</div>
-<div class="qwen-container">
-<div class="qwen-row">
-<div class="qwen-col"><a class="qwen-button primary" href="/download-models-locally/">
-<span class="button-content"><span class="button-text">Run Qwen Locally</span></span>
-</a></div>
-<div class="qwen-col"><a class="qwen-button primary" href="/prompts/">
-<span class="button-content"><span class="button-text">Prompt Engineering Hub</span></span>
-</a></div>
-</div>
-<div class="qwen-row">
-<div class="qwen-col"><a class="qwen-button primary" href="/web-dev/">
-<span class="button-content"><span class="button-text">Qwen for Web Dev</span></span>
-</a></div>
-<div class="qwen-col"><a class="qwen-button primary" href="/deep-research/">
-<span class="button-content"><span class="button-text">Qwen for Deep Research</span></span>
-</a></div>
-<div class="qwen-col"><a class="qwen-button dark" href="https://huggingface.co/Qwen" target="_blank" rel="noopener noreferrer">
-<span class="button-content"><span class="button-text">Qwen on Hugging Face</span></span>
-</a></div>
-</div>
-</div>
-</section>
-
-<section class="qwen-section">
-<div class="qwen-section-header">
-<h2>Previous Generation — Qwen 2.5</h2>
-</div>
-<p style="text-align:center;margin-bottom:1em;color:#6b7280;">The Qwen 2.5 series (Sept 2024) remains widely deployed. <a href="/qwen-3/">Qwen 3</a> is the latest and most capable family.</p>
-<div class="qwen-container">
-<div class="qwen-row">
-<div class="qwen-col"><a class="qwen-button dark" href="/qwen-2-5/">
-<span class="button-content"><span class="button-text">Qwen 2.5 Family Hub</span></span>
-</a></div>
-<div class="qwen-col"><a class="qwen-button dark" href="/2-5-max/">
-<span class="button-content"><span class="button-text">Qwen 2.5 Max</span></span>
-</a></div>
-<div class="qwen-col"><a class="qwen-button dark" href="/qwen-2-5-coder/">
-<span class="button-content"><span class="button-text">Qwen 2.5 Coder</span></span>
-</a></div>
-</div>
-</div>
-</section>
-
-<img class="aligncenter" src="/wp-content/uploads/2025/05/The-Free-AI-Powerhouse-Making-Premium-Services-Sweat-1.webp" alt="Qwen AI - The Free AI Powerhouse Making Premium Services Sweat" width="512" height="288" loading="lazy" />
 
 <section class="qwen-section">
 <div class="qwen-section-header">
 <h2>What Is Qwen AI?</h2>
 </div>
 <p>
-Qwen (pronounced "chwen", from the Chinese 通义千问 / Tōngyì Qiānwèn) is a family of large language models and multimodal AI systems developed by <strong>Alibaba Cloud</strong>. Since its initial release in 2023, the project has grown into one of the largest open-source AI ecosystems in the world — with <strong>more than 100 open-weight models</strong> published on Hugging Face and <strong>over 40 million downloads</strong> to date.
+Qwen (pronounced "chwen", from the Chinese 通义千问 / Tōngyì Qiānwèn) is a family of large language models and multimodal AI systems developed by <strong>Alibaba Cloud</strong>. Since its initial release in 2023, the project has grown into one of the largest open-source AI ecosystems in the world, spanning text generation, coding, vision, audio, speech, image generation, and real-time multimodal interaction.
 </p>
 <p>
-The ecosystem spans multiple model families. <strong><a href="/qwen-3/">Qwen 3</a></strong> (April 2025) is the current flagship generation, featuring both dense models (0.6B to 32B parameters) and sparse Mixture-of-Experts models up to 235B parameters with 22B active — supporting 119 languages and a hybrid "thinking mode" that toggles between fast inference and deep chain-of-thought reasoning. <strong><a href="/qwen3-coder/">Qwen3-Coder-Next</a></strong> (February 2026) is the newest addition: an 80B MoE coding agent with only 3B active parameters, 256K context, and autonomous debugging capabilities that rival frontier proprietary models.
+The latest flagship, <strong><a href="/qwen-3-5/">Qwen 3.5</a></strong> (February 2026), is a 397B Mixture-of-Experts model with 17B active parameters, 262K native context extensible to 1M tokens, and native support for 201 languages. It competes directly with GPT-5.2, Claude Opus 4.5, and Gemini 3 Pro across reasoning, coding, and multimodal tasks — while remaining open-weight under the Apache 2.0 license.
 </p>
 <p>
-Beyond text, Qwen offers specialized models for <a href="/2-5-vl/">vision</a> (Qwen-VL), <a href="/2-audio/">audio</a> (Qwen-Audio, ASR, TTS), <a href="/images/">image generation</a>, <a href="/video/">video generation</a>, and the all-in-one <a href="/voice-video-chat/">Qwen 2.5-Omni</a> that processes text, images, audio and video simultaneously with real-time speech output. The closed-source <a href="/qwen-3-max/">Qwen3-Max-Thinking</a> (1T+ parameters) pushes further with test-time scaling, scoring perfect 100% on AIME 2025. For reasoning-heavy tasks, <a href="/qwq-max/">QwQ</a> delivers specialized mathematical and analytical performance.
+Most Qwen models can be <a href="/run-locally/">run locally</a> with tools like Ollama, llama.cpp, or LM Studio, deployed via Alibaba Cloud's DashScope API, or accessed through <a href="/chat/">Qwen Chat</a> for free. The project is backed by Alibaba Cloud's infrastructure, serving <strong>290,000+ enterprise customers</strong> worldwide.
 </p>
-<p>
-Most Qwen models are released under the <strong>Apache 2.0 license</strong>, allowing free commercial use, modification and redistribution. You can run them locally with tools like <a href="/download-models-locally/">Ollama, llama.cpp, or LM Studio</a>, deploy them via Alibaba Cloud's DashScope API, or use them through third-party providers. The project is backed by Alibaba Cloud's infrastructure, which serves <strong>290,000+ enterprise customers</strong> including AstraZeneca, NIO, and Dingdong.
-</p>
+</section>
+
+<div class="ad-afterintro-container"><div class="ad-afterintro-inner"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9609544329602409" data-ad-slot="8310388095" data-ad-format="auto" data-full-width-responsive="true"></ins></div></div>
+
+<section id="models" class="qwen-section">
+<div class="qwen-section-header">
+<h2>Explore the Qwen Ecosystem</h2>
+</div>
+
+<h3 style="text-align:left;margin-top:0;font-family:var(--qwen-font-sans);font-size:0.85rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--qwen-primary);border-bottom:2px solid var(--qwen-primary);padding-bottom:8px;display:inline-block;">Flagship & General Purpose</h3>
+<div class="qwen-grid" style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr));margin-bottom:2.5em;margin-top:1em;">
+<a href="/qwen-3-5/" class="hub-card" style="text-decoration:none;">
+<div class="feature-item" style="position:relative;text-align:left;padding:20px 24px;">
+<span class="new-badge" style="top:-8px;right:-8px;font-size:10px;padding:3px 8px;">NEW</span>
+<div style="font-family:var(--qwen-font-sans);font-weight:700;font-size:1.05rem;color:var(--qwen-primary-dark);margin-bottom:4px;">Qwen 3.5</div>
+<div style="font-family:var(--qwen-font-sans);font-size:0.85rem;color:var(--qwen-gray-500);line-height:1.4;">397B MoE flagship — vision, language, reasoning, 1M context</div>
+</div>
+</a>
+<a href="/qwen-3/" class="hub-card" style="text-decoration:none;">
+<div class="feature-item" style="text-align:left;padding:20px 24px;">
+<div style="font-family:var(--qwen-font-sans);font-weight:700;font-size:1.05rem;color:var(--qwen-primary-dark);margin-bottom:4px;">Qwen 3 Family</div>
+<div style="font-family:var(--qwen-font-sans);font-size:0.85rem;color:var(--qwen-gray-500);line-height:1.4;">0.6B to 235B models with hybrid thinking mode</div>
+</div>
+</a>
+<a href="/qwen-max/" class="hub-card" style="text-decoration:none;">
+<div class="feature-item" style="text-align:left;padding:20px 24px;">
+<div style="font-family:var(--qwen-font-sans);font-weight:700;font-size:1.05rem;color:var(--qwen-primary-dark);margin-bottom:4px;">Qwen Max</div>
+<div style="font-family:var(--qwen-font-sans);font-size:0.85rem;color:var(--qwen-gray-500);line-height:1.4;">1T+ parameter API model with test-time scaling</div>
+</div>
+</a>
+<a href="/qwen-plus/" class="hub-card" style="text-decoration:none;">
+<div class="feature-item" style="text-align:left;padding:20px 24px;">
+<div style="font-family:var(--qwen-font-sans);font-weight:700;font-size:1.05rem;color:var(--qwen-primary-dark);margin-bottom:4px;">Qwen Plus</div>
+<div style="font-family:var(--qwen-font-sans);font-size:0.85rem;color:var(--qwen-gray-500);line-height:1.4;">Cost-effective API model for production workloads</div>
+</div>
+</a>
+</div>
+
+<h3 style="text-align:left;margin-top:0;font-family:var(--qwen-font-sans);font-size:0.85rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--qwen-secondary-dark);border-bottom:2px solid var(--qwen-secondary);padding-bottom:8px;display:inline-block;">Coding & Reasoning</h3>
+<div class="qwen-grid" style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr));margin-bottom:2.5em;margin-top:1em;">
+<a href="/qwen-coder/" class="hub-card" style="text-decoration:none;">
+<div class="feature-item" style="text-align:left;padding:20px 24px;">
+<div style="font-family:var(--qwen-font-sans);font-weight:700;font-size:1.05rem;color:var(--qwen-primary-dark);margin-bottom:4px;">Qwen Coder</div>
+<div style="font-family:var(--qwen-font-sans);font-size:0.85rem;color:var(--qwen-gray-500);line-height:1.4;">Autonomous coding agent — write, debug, and fix code</div>
+</div>
+</a>
+<a href="/qwq/" class="hub-card" style="text-decoration:none;">
+<div class="feature-item" style="text-align:left;padding:20px 24px;">
+<div style="font-family:var(--qwen-font-sans);font-weight:700;font-size:1.05rem;color:var(--qwen-primary-dark);margin-bottom:4px;">QwQ</div>
+<div style="font-family:var(--qwen-font-sans);font-size:0.85rem;color:var(--qwen-gray-500);line-height:1.4;">Reasoning specialist — math, logic, and analysis</div>
+</div>
+</a>
+<a href="/qwen-math/" class="hub-card" style="text-decoration:none;">
+<div class="feature-item" style="text-align:left;padding:20px 24px;">
+<div style="font-family:var(--qwen-font-sans);font-weight:700;font-size:1.05rem;color:var(--qwen-primary-dark);margin-bottom:4px;">Qwen Math</div>
+<div style="font-family:var(--qwen-font-sans);font-size:0.85rem;color:var(--qwen-gray-500);line-height:1.4;">Specialized mathematical reasoning and problem-solving</div>
+</div>
+</a>
+<a href="/deep-research/" class="hub-card" style="text-decoration:none;">
+<div class="feature-item" style="text-align:left;padding:20px 24px;">
+<div style="font-family:var(--qwen-font-sans);font-weight:700;font-size:1.05rem;color:var(--qwen-primary-dark);margin-bottom:4px;">Deep Research</div>
+<div style="font-family:var(--qwen-font-sans);font-size:0.85rem;color:var(--qwen-gray-500);line-height:1.4;">Multi-step research with web search and synthesis</div>
+</div>
+</a>
+</div>
+
+<h3 style="text-align:left;margin-top:0;font-family:var(--qwen-font-sans);font-size:0.85rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--qwen-accent);border-bottom:2px solid var(--qwen-accent);padding-bottom:8px;display:inline-block;">Vision & Image</h3>
+<div class="qwen-grid" style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr));margin-bottom:2.5em;margin-top:1em;">
+<a href="/qwen-vision/" class="hub-card" style="text-decoration:none;">
+<div class="feature-item" style="text-align:left;padding:20px 24px;">
+<div style="font-family:var(--qwen-font-sans);font-weight:700;font-size:1.05rem;color:var(--qwen-primary-dark);margin-bottom:4px;">Qwen Vision</div>
+<div style="font-family:var(--qwen-font-sans);font-size:0.85rem;color:var(--qwen-gray-500);line-height:1.4;">Image and video understanding, OCR, visual reasoning</div>
+</div>
+</a>
+<a href="/qwen-image/" class="hub-card" style="text-decoration:none;">
+<div class="feature-item" style="text-align:left;padding:20px 24px;">
+<div style="font-family:var(--qwen-font-sans);font-weight:700;font-size:1.05rem;color:var(--qwen-primary-dark);margin-bottom:4px;">Qwen Image</div>
+<div style="font-family:var(--qwen-font-sans);font-size:0.85rem;color:var(--qwen-gray-500);line-height:1.4;">AI image generation and editing</div>
+</div>
+</a>
+</div>
+
+<h3 style="text-align:left;margin-top:0;font-family:var(--qwen-font-sans);font-size:0.85rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--qwen-success);border-bottom:2px solid var(--qwen-success);padding-bottom:8px;display:inline-block;">Audio & Voice</h3>
+<div class="qwen-grid" style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr));margin-bottom:2.5em;margin-top:1em;">
+<a href="/qwen-omni/" class="hub-card" style="text-decoration:none;">
+<div class="feature-item" style="text-align:left;padding:20px 24px;">
+<div style="font-family:var(--qwen-font-sans);font-weight:700;font-size:1.05rem;color:var(--qwen-primary-dark);margin-bottom:4px;">Qwen Omni</div>
+<div style="font-family:var(--qwen-font-sans);font-size:0.85rem;color:var(--qwen-gray-500);line-height:1.4;">All-in-one: text, image, audio, video in, speech out</div>
+</div>
+</a>
+<a href="/qwen-audio/" class="hub-card" style="text-decoration:none;">
+<div class="feature-item" style="text-align:left;padding:20px 24px;">
+<div style="font-family:var(--qwen-font-sans);font-weight:700;font-size:1.05rem;color:var(--qwen-primary-dark);margin-bottom:4px;">Qwen Audio</div>
+<div style="font-family:var(--qwen-font-sans);font-size:0.85rem;color:var(--qwen-gray-500);line-height:1.4;">Audio understanding and analysis</div>
+</div>
+</a>
+<a href="/qwen-asr/" class="hub-card" style="text-decoration:none;">
+<div class="feature-item" style="text-align:left;padding:20px 24px;">
+<div style="font-family:var(--qwen-font-sans);font-weight:700;font-size:1.05rem;color:var(--qwen-primary-dark);margin-bottom:4px;">Qwen ASR</div>
+<div style="font-family:var(--qwen-font-sans);font-size:0.85rem;color:var(--qwen-gray-500);line-height:1.4;">Speech recognition in 52+ languages</div>
+</div>
+</a>
+<a href="/qwen-tts/" class="hub-card" style="text-decoration:none;">
+<div class="feature-item" style="text-align:left;padding:20px 24px;">
+<div style="font-family:var(--qwen-font-sans);font-weight:700;font-size:1.05rem;color:var(--qwen-primary-dark);margin-bottom:4px;">Qwen TTS</div>
+<div style="font-family:var(--qwen-font-sans);font-size:0.85rem;color:var(--qwen-gray-500);line-height:1.4;">Text-to-speech with voice cloning and design</div>
+</div>
+</a>
+</div>
 </section>
 
 <section class="qwen-section">
 <div class="qwen-section-header">
-<h2>Key Innovations Driving Qwen AI</h2>
+<h2>Guides & Resources</h2>
 </div>
-<div class="qwen-feature-highlight">
-<div class="feature-highlight-header">
-<h3>Hybrid Reasoning Engine &amp; Switchable Thinking Mode (Qwen 3)</h3>
+<div class="qwen-grid" style="grid-template-columns:repeat(auto-fit,minmax(250px,1fr));">
+<a href="/use-cases/" style="text-decoration:none;">
+<div class="feature-item" style="text-align:left;padding:24px;">
+<div style="font-family:var(--qwen-font-sans);font-weight:700;font-size:1.05rem;color:var(--qwen-primary-dark);margin-bottom:6px;">Use Cases</div>
+<div style="font-family:var(--qwen-font-sans);font-size:0.88rem;color:var(--qwen-gray-500);line-height:1.4;">Coding, content, research, business, education — find the right model for your task</div>
 </div>
-<div class="feature-highlight-body">
-The <strong>Hybrid Reasoning Engine</strong> in <a href="/qwen-3/">Qwen 3</a> lets you toggle between lightning-fast responses and step-by-step chain-of-thought reasoning. Control depth, latency and cost with a single flag — perfect for both realtime chat and heavy STEM problem-solving. All Qwen 3 models support this natively, from the 0.6B edge model to the 235B flagship.
+</a>
+<a href="/prompts/" style="text-decoration:none;">
+<div class="feature-item" style="text-align:left;padding:24px;">
+<div style="font-family:var(--qwen-font-sans);font-weight:700;font-size:1.05rem;color:var(--qwen-primary-dark);margin-bottom:6px;">Prompt Engineering</div>
+<div style="font-family:var(--qwen-font-sans);font-size:0.88rem;color:var(--qwen-gray-500);line-height:1.4;">Templates, techniques, and best practices for getting great results</div>
 </div>
+</a>
+<a href="/run-locally/" style="text-decoration:none;">
+<div class="feature-item" style="text-align:left;padding:24px;">
+<div style="font-family:var(--qwen-font-sans);font-weight:700;font-size:1.05rem;color:var(--qwen-primary-dark);margin-bottom:6px;">Run Locally</div>
+<div style="font-family:var(--qwen-font-sans);font-size:0.88rem;color:var(--qwen-gray-500);line-height:1.4;">Ollama, llama.cpp, LM Studio, vLLM — deploy on your own hardware</div>
 </div>
-<div class="qwen-feature-highlight">
-<div class="feature-highlight-header">
-<h3>Autonomous Coding Agents (Qwen3-Coder-Next)</h3>
+</a>
+<a href="/hardware-requirements/" style="text-decoration:none;">
+<div class="feature-item" style="text-align:left;padding:24px;">
+<div style="font-family:var(--qwen-font-sans);font-weight:700;font-size:1.05rem;color:var(--qwen-primary-dark);margin-bottom:6px;">Hardware Requirements</div>
+<div style="font-family:var(--qwen-font-sans);font-size:0.88rem;color:var(--qwen-gray-500);line-height:1.4;">RAM, VRAM, and GPU specs for every Qwen model size</div>
 </div>
-<div class="feature-highlight-body">
-<a href="/qwen3-coder/">Qwen3-Coder-Next</a> shifts from code <em>assistance</em> to code <em>agency</em>. Trained across 800,000+ verifiable tasks, it autonomously writes, executes, debugs and fixes code — achieving 70.5% on SWE-Bench with only 3B active parameters. Run it locally on a 64 GB system at 60+ tokens per second.
-</div>
-</div>
-<div class="qwen-feature-highlight">
-<div class="feature-highlight-header">
-<h3>End-to-End Multimodality via Thinker-Talker (Qwen 2.5-Omni)</h3>
-</div>
-<div class="feature-highlight-body">
-Powered by the novel <strong>Thinker-Talker</strong> stack, <a href="/voice-video-chat/">Qwen 2.5-Omni</a> ingests text, images, audio and video — and streams back rich text <em>or</em> natural speech. Build voice or vision apps without juggling separate models.
-</div>
-</div>
-<div class="qwen-feature-highlight">
-<div class="feature-highlight-header">
-<h3>Extreme Scale &amp; 1M-Token Context (MoE Architecture)</h3>
-</div>
-<div class="feature-highlight-body">
-Qwen's sparse <strong>Mixture-of-Experts</strong> architecture delivers frontier-class quality while keeping inference lean. Context windows stretch to <strong>256K–1M tokens</strong> natively, trained on an unrivalled 36 trillion-token corpus spanning 119 languages.
-</div>
+</a>
 </div>
 </section>
 
 <section class="qwen-section">
 <div class="qwen-section-header">
-<h2>Qwen AI: Powering Industries Worldwide</h2>
+<h2>How Does Qwen Compare?</h2>
 </div>
-<p style="text-align: center;">Trusted by <strong>290,000+ customers</strong>, Qwen drives measurable ROI across e-commerce, finance, healthcare, automotive and more. Dingdong's AI concierge, NIO's smart cockpit and Microcraft's medical assistant all run on Qwen's unified LLM stack.</p>
+<p style="text-align:center;margin-bottom:1.5em;">See how Qwen stacks up against other leading AI platforms.</p>
+<div class="qwen-grid" style="grid-template-columns:repeat(auto-fit,minmax(200px,1fr));">
+<a href="/vs-deepseek/" style="text-decoration:none;">
+<div class="feature-item" style="padding:20px 24px;">
+<div style="font-family:var(--qwen-font-sans);font-weight:700;font-size:1.05rem;color:var(--qwen-primary-dark);">Qwen vs DeepSeek</div>
+<div style="font-family:var(--qwen-font-sans);font-size:0.85rem;color:var(--qwen-gray-500);margin-top:4px;">Qwen 3.5 vs DeepSeek V3 — benchmarks, ecosystem, multimodal</div>
+</div>
+</a>
+<a href="/vs-chatgpt/" style="text-decoration:none;">
+<div class="feature-item" style="padding:20px 24px;">
+<div style="font-family:var(--qwen-font-sans);font-weight:700;font-size:1.05rem;color:var(--qwen-primary-dark);">Qwen vs ChatGPT</div>
+<div style="font-family:var(--qwen-font-sans);font-size:0.85rem;color:var(--qwen-gray-500);margin-top:4px;">Open-source vs proprietary — features, pricing, capabilities</div>
+</div>
+</a>
+<a href="/vs-mistral/" style="text-decoration:none;">
+<div class="feature-item" style="padding:20px 24px;">
+<div style="font-family:var(--qwen-font-sans);font-weight:700;font-size:1.05rem;color:var(--qwen-primary-dark);">Qwen vs Mistral</div>
+<div style="font-family:var(--qwen-font-sans);font-size:0.85rem;color:var(--qwen-gray-500);margin-top:4px;">Two leading open-weight families compared</div>
+</div>
+</a>
+</div>
+</section>
 
-<h4>AstraZeneca: 3x Faster Safety Reporting</h4>
-By automating adverse-event analysis with Qwen, AstraZeneca slashed document turnaround times by <strong>300%</strong> while sustaining <strong>95%</strong> accuracy — freeing medical teams for higher-value work.
+<section class="qwen-section">
+<div class="qwen-section-header">
+<h2>Key Innovations</h2>
+</div>
+<div class="qwen-feature-highlight" style="margin-top:0;">
+<div class="feature-highlight-header">
+<h3>Hybrid Thinking Mode</h3>
+</div>
+<div class="feature-highlight-body">
+Toggle between instant responses and deep chain-of-thought reasoning with a single flag. <a href="/qwen-3-5/">Qwen 3.5</a> and <a href="/qwen-3/">Qwen 3</a> models support this natively — control depth, latency and cost per request, from real-time chat to complex STEM problems.
+</div>
+</div>
+<div class="qwen-feature-highlight">
+<div class="feature-highlight-header">
+<h3>Autonomous Coding Agents</h3>
+</div>
+<div class="feature-highlight-body">
+<a href="/qwen-coder/">Qwen Coder</a> autonomously writes, executes, debugs and fixes code across 800,000+ verifiable tasks — achieving 70.5% on SWE-Bench with only 3B active parameters. Run it locally on a 64 GB system at 60+ tokens/sec.
+</div>
+</div>
+<div class="qwen-feature-highlight">
+<div class="feature-highlight-header">
+<h3>End-to-End Multimodality</h3>
+</div>
+<div class="feature-highlight-body">
+<a href="/qwen-omni/">Qwen Omni</a> processes text, images, audio and video simultaneously and streams back natural speech or text. Build voice or vision apps without juggling separate models.
+</div>
+</div>
+<div class="qwen-feature-highlight">
+<div class="feature-highlight-header">
+<h3>Mixture-of-Experts at Scale</h3>
+</div>
+<div class="feature-highlight-body">
+Sparse MoE architecture delivers frontier-class quality while keeping inference lean — with context windows up to <strong>1M tokens</strong> natively. Trained on 36 trillion tokens spanning 119 languages.
+</div>
+</div>
+</section>
+
+<section class="qwen-section" style="padding:1.5em 0;">
+<p style="text-align:center;color:var(--qwen-gray-500);margin-bottom:0.5em;">Looking for previous-generation models?</p>
+<div style="display:flex;justify-content:center;gap:16px;flex-wrap:wrap;">
+<a class="qwen-button dark" href="/qwen-2-5/" style="width:auto;padding:12px 28px;font-size:0.9rem;">
+<span class="button-content"><span class="button-text">Qwen 2.5 Family</span></span>
+</a>
+</div>
+</section>
+
+<section class="qwen-section" style="padding-top:0;">
+<div class="qwen-section-header">
+<h2>Qwen AI in Production</h2>
+</div>
+<p style="text-align:center;">Trusted by <strong>290,000+ enterprises</strong> including AstraZeneca, NIO, and Dingdong. Qwen drives measurable ROI across healthcare, automotive, e-commerce, and finance.</p>
 <blockquote>"Qwen turbo-charged our pharmacovigilance workflow — an industry first."
 <cite>— Xin Zhong, IT Head, AstraZeneca China</cite></blockquote>
 </section>
 
 <div class="qwen-cta-section">
-<h2>Ready to Build with Qwen AI?</h2>
-Leverage open-source licenses or fully managed APIs to launch production-grade AI apps in days. Explore our detailed model guides, run locally with Ollama or llama.cpp, or deploy on Alibaba Cloud's GPU backbone.
-<p class="cta-highlight">Guides and benchmarks updated February 2026 — stay ahead with Qwen AI.</p>
+<h2>Start Building with Qwen AI</h2>
+Open-source models under Apache 2.0, managed APIs, and comprehensive guides. From prototype to production in days.
+<div style="display:flex;justify-content:center;gap:16px;flex-wrap:wrap;margin-top:1.5em;">
+<a class="qwen-button pro" href="/qwen-3-5/" style="width:auto;padding:14px 36px;">Qwen 3.5 Overview</a>
+<a class="qwen-button primary" href="/chat/" style="width:auto;padding:14px 36px;">Try Qwen Chat</a>
+<a class="qwen-button dark" href="https://huggingface.co/Qwen" target="_blank" rel="noopener noreferrer" style="width:auto;padding:14px 36px;">Hugging Face</a>
 </div>
-</div>`;
+<p class="cta-highlight" style="margin-top:1.5em;">Guides and benchmarks updated February 2026.</p>
+</div>
+`;
 ---
-<BaseLayout title="Qwen AI: Alibaba's Generative AI Ecosystem" seoTitle="Qwen AI: Explore &amp; Use Alibaba's Open Source Multimodal LLMs" seoDescription="Explore Qwen AI, Alibaba Cloud's open-source generative AI ecosystem. Access Qwen 3, multimodal LLMs, code generation, image and video AI tools — all free under Apache 2.0.">
+<BaseLayout title="Qwen AI: Alibaba's Open-Source AI Ecosystem" seoTitle="Qwen AI — Open-Source LLMs, Vision, Audio & Coding Models (2026)" seoDescription="Explore Qwen AI: Alibaba's open-source ecosystem of 100+ models. Qwen 3.5 flagship, coding agents, vision, audio, and multimodal AI — all free under Apache 2.0.">
   <article class="qwen-container">
-    <h1>Qwen AI: Alibaba's Generative AI Ecosystem</h1>
+    <h1 style="margin-bottom:0.2em;">Qwen AI</h1>
     <Fragment set:html={rawHtml} />
   </article>
 </BaseLayout>
